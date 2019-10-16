@@ -74,10 +74,12 @@
         "webpack-merge": "^4.2.2"
     },
     "dependencies": {
+        "@blueprintjs/core": "^3.19.1",
         "electron-is-dev": "^1.1.0",
         "lodash": "^4.17.15",
         "mobx": "^5.14.0",
         "mobx-react": "^6.1.3",
+        "normalize.css": "^8.0.1",
         "react": "^16.10.2",
         "react-dom": "^16.10.2",
         "react-router-dom": "^5.1.2"
