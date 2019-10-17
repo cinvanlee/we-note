@@ -1,0 +1,39 @@
+$themes: (
+    light: (
+        background: white,
+        sideBarBg: #fff,
+        sideBarColor: #000
+    ),
+    dark: (
+        sideBarBg: #333,
+        sideBarColor: #fff,
+        tabBarBg: #252526,
+        tabBarActiveBg: #1e1e1e,
+        tabBarColor: rgba(255, 255, 255, 0.5),
+        tabBarActiveColor: rgba(255, 255, 255, 1),
+        mainBg: #1e1e1e
+    )
+);
+
+@mixin themify($themes) {
+    @each $theme, $map in $themes {
+        .theme-#{$theme} & {
+            $theme-map: () !global;
+            @each $key, $submap in $map {
+                $value: map-get(map-get($themes, $theme), "#{$key}");
+                $theme-map: map-merge(
+                    $theme-map,
+                    (
+                        $key: $value
+                    )
+                ) !global;
+            }
+            @content;
+            $theme-map: null !global;
+        }
+    }
+}
+
+@function themed($key) {
+    @return map-get($theme-map, $key);
+}
