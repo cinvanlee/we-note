@@ -1,5 +1,5 @@
 import React from "react";
-import { Icon } from "@blueprintjs/core";
+import { FontIcon } from "office-ui-fabric-react";
 import { Link, withRouter } from "react-router-dom";
 import classnames from "classnames";
 import "./style.scss";
@@ -51,7 +51,7 @@ class SideBar extends React.Component {
                             to={menu.link}
                             title={menu.title}
                         >
-                            <Icon icon={menu.icon} iconSize={20} />
+                            <FontIcon iconName={menu.icon} iconSize={20} />
                             <div className="sidebar-item-title">{menu.title}</div>
                         </Link>
                     );

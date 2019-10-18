@@ -1,5 +1,5 @@
 import React from "react";
-import { Icon } from "@blueprintjs/core";
+import { FontIcon } from "office-ui-fabric-react";
 import "./style.scss";
 
 class TabBar extends React.Component {
@@ -9,11 +9,11 @@ class TabBar extends React.Component {
                 <div className="iframe-tabs">
                     <div className="iframe-tab">
                         index.js
-                        <Icon className="close-icon" icon="small-cross" />
+                        <FontIcon className="close-icon" iconName="small-cross" />
                     </div>
                     <div className="iframe-tab active">
                         style.scss
-                        <Icon className="close-icon" icon="small-cross" />
+                        <FontIcon className="close-icon" iconName="small-cross" />
                     </div>
                 </div>
             </div>
