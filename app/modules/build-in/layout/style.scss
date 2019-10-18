@@ -1,5 +1,3 @@
-@import "../../../theme.scss";
-
 .build-in-layout {
     position: fixed;
     top: 0;
@@ -11,7 +9,7 @@
         position: absolute;
         top: 0;
         left: 0;
-        width: 45px;
+        width: 50px;
         height: 100%;
         z-index: 10;
     }
@@ -21,14 +19,14 @@
         width: 100%;
         height: 100%;
         overflow-y: auto;
-        padding-left: 45px;
+        padding-left: 50px;
     }
 
     .tabbar-wrap {
         position: absolute;
         top: 0;
-        left: 45px;
-        width: calc(100% - 45px);
+        left: 50px;
+        width: calc(100% - 50px);
         height: 35px;
     }
 
@@ -37,9 +35,5 @@
         height: 100%;
         padding-top: 35px;
         overflow-y: auto;
-
-        @include themify($themes) {
-            background: themed("mainBg");
-        }
     }
 }

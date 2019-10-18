@@ -1,11 +1,13 @@
 import React from "react";
 import { Icon } from "@blueprintjs/core";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import classnames from "classnames";
 import "./style.scss";
 
+@withRouter
 class SideBar extends React.Component {
     render() {
+        const { pathname } = this.props.location;
         const configs = [
             {
                 title: "笔记本",
@@ -13,7 +15,7 @@ class SideBar extends React.Component {
                 icon: "book"
             },
             {
-                title: "工作日志",
+                title: "工作",
                 link: "/worklog",
                 icon: "application"
             },
@@ -39,7 +41,8 @@ class SideBar extends React.Component {
                 {configs.map(menu => {
                     const cls = classnames({
                         "sidebar-item": true,
-                        "fixed-bottom": menu.position === "bottom"
+                        "sidebar-item--bottom": menu.position === "bottom",
+                        "active": pathname.startsWith(menu.link)
                     });
                     return (
                         <Link
@@ -49,6 +52,7 @@ class SideBar extends React.Component {
                             title={menu.title}
                         >
                             <Icon icon={menu.icon} iconSize={20} />
+                            <div className="sidebar-item-title">{menu.title}</div>
                         </Link>
                     );
                 })}

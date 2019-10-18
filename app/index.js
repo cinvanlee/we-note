@@ -4,14 +4,14 @@ import { Provider } from "mobx-react";
 import { HashRouter } from "react-router-dom";
 
 import "./global.scss";
-import getRoutes from "./modules/routes";
+import routes from "./modules/routes";
 import stores from "./modules/stores";
 
 class App extends React.Component {
     render() {
         return (
             <Provider {...stores}>
-                <HashRouter ref="navigator">{getRoutes()}</HashRouter>
+                <HashRouter ref="navigator">{routes}</HashRouter>
             </Provider>
         );
     }
