@@ -7,7 +7,7 @@ const __DEV__ = env === "development";
 const __PROD__ = env === "production";
 
 module.exports = {
-    target: "web",
+    target: "electron-renderer",
 
     entry: path.join(__dirname, "../app/index.js"),
 

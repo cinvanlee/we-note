@@ -3,24 +3,14 @@
     width: 100%;
     height: 100%;
 
-    &-menu {
+    &-sidebar {
         position: absolute;
         top: 0;
         left: 0;
         width: 200px;
         height: 100%;
         overflow-y: auto;
-        padding: 10px 0;
-
-        &__link {
-            display: block;
-            padding: 0 20px;
-            line-height: 35px;
-            font-size: 12px;
-            text-decoration: none !important;
-            transition: all 0.3s;
-            color: inherit;
-        }
+        padding: 8px 0;
     }
 
     &-main {
@@ -33,20 +23,7 @@
 
 .theme-default {
     .setting-layout {
-        &-menu {
-            color: #6f6f6f;
-            background: #f3f3f3;
-
-            &__link {
-                color: #6f6f6f;
-                &.active,
-                &:hover {
-                    background: #e4e6f1;
-                }
-            }
-        }
-
-        &-main {
+        &-sidebar {
             background: #fff;
         }
     }

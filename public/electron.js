@@ -8,7 +8,12 @@ let mainWindow;
 
 function createMainWindow() {
     const window = new BrowserWindow({
-        webPreferences: { nodeIntegration: true }
+        width: 1200,
+        height: 900,
+        webPreferences: {
+            nodeIntegration: true,
+            webviewTag: true
+        }
     });
 
     if (isDevelopment) {

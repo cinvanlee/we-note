@@ -8,9 +8,8 @@
         display: block;
         text-align: center;
         cursor: pointer;
-        transition: opacity 0.3s;
+        transition: color 0.2s;
         margin-bottom: 15px;
-        opacity: 0.6;
         text-decoration: none !important;
 
         &--bottom {
@@ -29,10 +28,10 @@
 
 .theme-default {
     .sidebar {
-        background: #2c2c2c;
+        background: #1d1e20;
 
         &-item {
-            color: rgba(255, 255, 255, 0.5);
+            color: rgba(255, 255, 255, 0.6);
 
             &:hover,
             &.active {

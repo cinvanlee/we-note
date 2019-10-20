@@ -2,7 +2,7 @@ const path = require("path");
 const webpack = require("webpack");
 const package = require("../package.json");
 
-const blackList = ["electron-is-dev"];
+const blackList = ["electron-is-dev", "electron-json-storage"];
 const vendor = Object.keys(package.dependencies).filter(
     item => !blackList.includes(item)
 );

@@ -13,7 +13,15 @@ class BuildInLayout extends React.Component {
                     <div className="tabbar-wrap">
                         <TabBar />
                     </div>
-                    <div className="body-wrap">{this.props.children}</div>
+                    <div className="body-wrap">
+                        {this.props.children}
+
+                        <webview src="https://www.baidu.com/"></webview>
+
+                        <webview src="http://0.0.0.0:1024/#/note"></webview>
+
+                        <webview src="https://www.github.com/"></webview>
+                    </div>
                 </div>
             </div>
         );
