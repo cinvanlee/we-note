@@ -1,9 +1,16 @@
 import React from "react";
+import { inject, observer } from "mobx-react";
+import classnames from "classnames";
 import { SideBar, TabBar } from "../components";
 import "./style.scss";
 
+@inject(stores => ({
+    iframes: stores.tabBar.iframes
+}))
+@observer
 class BuildInLayout extends React.Component {
     render() {
+        const { iframes } = this.props;
         return (
             <div className="build-in-layout">
                 <div className="sidebar-wrap">
@@ -14,13 +21,22 @@ class BuildInLayout extends React.Component {
                         <TabBar />
                     </div>
                     <div className="body-wrap">
-                        {this.props.children}
-
-                        <webview src="https://www.baidu.com/"></webview>
-
-                        <webview src="http://0.0.0.0:1024/#/note"></webview>
-
-                        <webview src="https://www.github.com/"></webview>
+                        <div className="body-wrap-inner">
+                            {iframes.map((iframe, index) => {
+                                const cls = classnames({
+                                    "iframe-wrap": true,
+                                    active: iframe.active
+                                });
+                                return (
+                                    <webview
+                                        className={cls}
+                                        key={index}
+                                        src={`#${iframe.url}`}
+                                        nodeintegration={1}
+                                    />
+                                );
+                            })}
+                        </div>
                     </div>
                 </div>
             </div>

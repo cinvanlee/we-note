@@ -27,16 +27,19 @@ class TabBar extends React.Component {
                                 <div
                                     key={index}
                                     className={cls}
-                                    onClick={() =>
-                                        this.props.activeTabBar(iframe)
-                                    }
+                                    onClick={this.handleTabClick.bind(
+                                        this,
+                                        iframe
+                                    )}
+                                    onContextMenu={this.handleTabRightClick}
                                 >
                                     {iframe.name}
                                     <div
                                         className="iframe-tab-close"
-                                        onClick={() =>
-                                            this.props.closeTabBar(iframe)
-                                        }
+                                        onClick={this.handleCloseIconClick.bind(
+                                            this,
+                                            iframe
+                                        )}
                                     >
                                         <FontIcon iconName="cancel" />
                                     </div>
@@ -48,6 +51,19 @@ class TabBar extends React.Component {
             </div>
         );
     }
+
+    handleTabClick = iframe => {
+        this.props.activeTabBar(iframe);
+    };
+
+    handleTabRightClick = () => {
+        console.log("right click");
+    };
+
+    handleCloseIconClick = (evt, iframe) => {
+        this.props.closeTabBar(iframe);
+        evt.stopPropagation();
+    };
 }
 
 export default TabBar;

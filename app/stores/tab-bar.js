@@ -7,14 +7,15 @@ const DEFAULT_IFRAMES = [
         name: "笔记本",
         url: "#/note",
         disableClose: true,
-        active: true
+        active: false
     }
 ];
 
 class TabBarStore {
     @observable iframes = DEFAULT_IFRAMES;
 
-    @action async init() {
+    @action
+    async init() {
         self.iframes = await storage.get(LOCAL_STORAGE_KEY);
     }
 
@@ -24,7 +25,6 @@ class TabBarStore {
         );
         if (existedIndex === -1) {
             self.iframes.push(iframe);
-            return;
         }
         self.active(iframe);
     }
@@ -33,8 +33,16 @@ class TabBarStore {
         const existedIndex = self.iframes.findIndex(
             item => item.url === iframe.url
         );
+        let nextActiveIframe = null;
+        if (self.iframes[existedIndex - 1]) {
+            nextActiveIframe = self.iframes[existedIndex - 1];
+        }
+        if (self.iframes[existedIndex + 1]) {
+            nextActiveIframe = self.iframes[existedIndex + 1];
+        }
         if (existedIndex !== -1) {
             self.iframes.splice(existedIndex, 1);
+            self.active(nextActiveIframe);
         }
         self.persist();
     }
@@ -49,7 +57,6 @@ class TabBarStore {
             item.active = item.url === iframe.url;
             return item;
         });
-        console.log(JSON.stringify(self.iframes));
         self.persist();
     }
 

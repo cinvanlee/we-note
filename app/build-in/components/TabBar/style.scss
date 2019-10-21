@@ -24,6 +24,7 @@
             text-overflow: ellipsis;
             white-space: nowrap;
             min-width: 100px;
+            user-select: none;
 
             &.active:after {
                 content: "";
