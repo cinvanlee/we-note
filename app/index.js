@@ -11,10 +11,6 @@ import stores from "./stores";
 initializeIcons();
 
 class App extends React.Component {
-    async componentDidMount() {
-        await stores.tabBar.init();
-    }
-
     render() {
         return (
             <Provider {...stores}>

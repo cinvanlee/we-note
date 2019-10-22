@@ -4,8 +4,8 @@ import { ipcRenderer } from "electron";
 
 class TestTabBarPage extends React.Component {
     componentDidMount() {
-        ipcRenderer.on("start", (ev) => {
-            console.log(ev);
+        ipcRenderer.on("ping", () => {
+            ipcRenderer.sendToHost("pong");
         });
     }
 
@@ -17,7 +17,7 @@ class TestTabBarPage extends React.Component {
                 <div>
                     <DefaultButton
                         style={{ marginRight: 10 }}
-                        text="打开百度"
+                        text="发送消息"
                         onClick={this.sendMsgToHost}
                     />
                     <DefaultButton
@@ -28,14 +28,14 @@ class TestTabBarPage extends React.Component {
                         style={{ marginRight: 10 }}
                         text="关闭所有Tab"
                     />
-                    <DefaultButton text="激活第二个Tab"/>
+                    <DefaultButton text="激活第二个Tab" />
                 </div>
             </div>
         );
     }
 
     sendMsgToHost = () => {
-        ipcRenderer.sendToHost("Message from child");
+        ipcRenderer.sendToHost("Message from tabbar");
     };
 }
 

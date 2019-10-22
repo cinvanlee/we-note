@@ -1,14 +1,9 @@
 import React from "react";
 import { FontIcon } from "office-ui-fabric-react";
 import { Link, withRouter } from "react-router-dom";
-import { inject, observer } from "mobx-react";
 import classnames from "classnames";
 import "./style.scss";
 
-@inject(stores => ({
-    openTabBar: stores.tabBar.open
-}))
-@observer
 @withRouter
 class SideBar extends React.Component {
     render() {
@@ -54,7 +49,6 @@ class SideBar extends React.Component {
                             key={menu.url}
                             className={cls}
                             title={menu.title}
-                            onClick={this.handleMenuClick.bind(this, menu)}
                         >
                             <FontIcon iconName={menu.icon} iconSize={20}/>
                             <div className="sidebar-item-title">
@@ -66,10 +60,6 @@ class SideBar extends React.Component {
             </div>
         );
     }
-
-    handleMenuClick = ({ name, url }) => {
-        this.props.openTabBar({ name, url });
-    };
 }
 
 export default SideBar;
