@@ -56,7 +56,7 @@ class SideBar extends React.Component {
                             title={menu.title}
                             onClick={this.handleMenuClick.bind(this, menu)}
                         >
-                            <FontIcon iconName={menu.icon} iconSize={20} />
+                            <FontIcon iconName={menu.icon} iconSize={20}/>
                             <div className="sidebar-item-title">
                                 {menu.name}
                             </div>

@@ -1,4 +1,4 @@
-import { action, observable, observe } from "mobx";
+import { action, observable, computed } from "mobx";
 import storage from "../helper/storage";
 
 const LOCAL_STORAGE_KEY = "WN__Iframes";
@@ -13,6 +13,10 @@ const DEFAULT_IFRAMES = [
 
 class TabBarStore {
     @observable iframes = DEFAULT_IFRAMES;
+
+    @computed get current() {
+        return self.iframes.find(item => item.active);
+    }
 
     @action
     async init() {

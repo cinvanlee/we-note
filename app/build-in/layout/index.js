@@ -9,6 +9,13 @@ import "./style.scss";
 }))
 @observer
 class BuildInLayout extends React.Component {
+    componentDidMount() {
+        const webview = document.querySelector("webview");
+        webview.addEventListener("ipc-message", evt => {
+            console.log(evt);
+        });
+    }
+
     render() {
         const { iframes } = this.props;
         return (
@@ -24,6 +31,7 @@ class BuildInLayout extends React.Component {
                         <div className="body-wrap-inner">
                             {iframes.map((iframe, index) => {
                                 const cls = classnames({
+                                    webview: true,
                                     "iframe-wrap": true,
                                     active: iframe.active
                                 });

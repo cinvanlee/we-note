@@ -7,12 +7,12 @@ class SideBar extends React.Component {
             {
                 links: [
                     {
-                        name: "Demo components",
+                        name: "测试版块",
                         links: [
                             {
-                                key: "ActivityItem",
-                                name: "ActivityItem",
-                                url: "#/setting/demo"
+                                key: "Test TabBar",
+                                name: "测试 TabBar",
+                                url: "#/setting/test-tabbar"
                             }
                         ]
                     },
