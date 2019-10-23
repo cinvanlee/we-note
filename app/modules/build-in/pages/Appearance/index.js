@@ -17,10 +17,6 @@ class AppearancePage extends React.Component {
                         tandem with theme variables and provides some inherent
                         styling in the way of a box-shadow on the container.
                     </p>
-
-                    <Dropdown
-                        options={}
-                    />
                 </div>
             </div>
         );
