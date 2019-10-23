@@ -1,0 +1,58 @@
+.build-in-layout {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    .side-menu-wrap {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 50px;
+        height: 100%;
+        z-index: 10;
+    }
+
+    .main-wrap {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow-y: auto;
+        padding-left: 50px;
+    }
+
+    .tabbar-wrap {
+        position: absolute;
+        top: 0;
+        left: 50px;
+        width: calc(100% - 50px);
+        height: 32px;
+    }
+
+    .body-wrap {
+        width: 100%;
+        height: 100%;
+        padding-top: 32px;
+        overflow-y: auto;
+
+        &-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    .iframe-wrap {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -10;
+
+        &.active {
+            z-index: 40;
+        }
+    }
+}
