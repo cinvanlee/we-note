@@ -1,6 +1,6 @@
 import React from "react";
-import { TextField } from "office-ui-fabric-react";
-import "./style.scss";
+import { Input } from "antd";
+import "./style.less";
 
 class JsonBeautifyPage extends React.Component {
     state = {
@@ -13,10 +13,8 @@ class JsonBeautifyPage extends React.Component {
             <div className="json-beautify-page">
                 <div className="input-area">
                     <p>输入: </p>
-                    <TextField
-                        multiline
-                        autoAdjustHeight
-                        rows={25}
+                    <Input.TextArea
+                        autoSize={{ minRows: 20 }}
                         onChange={this.beautifyJSON}
                     />
                 </div>

@@ -29,8 +29,20 @@ module.exports = {
                 use: ["style-loader", "css-loader"]
             },
             {
-                test: /\.scss$/,
-                use: ["style-loader", "css-loader", "sass-loader"]
+                test: /\.less$/,
+                use: [
+                    "style-loader",
+                    "css-loader",
+                    {
+                        loader: "less-loader",
+                        options: {
+                            modifyVars: {
+                                "primary-color": "#2f54eb"
+                            },
+                            javascriptEnabled: true
+                        }
+                    }
+                ]
             },
             {
                 test: /\.html$/,

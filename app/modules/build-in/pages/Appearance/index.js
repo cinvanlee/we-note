@@ -1,5 +1,4 @@
 import React from "react";
-import { Dropdown } from "office-ui-fabric-react";
 
 class AppearancePage extends React.Component {
     render() {

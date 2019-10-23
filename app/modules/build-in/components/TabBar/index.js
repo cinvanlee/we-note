@@ -1,7 +1,7 @@
 import React from "react";
-import { FontIcon } from "office-ui-fabric-react";
+import { Icon } from 'antd'
 import classnames from "classnames";
-import "./style.scss";
+import "./style.less";
 import { inject, observer } from "mobx-react";
 
 @inject(stores => ({
@@ -40,7 +40,7 @@ class TabBar extends React.Component {
                         className="tab-close"
                         onClick={this.handleClose.bind(this, tab)}
                     >
-                        <FontIcon iconName="cancel" />
+                        <Icon type="close" />
                     </div>
                 </div>
             );
