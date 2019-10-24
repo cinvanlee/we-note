@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
-import HomePage from "./home";
-import IframePage from "./iframe";
+import HomePage from "./pages/home";
+import IframePage from "./pages/iframe";
 
 export default () => (
     <Switch>

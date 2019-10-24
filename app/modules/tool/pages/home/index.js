@@ -1,11 +1,12 @@
 import React from "react";
 import { Button } from "antd";
 import { navigateTo } from "@/helper/utils";
+import './style.less';
 
 class HomePage extends React.Component {
     render() {
         return (
-            <div>
+            <div className='tool-home-page'>
                 <h3>工具</h3>
                 <p>收集一些实用的小工具</p>
                 <Button

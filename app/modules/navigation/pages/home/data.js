@@ -23,7 +23,9 @@ export default [
             { title: "Gist", url: "https://gist.github.com/" },
             { title: "v2ex", url: "https://www.v2ex.com/" },
             { title: "CNode", url: "https://cnodejs.org/" },
-            { title: "Medium", url: "https://medium.com/" }
+            { title: "Medium", url: "https://medium.com/" },
+            { title: "Stack Overflow", url: "https://stackoverflow.com/" },
+            { title: "SegmentFault", url: "https://segmentfault.com/" }
         ]
     },
     {
@@ -48,8 +50,9 @@ export default [
             { title: "纯洁的微笑", url: "http://www.ityouknow.com/" },
             { title: "廖雪峰", url: "https://www.liaoxuefeng.com/" },
             { title: "现代简明魔法", url: "http://www.nowamagic.net/" },
-            { title: "浪里行舟", url: "https://github.com/ljianshu/Blog" },
-            { title: "老叶茶馆", url: "http://imysql.com/" }
+            { title: "囧克斯", url: "https://jiongks.name/" },
+            { title: "百度EFE", url: "https://efe.baidu.com/" },
+            { title: "", url: "" }
         ]
     },
     {
@@ -58,7 +61,11 @@ export default [
             { title: "美团技术团队", url: "https://tech.meituan.com/" },
             { title: "博客园团队", url: "https://www.cnblogs.com/cmt" },
             { title: "Daily JS", url: "https://medium.com/dailyjs" },
-            { title: "Echo JS", url: "https://www.echojs.com/" }
+            { title: "Echo JS", url: "https://www.echojs.com/" },
+            { title: "阿里中间件团队", url: "http://jm.taobao.org/" },
+            { title: "有赞技术团队", url: "https://tech.youzan.com/" },
+            { title: "淘宝技术团队", url: "https://fed.taobao.org/" },
+            { title: "凹凸实验室", url: "https://aotu.io/" }
         ]
     }
 ];

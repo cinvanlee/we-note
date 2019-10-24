@@ -2,10 +2,11 @@ import React from "react";
 import { withRouter, Route, Switch } from "react-router-dom";
 import DefaultLayout from "./modules/build-in/layout/Default";
 import HomePage from "./modules/home";
-import BuildInModules from "./modules/build-in";
-import ToolModules from "./modules/tool";
-import DemoModules from "./modules/demo";
-import NavigationModules from "./modules/navigation";
+import BuildIn from "./modules/build-in";
+import Tool from "./modules/tool";
+import Demo from "./modules/demo";
+import Navigation from "./modules/navigation";
+import Note from "./modules/note";
 
 const Layout = withRouter(props => <DefaultLayout {...props} />);
 
@@ -13,10 +14,11 @@ export default (
     <Layout>
         <Switch>
             <Route exact path="/" component={HomePage} />
-            <Route path="/build-in" component={BuildInModules} />
-            <Route path="/tool" component={ToolModules} />
-            <Route path="/demo" component={DemoModules} />
-            <Route path="/navigation" component={NavigationModules} />
+            <Route path="/build-in" component={BuildIn} />
+            <Route path="/tool" component={Tool} />
+            <Route path="/demo" component={Demo} />
+            <Route path="/navigation" component={Navigation} />
+            <Route path="/note" component={Note} />
         </Switch>
     </Layout>
 );
