@@ -9,10 +9,7 @@ class Layout extends React.Component {
         super(props);
         this.state = {
             selectKey: props.location.pathname,
-            menus: [
-                { name: "CodeMirror", url: "/demo/editor" },
-                { name: "UI", url: "/demo/ui" }
-            ]
+            menus: [{ name: "CodeMirror", url: "/demo/editor" }, { name: "UI", url: "/demo/ui" }]
         };
     }
 
@@ -21,11 +18,7 @@ class Layout extends React.Component {
         return (
             <div className="demo-layout">
                 <div className="demo-layout__menu">
-                    <Menu
-                        onClick={this.handleMenuClick}
-                        selectedKeys={[selectKey]}
-                        style={{ height: "100%" }}
-                    >
+                    <Menu onClick={this.handleMenuClick} selectedKeys={[selectKey]} style={{ height: "100%" }}>
                         {menus.map((item, i) => (
                             <Menu.Item key={item.url}>{item.name}</Menu.Item>
                         ))}

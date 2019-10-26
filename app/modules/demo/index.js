@@ -1,7 +1,8 @@
 import React from "react";
 import { Route, Switch, Redirect, withRouter } from "react-router-dom";
-import EditorPage from "./pages/editor";
 import DemoLayout from "./layout";
+import EditorPage from "./pages/editor";
+import UiPage from "./pages/ui";
 
 const Layout = withRouter(props => <DemoLayout {...props} />);
 
@@ -14,6 +15,7 @@ export default () => (
                 render={() => <Redirect to="/demo/editor" />}
             />
             <Route path="/demo/editor" component={EditorPage} />
+            <Route path="/demo/ui" component={UiPage} />
         </Switch>
     </Layout>
 );
