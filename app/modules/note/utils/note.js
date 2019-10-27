@@ -74,7 +74,7 @@ class NoteUtils {
         });
     }
 
-    getNoteById(uuid) {
+    getNoteByUuid(uuid) {
         const contentPath = this.fullPath(`output/Blog/${uuid}/content.json`);
         return new Promise((resolve, reject) => {
             try {
@@ -86,7 +86,7 @@ class NoteUtils {
         });
     }
 
-    updateNoteById(uuid, content) {
+    updateNoteByUuid(uuid, content) {
         const contentPath = this.fullPath(`output/Blog/${uuid}/content.json`);
         const metaPath = this.fullPath(`output/Blog/${uuid}/meta.json`);
         return new Promise((resolve, reject) => {
@@ -100,6 +100,23 @@ class NoteUtils {
             } catch (e) {
                 reject(new Error(`Update ${contentPath} failed.`));
             }
+        });
+    }
+
+    showInFinder(uuid) {
+        const noteDir = this.fullPath(`output/Blog/${uuid}`);
+        electron.shell.showItemInFolder(noteDir);
+    }
+
+    deleteNoteByUuid(uuid) {
+        const noteDir = this.fullPath(`output/Blog/${uuid}`);
+        return new Promise((resolve, reject) => {
+            const res = shell.rm("-rf", noteDir);
+            if (res.code !== 0) {
+                reject(new Error(`Delete ${noteDir} failed`));
+                return;
+            }
+            resolve(noteDir);
         });
     }
 }

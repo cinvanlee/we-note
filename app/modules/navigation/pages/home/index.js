@@ -1,5 +1,6 @@
 import React from "react";
-import { Row, Col, Card, Button } from "antd";
+import { Row, Col } from "antd";
+import { Card, Button } from "@/components";
 import { navigateTo } from "@/helper/utils";
 import data from "./data";
 import "./style.less";
@@ -12,20 +13,28 @@ class HomePage extends React.Component {
                     {data.map((card, i) => (
                         <Col xs={{ span: 12 }} lg={{ span: 8 }} key={i}>
                             <Card
-                                size='small'
+                                size="small"
                                 title={card.title}
                                 extra={
-                                    <Button type="link" onClick={this.openMultiSites.bind(this, card.links)}>
+                                    <Button
+                                        type="link"
+                                        onClick={this.openMultiSites.bind(this, card.links)}
+                                    >
                                         一键打开
                                     </Button>
                                 }
-                                bodyStyle={{ minHeight: 200 }}
                             >
-                                {card.links.map((link, linkIndex) => (
-                                    <Button key={linkIndex} type="link" onClick={this.openSite.bind(this, link)}>
-                                        {link.title}
-                                    </Button>
-                                ))}
+                                <div className="site-links">
+                                    {card.links.map((link, linkIndex) => (
+                                        <a
+                                            className='site-link'
+                                            key={linkIndex}
+                                            onClick={this.openSite.bind(this, link)}
+                                        >
+                                            {link.title}
+                                        </a>
+                                    ))}
+                                </div>
                             </Card>
                         </Col>
                     ))}

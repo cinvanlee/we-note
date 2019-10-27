@@ -1,17 +1,17 @@
 import React from "react";
 import "./style.less";
 
-class MdEditorPage extends React.Component {
+class AceEditorPage extends React.Component {
     componentDidMount() {
     }
 
     render() {
         return (
-            <div className="demo-md-editor-page">
+            <div className="demo-ace-editor-page">
                 <div id="MdEditorArea"></div>
             </div>
         );
     }
 }
 
-export default MdEditorPage;
+export default AceEditorPage;

@@ -1,9 +1,7 @@
 import React from "react";
-import { Icon } from "antd";
-import moment from "moment";
-import classnames from "classnames";
-import ReactQuill from "react-quill";
 import _ from "lodash";
+import Notebook from "./Notebook";
+import Editor from "./Editor";
 import noteUtil from "../../utils/note";
 import "./style.less";
 
@@ -11,149 +9,79 @@ class HomePage extends React.Component {
     state = {
         notes: [],
 
-        selectedNoteId: null,
+        activatedUuid: null,
 
-        noteInfo: {},
-
-        log: ""
+        noteInfo: {
+            title: "",
+            content: "",
+            created_at: 0,
+            updated_at: 0
+        }
     };
-
-    modules = {
-        toolbar: [
-            [{ header: [1, 2, false] }],
-            ["bold", "italic", "underline", "strike", "blockquote"],
-            [{ list: "ordered" }, { list: "bullet" }, { indent: "-1" }, { indent: "+1" }],
-            ["link", "image"],
-            ["clean"]
-        ]
-    };
-
-    formats = [
-        "header",
-        "bold",
-        "italic",
-        "underline",
-        "strike",
-        "blockquote",
-        "list",
-        "bullet",
-        "indent",
-        "link",
-        "image"
-    ];
 
     async componentDidMount() {
         this.fetchAllNotes();
     }
 
     render() {
-        const { notes, selectedNoteId, noteInfo, log } = this.state;
+        const { notes, activatedUuid, noteInfo } = this.state;
         return (
             <div className="note-home-page">
-                <div className="note">
-                    <div className="note-tools">
-                        <span className="add-note">
-                            <Icon type="plus" onClick={this.createNote} />
-                        </span>
-                    </div>
-                    <div className="note-list">
-                        {notes.map(note => {
-                            const date = this.formatTime(note.created_at);
-                            const cls = classnames({
-                                "note-item": true,
-                                active: note.uuid === selectedNoteId
-                            });
-                            return (
-                                <div key={note.uuid} className={cls} onClick={this.selectNote.bind(this, note.uuid)}>
-                                    <div className="note-item__name ellipsis">{note.title}</div>
-                                    <div className="note-item__date">{date}</div>
-                                </div>
-                            );
-                        })}
-                    </div>
-                </div>
-                {selectedNoteId ? (
-                    <div className="editor">
-                        <div className="editor-meta">
-                            <span>Created: {this.formatTime(noteInfo.created_at)}</span>
-                            <span>Updated: {this.formatTime(noteInfo.created_at)}</span>
-                        </div>
-                        <div className="editor-area">
-                            <div className="editor-area__inner">
-                                <div className="editor-title">
-                                    <input type="text" value={noteInfo.title} onChange={this.handleTitleChange} />
-                                </div>
-                                <ReactQuill
-                                    theme="snow"
-                                    className="rich-editor"
-                                    modules={this.modules}
-                                    formats={this.formats}
-                                    value={noteInfo.content}
-                                    onChange={this.handleEditorChange}
-                                />
-                            </div>
-                        </div>
-                        <div className="editor-tools">{log}</div>
-                    </div>
-                ) : (
-                    <div className="editor editor--empty">
-                        <span>No Note Selected</span>
-                    </div>
-                )}
+                <Notebook
+                    activatedUuid={activatedUuid}
+                    notes={notes}
+                    onCreate={this.handleNoteCreate}
+                    onSelect={this.handleNoteSelect}
+                    onContextMenu={this.handleCtxMenu}
+                />
+
+                <Editor
+                    activatedUuid={activatedUuid}
+                    noteInfo={noteInfo}
+                    onChange={this.handleNoteChange}
+                />
             </div>
         );
     }
 
-    formatTime = timestamp => {
-        return moment(timestamp).format("YYYY-MM-DD")
-    };
-
-    createNote = async () => {
-        await noteUtil.create();
-        this.fetchAllNotes();
-    };
-
     fetchAllNotes = async () => {
-        const notes = await noteUtil.listAll();
+        let notes = await noteUtil.listAll();
+        notes = notes.sort((a, b) => {
+            return b.created_at - a.created_at;
+        });
         await this.setState({ notes });
     };
 
-    selectNote = async noteId => {
-        const noteInfo = await noteUtil.getNoteById(noteId);
-        await this.setState({ selectedNoteId: noteId, noteInfo });
+    handleNoteCreate = async () => {
+        const created = await noteUtil.create();
+        await this.fetchAllNotes();
+        await this.handleNoteSelect(created.uuid);
     };
 
-    handleTitleChange = async evt => {
-        const { noteInfo } = this.state;
-        await this.setState({
-            log: "Saving...",
-            noteInfo: {
-                ...noteInfo,
-                title: evt.target.value
-            }
-        });
+    handleNoteSelect = async noteId => {
+        const noteInfo = await noteUtil.getNoteByUuid(noteId);
+        await this.setState({ activatedUuid: noteId, noteInfo });
+    };
+
+    handleNoteChange = async noteInfo => {
+        await this.setState({ noteInfo });
         this.saveNote();
     };
 
-    handleEditorChange = async content => {
-        const { noteInfo } = this.state;
-        await this.setState({
-            log: "Saving...",
-            noteInfo: {
-                ...noteInfo,
-                content
-            }
-        });
-        this.saveNote();
+    handleCtxMenu = async (action, uuid) => {
+        if (action === "show_in_finder") {
+            noteUtil.showInFinder(uuid);
+        }
+        if (action === 'delete_note') {
+            await noteUtil.deleteNoteByUuid(uuid);
+            await this.fetchAllNotes();
+        }
     };
 
     saveNote = _.debounce(async () => {
-        const { selectedNoteId, noteInfo } = this.state;
-        const t1 = +new Date();
-        await noteUtil.updateNoteById(selectedNoteId, noteInfo);
+        const { activatedUuid, noteInfo } = this.state;
+        await noteUtil.updateNoteByUuid(activatedUuid, noteInfo);
         await this.fetchAllNotes();
-        const t2 = +new Date();
-        await this.setState({ log: `Saved, spend ${t2 - t1}ms.` });
     }, 500);
 }
 
