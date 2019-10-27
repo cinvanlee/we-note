@@ -18,7 +18,7 @@ class Card extends React.Component {
                 })}
                 style={style}
             >
-                <div className="we-card-header">{title}</div>
+                {title && <div className="we-card-header">{title}</div>}
                 <div className="we-card-body">{children}</div>
             </div>
         );
