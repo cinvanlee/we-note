@@ -1,6 +1,7 @@
 const path = require("path");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const themes = require('./themes');
 
 const env = process.env.NODE_ENV;
 const __DEV__ = env === "development";
@@ -36,9 +37,7 @@ module.exports = {
                     {
                         loader: "less-loader",
                         options: {
-                            modifyVars: {
-                                "primary-color": "#009688"
-                            },
+                            modifyVars: themes,
                             javascriptEnabled: true
                         }
                     }

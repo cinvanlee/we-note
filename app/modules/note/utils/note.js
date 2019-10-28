@@ -4,12 +4,13 @@ import jsonfile from "jsonfile";
 import electron from "electron";
 import uuidv1 from "uuid/v1";
 import shell from "shelljs";
+import appUtil from "@/helper/app";
 
 class NoteUtils {
     appPath = electron.remote.app.getAppPath();
 
-    fullPath(_path) {
-        return path.join(this.appPath, _path);
+    getNotePath(_path) {
+        return path.join(appUtil.getAppDir(), 'NOTE', _path);
     }
 
     exists(_path) {
@@ -36,10 +37,10 @@ class NoteUtils {
             content: ""
         };
         return new Promise((resolve, reject) => {
-            const noteDir = this.fullPath(`output/Blog/${uuid}`);
-            const resourceDir = this.fullPath(`output/Blog/${uuid}/resources`);
-            const metaPath = this.fullPath(`output/Blog/${uuid}/meta.json`);
-            const contentPath = this.fullPath(`output/Blog/${uuid}/content.json`);
+            const noteDir = this.getNotePath(`Inbox/${uuid}`);
+            const resourceDir = this.getNotePath(`Inbox/${uuid}/resources`);
+            const metaPath = this.getNotePath(`Inbox/${uuid}/meta.json`);
+            const contentPath = this.getNotePath(`Inbox/${uuid}/content.json`);
 
             const mkdirRes = shell.mkdir("-p", [noteDir, resourceDir]);
             if (mkdirRes.code !== 0) {
@@ -59,7 +60,7 @@ class NoteUtils {
     }
 
     listAll() {
-        const noteDir = this.fullPath(`output/Blog`);
+        const noteDir = this.getNotePath(`Inbox`);
         return new Promise((resolve, reject) => {
             const lsRes = shell.ls("-d", `${noteDir}/*`);
             if (lsRes.code !== 0) {
@@ -75,7 +76,7 @@ class NoteUtils {
     }
 
     getNoteByUuid(uuid) {
-        const contentPath = this.fullPath(`output/Blog/${uuid}/content.json`);
+        const contentPath = this.getNotePath(`Inbox/${uuid}/content.json`);
         return new Promise((resolve, reject) => {
             try {
                 const content = jsonfile.readFileSync(contentPath);
@@ -87,8 +88,8 @@ class NoteUtils {
     }
 
     updateNoteByUuid(uuid, content) {
-        const contentPath = this.fullPath(`output/Blog/${uuid}/content.json`);
-        const metaPath = this.fullPath(`output/Blog/${uuid}/meta.json`);
+        const contentPath = this.getNotePath(`Inbox/${uuid}/content.json`);
+        const metaPath = this.getNotePath(`Inbox/${uuid}/meta.json`);
         return new Promise((resolve, reject) => {
             try {
                 const meta = jsonfile.readFileSync(metaPath);
@@ -104,12 +105,12 @@ class NoteUtils {
     }
 
     showInFinder(uuid) {
-        const noteDir = this.fullPath(`output/Blog/${uuid}`);
+        const noteDir = this.getNotePath(`Inbox/${uuid}`);
         electron.shell.showItemInFolder(noteDir);
     }
 
     deleteNoteByUuid(uuid) {
-        const noteDir = this.fullPath(`output/Blog/${uuid}`);
+        const noteDir = this.getNotePath(`Inbox/${uuid}`);
         return new Promise((resolve, reject) => {
             const res = shell.rm("-rf", noteDir);
             if (res.code !== 0) {
@@ -118,6 +119,14 @@ class NoteUtils {
             }
             resolve(noteDir);
         });
+    }
+
+    deployToHexo() {
+        // 1. 读取 Inbox 下所有的笔记
+        // 2. 解析笔记, 输出为 hexo 格式的 md 文件到 _posts 目录下
+        // 3. 移动 _posts 到 hexo 路径下
+        // 4. 执行 after script 里的部署任务
+        // 5. 抓取执行结果
     }
 }
 

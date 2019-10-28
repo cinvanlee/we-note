@@ -16,8 +16,8 @@ class SideMenu extends React.Component {
                 icon: "book"
             },
             {
-                name: "Demo",
-                url: "/demo",
+                name: "Debug",
+                url: "/debug",
                 icon: "bug"
             },
             {

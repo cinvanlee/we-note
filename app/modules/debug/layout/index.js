@@ -10,8 +10,7 @@ class Layout extends React.Component {
         this.state = {
             selectKey: props.location.pathname,
             menus: [
-                { name: "UI", url: "/demo/ui" },
-                { name: "Ace Editor", url: "/demo/ace-editor" }
+                { name: "Electron", url: "/debug/electron" },
             ]
         };
     }

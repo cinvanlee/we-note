@@ -1,5 +1,5 @@
 import React from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import AceEditor from "react-ace";
 import moment from "moment";
 
@@ -47,6 +47,7 @@ class Editor extends React.Component {
                                 mode="markdown"
                                 theme="github"
                                 onChange={this.handleEditorChange}
+                                onPaste={this.handleEditorPaste}
                             />
                         </div>
                     </div>
@@ -72,6 +73,17 @@ class Editor extends React.Component {
             content
         });
     };
+
+    handleEditorPaste = text => {
+        console.log(text);
+    };
+
+    savePastedImage = () => {
+        // https://ourcodeworld.com/articles/read/491/how-to-retrieve-images-from-the-clipboard-with-javascript-in-the-browser
+        // 1. 监听 clipboard
+        // 2. 保存图片到本地
+        // 3. 修改 note
+    }
 }
 
 export default Editor;
