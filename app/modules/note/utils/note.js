@@ -32,7 +32,7 @@ class NoteUtils {
         };
         const defaultContent = {
             title: defaultTitle,
-            type: "text",
+            type: "markdown",
             content: ""
         };
         return new Promise((resolve, reject) => {
