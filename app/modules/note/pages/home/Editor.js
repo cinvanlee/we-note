@@ -1,12 +1,16 @@
 import React from "react";
-import PropTypes from "prop-types";
+import PropTypes, { func } from "prop-types";
 import AceEditor from "react-ace";
-import { message } from "antd";
+import classnames from "classnames";
+import * as MarkdownIt from "markdown-it";
+import { message, Button, Icon, Row, Col, Dropdown, Menu } from "antd";
 import moment from "moment";
 import noteUtil from "@/modules/note/utils/note";
 
 import "ace-builds/src-noconflict/mode-markdown";
 import "ace-builds/src-noconflict/theme-github";
+
+const ButtonGroup = Button.Group;
 
 class Editor extends React.Component {
     static defaultProps = {
@@ -18,17 +22,20 @@ class Editor extends React.Component {
     constructor(props) {
         super(props);
         this.editor = null;
+        this.md = new MarkdownIt();
         this.state = {
-            cursor: null
+            editorFocus: false,
+            mode: "edit",
+            previewHTML: ""
         };
     }
 
     componentDidMount() {
-        console.log(this.editor.insert);
         window.addEventListener("paste", this.pasteListener, false);
     }
 
     render() {
+        const { mode, previewHTML } = this.state;
         const { activatedUuid, noteInfo } = this.props;
         return (
             <div className="editor">
@@ -39,12 +46,66 @@ class Editor extends React.Component {
                 )}
 
                 <div className="editor-meta">
-                    <span>Created: {moment(noteInfo.created_at).format("YYYY-MM-DD")}</span>
-                    <span>Updated: {moment(noteInfo.updated_at).format("YYYY-MM-DD")}</span>
+                    <Row>
+                        <Col span={8}>
+                            <Dropdown
+                                overlay={
+                                    <Menu>
+                                        <Menu.Item key="1">
+                                            <span style={{ marginRight: 5 }}>⌘1</span>Single Panel
+                                        </Menu.Item>
+                                        <Menu.Item key="2">
+                                            <span style={{ marginRight: 5 }}>⌘2</span>Two Panel
+                                        </Menu.Item>
+                                        <Menu.Item key="3">
+                                            <span style={{ marginRight: 5 }}>⌘3</span>Three Panel
+                                        </Menu.Item>
+                                    </Menu>
+                                }
+                                trigger={["click"]}
+                            >
+                                <Icon type="menu" />
+                            </Dropdown>
+                        </Col>
+                        <Col span={8} style={{ textAlign: "center" }}>
+                            <ButtonGroup size="mini">
+                                <Button
+                                    type={mode === "edit" ? "primary" : ""}
+                                    value="edit"
+                                    onClick={this.handleModeChange.bind(this, "edit")}
+                                >
+                                    <Icon type="edit" />
+                                </Button>
+                                <Button
+                                    type={mode === "preview" ? "primary" : ""}
+                                    value="preview"
+                                    onClick={this.handleModeChange.bind(this, "preview")}
+                                >
+                                    <Icon type="eye" />
+                                </Button>
+                                <Button
+                                    type={mode === "multiple" ? "primary" : ""}
+                                    value="multiple"
+                                    onClick={this.handleModeChange.bind(this, "multiple")}
+                                >
+                                    <Icon type="reconciliation" />
+                                </Button>
+                            </ButtonGroup>
+                        </Col>
+                        <Col span={8} style={{ textAlign: "right" }}>
+                            <span>Created: {moment(noteInfo.created_at).format("YYYY-MM-DD")}</span>
+                            <span>Updated: {moment(noteInfo.updated_at).format("YYYY-MM-DD")}</span>
+                        </Col>
+                    </Row>
                 </div>
 
                 <div className="editor-bd">
-                    <div className="editor-bd__inner">
+                    <div
+                        className={classnames({
+                            editor__main: true,
+                            hide: mode === "preview"
+                        })}
+                    >
                         <div className="editor-title">
                             <input
                                 type="text"
@@ -64,9 +125,21 @@ class Editor extends React.Component {
                                 theme="github"
                                 onChange={this.handleEditorChange}
                                 onCursorChange={this.handleCursorChange}
+                                onFocus={this.handleEditorFocus}
+                                onBlur={this.handleEditorBlur}
                             />
                         </div>
                     </div>
+                    <div
+                        className={classnames({
+                            editor__preview: true,
+                            "markdown-body": true,
+                            hide: mode === "edit"
+                        })}
+                        dangerouslySetInnerHTML={{
+                            __html: previewHTML
+                        }}
+                    />
                 </div>
 
                 <div className="editor-tools"></div>
@@ -101,9 +174,9 @@ class Editor extends React.Component {
 
     pasteListener = async evt => {
         const { activatedUuid } = this.props;
-        const { cursor } = this.state;
+        const { editorFocus } = this.state;
         const items = evt.clipboardData.items;
-        if (!cursor) {
+        if (!editorFocus) {
             return;
         }
         if (!evt.clipboardData) {
@@ -125,6 +198,26 @@ class Editor extends React.Component {
                 break;
             }
         }
+    };
+
+    handleEditorFocus = () => {
+        this.setState({ editorFocus: true });
+    };
+
+    handleEditorBlur = () => {
+        this.setState({ editorFocus: false });
+    };
+
+    handleModeChange = async mode => {
+        const { activatedUuid, noteInfo } = this.props;
+        this.md.normalizeLink = text => {
+            return noteUtil.getAssetFullPath(activatedUuid, text);
+        };
+        this.md.validateLink = function() {
+            return true;
+        };
+        const previewHTML = this.md.render(noteInfo.content);
+        this.setState({ mode, previewHTML });
     };
 }
 

@@ -122,7 +122,8 @@ class NoteUtils {
     }
 
     saveNoteImage(uuid, imgBlob) {
-        const imgPath = this.getNotePath(`Inbox/${uuid}/resources/${uuidv1()}.png`);
+        const imgUuid = uuidv1();
+        const imgPath = this.getNotePath(`Inbox/${uuid}/resources/${imgUuid}.png`);
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
             reader.readAsDataURL(imgBlob);
@@ -133,10 +134,15 @@ class NoteUtils {
                     if (err) {
                         reject(`Save ${imgPath} failed.`);
                     }
-                    resolve(`./resources/${uuidv1()}.png`);
+                    resolve(`./resources/${imgUuid}.png`);
                 });
             };
         });
+    }
+
+    getAssetFullPath(uuid, assetPath) {
+        const noteDir = this.getNotePath(`Inbox/${uuid}`);
+        return `file://${path.join(noteDir, assetPath)}`;
     }
 
     deployToHexo() {

@@ -12,7 +12,8 @@ function createMainWindow() {
         height: 900,
         webPreferences: {
             nodeIntegration: true,
-            webviewTag: true
+            webviewTag: true,
+            webSecurity: false
         }
     });
 

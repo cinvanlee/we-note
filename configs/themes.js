@@ -7,5 +7,6 @@ module.exports = {
     "warning-color": "#ffb800",
     "error-color": "#ff5722",
     "border-radius-base": "2px",
-    "border-radius-sm": "1px"
+    "border-radius-sm": "1px",
+    "wave-animation-width": 0
 };
