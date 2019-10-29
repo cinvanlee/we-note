@@ -10,7 +10,7 @@ class NoteUtils {
     appPath = electron.remote.app.getAppPath();
 
     getNotePath(_path) {
-        return path.join(appUtil.getAppDir(), 'NOTE', _path);
+        return path.join(appUtil.getAppDir(), "NOTE", _path);
     }
 
     exists(_path) {
@@ -118,6 +118,24 @@ class NoteUtils {
                 return;
             }
             resolve(noteDir);
+        });
+    }
+
+    saveNoteImage(uuid, imgBlob) {
+        const imgPath = this.getNotePath(`Inbox/${uuid}/resources/${uuidv1()}.png`);
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(imgBlob);
+            reader.onload = event => {
+                const base64 = event.target.result;
+                const file = base64.replace(/^data:image\/\w+;base64,/, "");
+                fs.writeFile(imgPath, file, { encoding: "base64" }, function(err) {
+                    if (err) {
+                        reject(`Save ${imgPath} failed.`);
+                    }
+                    resolve(`./resources/${uuidv1()}.png`);
+                });
+            };
         });
     }
 

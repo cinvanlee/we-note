@@ -72,7 +72,7 @@ class HomePage extends React.Component {
         if (action === "show_in_finder") {
             noteUtil.showInFinder(uuid);
         }
-        if (action === 'delete_note') {
+        if (action === "delete_note") {
             await noteUtil.deleteNoteByUuid(uuid);
             await this.fetchAllNotes();
         }

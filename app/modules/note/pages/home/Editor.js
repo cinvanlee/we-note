@@ -1,7 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import AceEditor from "react-ace";
+import { message } from "antd";
 import moment from "moment";
+import noteUtil from "@/modules/note/utils/note";
 
 import "ace-builds/src-noconflict/mode-markdown";
 import "ace-builds/src-noconflict/theme-github";
@@ -12,6 +14,19 @@ class Editor extends React.Component {
         noteInfo: PropTypes.object,
         onChange: () => {}
     };
+
+    constructor(props) {
+        super(props);
+        this.editor = null;
+        this.state = {
+            cursor: null
+        };
+    }
+
+    componentDidMount() {
+        console.log(this.editor.insert);
+        window.addEventListener("paste", this.pasteListener, false);
+    }
 
     render() {
         const { activatedUuid, noteInfo } = this.props;
@@ -40,6 +55,7 @@ class Editor extends React.Component {
                         </div>
                         <div className="editor-ace">
                             <AceEditor
+                                onLoad={editor => (this.editor = editor)}
                                 width="100%"
                                 height="100%"
                                 value={noteInfo.content}
@@ -47,7 +63,7 @@ class Editor extends React.Component {
                                 mode="markdown"
                                 theme="github"
                                 onChange={this.handleEditorChange}
-                                onPaste={this.handleEditorPaste}
+                                onCursorChange={this.handleCursorChange}
                             />
                         </div>
                     </div>
@@ -74,16 +90,42 @@ class Editor extends React.Component {
         });
     };
 
-    handleEditorPaste = text => {
-        console.log(text);
+    handleCursorChange = ({ cursor }) => {
+        this.setState({
+            cursor: {
+                row: cursor.row,
+                column: cursor.column
+            }
+        });
     };
 
-    savePastedImage = () => {
-        // https://ourcodeworld.com/articles/read/491/how-to-retrieve-images-from-the-clipboard-with-javascript-in-the-browser
-        // 1. 监听 clipboard
-        // 2. 保存图片到本地
-        // 3. 修改 note
-    }
+    pasteListener = async evt => {
+        const { activatedUuid } = this.props;
+        const { cursor } = this.state;
+        const items = evt.clipboardData.items;
+        if (!cursor) {
+            return;
+        }
+        if (!evt.clipboardData) {
+            return;
+        }
+        if (!items) {
+            return;
+        }
+        for (let i = 0; i < items.length; i++) {
+            if (items[i].type.indexOf("image") === -1) {
+                continue;
+            }
+            try {
+                const blob = items[i].getAsFile();
+                const imgUrl = await noteUtil.saveNoteImage(activatedUuid, blob);
+                this.editor.insert(`\n\n![](${imgUrl})\n\n`);
+            } catch (e) {
+                message.error(e.message);
+                break;
+            }
+        }
+    };
 }
 
 export default Editor;
