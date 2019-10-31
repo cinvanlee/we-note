@@ -117,6 +117,7 @@
             flex: 1;
             padding: 0 15px;
             height: 100%;
+            border-right: 1px solid rgba(204, 204, 204, 1);
         }
 
         &__preview {
@@ -127,15 +128,16 @@
         }
 
         &-title {
-            padding: 5px 0 15px;
+            padding-top: 5px;
+            margin-bottom: 15px;
+            font-size: 16px;
+            border-bottom: 1px solid rgba(204, 204, 204, 1);
 
-            input {
+            input, .preview-title {
                 display: block;
                 width: 100%;
                 border: none;
-                border-bottom: 1px solid rgba(204, 204, 204, 1);
                 outline: none;
-                font-size: 16px;
                 padding: 10px 10px;
             }
         }

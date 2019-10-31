@@ -1,5 +1,5 @@
 import React from "react";
-import PropTypes, { func } from "prop-types";
+import PropTypes from "prop-types";
 import AceEditor from "react-ace";
 import classnames from "classnames";
 import * as MarkdownIt from "markdown-it";
@@ -116,10 +116,13 @@ class Editor extends React.Component {
                         </div>
                         <div className="editor-ace">
                             <AceEditor
+                                wrapEnabled
+                                showGutter
+                                value={noteInfo.content}
                                 onLoad={editor => (this.editor = editor)}
+                                showPrintMargin={false}
                                 width="100%"
                                 height="100%"
-                                value={noteInfo.content}
                                 name="ACE_EDITOR"
                                 mode="markdown"
                                 theme="github"
@@ -136,10 +139,16 @@ class Editor extends React.Component {
                             "markdown-body": true,
                             hide: mode === "edit"
                         })}
-                        dangerouslySetInnerHTML={{
-                            __html: previewHTML
-                        }}
-                    />
+                    >
+                        <div className="editor-title">
+                            <div className="preview-title">{noteInfo.title}</div>
+                        </div>
+                        <div
+                            dangerouslySetInnerHTML={{
+                                __html: previewHTML
+                            }}
+                        />
+                    </div>
                 </div>
 
                 <div className="editor-tools"></div>
@@ -192,7 +201,7 @@ class Editor extends React.Component {
             try {
                 const blob = items[i].getAsFile();
                 const imgUrl = await noteUtil.saveNoteImage(activatedUuid, blob);
-                this.editor.insert(`\n\n![](${imgUrl})\n\n`);
+                this.editor.insert(`\n![](${imgUrl})\n`);
             } catch (e) {
                 message.error(e.message);
                 break;
