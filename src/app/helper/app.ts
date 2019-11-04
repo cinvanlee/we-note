@@ -4,10 +4,6 @@ const remote = window.require('electron').remote;
 const shell = window.require('shelljs');
 const jf = window.require('jsonfile');
 
-const DefaultConfig = [
-
-];
-
 class AppUtil {
     getAppPath() {
         return remote.app.getAppPath();

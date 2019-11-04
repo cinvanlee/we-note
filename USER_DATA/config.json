@@ -1,1 +1,21 @@
-{"name":"we-note","version":"0.0.1","theme":"default","language":"en-US","firstRun":true,"createdAt":1572873351450,"updateAt":1572873351450,"hexo":{"enable":true,"path":"TEST_HEXO_PATH"},"sideMenuList":[{"name":"笔记本","url":"/note","icon":"book"}],"tabBarList":[]}
+{
+    "name": "we-note",
+    "version": "0.0.1",
+    "theme": "default",
+    "language": "en-US",
+    "firstRun": true,
+    "createdAt": 1572873351450,
+    "updateAt": 1572873351450,
+    "hexo": {
+        "enable": true,
+        "path": "TEST_HEXO_PATH"
+    },
+    "sideMenuList": [
+        {
+            "name": "笔记本",
+            "url": "/note",
+            "icon": "book"
+        }
+    ],
+    "tabBarList": []
+}
