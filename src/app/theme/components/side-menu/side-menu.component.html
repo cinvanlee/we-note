@@ -1,0 +1,13 @@
+<div class="side-menu">
+    <a *ngFor="let menu of sideMenuList"
+       [routerLink]="menu.url"
+       routerLinkActive="active"
+       [ngClass]="{
+           'side-menu-item': true,
+           'side-menu-item--bottom': menu.position === 'bottom'
+       }"
+    >
+        <i class="side-menu-item-icon" nz-icon [nzType]="menu.icon" nzTheme="outline"></i>
+        <div class="side-menu-item-title">{{menu.name}}</div>
+    </a>
+</div>

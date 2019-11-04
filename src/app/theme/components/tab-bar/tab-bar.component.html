@@ -1,0 +1,17 @@
+<div class="tabbar">
+    <div class="tabbar-inner">
+        <div class="tabs">
+            <div *ngFor="let tab of tabs"
+                 [ngClass]="{
+                    'tab': true,
+                    'active': tab.active
+                 }"
+            >
+                {{tab.name}}
+                <span class="tab-close">
+                    <i nz-icon nzType="close" nzTheme="outline"></i>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

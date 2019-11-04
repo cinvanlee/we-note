@@ -1,7 +1,6 @@
 /**
  * Custom angular webpack configuration
  */
-
 module.exports = (config, options) => {
     config.target = 'electron-renderer';
     if (options.customWebpackConfig.target) {

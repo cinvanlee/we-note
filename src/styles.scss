@@ -1,7 +1,29 @@
-/* You can add global styles to this file, and also import other style files */
-html, body {
-  margin: 0;
-  padding: 0;
+.theme-default {
+  .side-menu {
+    background: #20222a;
 
-  height: 100%;
+    &-item {
+      color: rgba(255, 255, 255, 0.7);
+
+      &.active {
+        color: #fff;
+        background: #009688;
+      }
+    }
+  }
+
+  .tabbar {
+    background: #20222a;
+
+    .tabs {
+      .tab {
+        color: rgb(193, 193, 193);
+
+        &.active {
+          color: #000;
+          background: #f6f6f6;
+        }
+      }
+    }
+  }
 }
