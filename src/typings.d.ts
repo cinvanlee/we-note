@@ -11,3 +11,5 @@ interface Window {
     process: any;
     require: any;
 }
+
+declare var ace: any;
