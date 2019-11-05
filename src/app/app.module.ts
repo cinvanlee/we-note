@@ -6,7 +6,6 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgZorroAntdModule, NZ_I18N, zh_CN } from 'ng-zorro-antd';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 
@@ -33,7 +32,6 @@ export function HttpLoaderFactory(http: HttpClient) {
         SharedModule,
         AppRoutingModule,
         BrowserAnimationsModule,
-        NgZorroAntdModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
@@ -42,9 +40,7 @@ export function HttpLoaderFactory(http: HttpClient) {
             }
         })
     ],
-    providers: [
-        {provide: NZ_I18N, useValue: zh_CN}
-    ],
+    providers: [],
     bootstrap: [AppComponent]
 })
 export class AppModule {
