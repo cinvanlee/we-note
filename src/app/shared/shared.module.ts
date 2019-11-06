@@ -1,15 +1,31 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { TranslateModule } from '@ngx-translate/core';
-
-import { PageNotFoundComponent } from './components/';
-import { WebviewDirective } from './directives/';
 import { FormsModule } from '@angular/forms';
 
+import { TranslateModule } from '@ngx-translate/core';
+import { MatButtonModule, MatIconModule } from '@angular/material';
+
+import { WebviewDirective } from './directives/';
+
+const materialModules = [
+    MatButtonModule,
+    MatIconModule
+];
+
 @NgModule({
-  declarations: [PageNotFoundComponent, WebviewDirective],
-  imports: [CommonModule, TranslateModule, FormsModule],
-  exports: [TranslateModule, WebviewDirective, FormsModule]
+    declarations: [WebviewDirective],
+    imports: [
+        CommonModule,
+        TranslateModule,
+        FormsModule,
+        ...materialModules
+    ],
+    exports: [
+        TranslateModule,
+        WebviewDirective,
+        FormsModule,
+        ...materialModules
+    ]
 })
-export class SharedModule {}
+export class SharedModule {
+}

@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { PageNotFoundComponent } from './shared/components';
+import { NotFoundComponent } from './core/pages';
 
 const routes: Routes = [
-    {path: '', loadChildren: './pages/pages.module#PagesModule'},
-    {path: '**', component: PageNotFoundComponent}
+    { path: '', loadChildren: './core/core.module#CoreModule' },
+    { path: '**', component: NotFoundComponent }
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes, {useHash: true})],
-    exports: [RouterModule]
+    imports: [ RouterModule.forRoot(routes, { useHash: true }) ],
+    exports: [ RouterModule ]
 })
 export class AppRoutingModule {
 }
