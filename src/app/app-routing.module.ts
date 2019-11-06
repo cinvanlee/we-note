@@ -4,6 +4,7 @@ import { NotFoundComponent } from './core/pages';
 
 const routes: Routes = [
     { path: '', loadChildren: './core/core.module#CoreModule' },
+    { path: 'note', loadChildren: './note/note.module#NoteModule' },
     { path: '**', component: NotFoundComponent }
 ];
 
