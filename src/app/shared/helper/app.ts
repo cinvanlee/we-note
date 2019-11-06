@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import * as pkg from '../../../package.json';
+import * as pkg from '../../../../package.json';
 
 const remote = window.require('electron').remote;
 const shell = window.require('shelljs');
