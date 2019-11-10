@@ -11,6 +11,7 @@ const routes: Routes = [
             { path: '', loadChildren: './core/core.module#CoreModule' },
             { path: 'note', loadChildren: './note/note.module#NoteModule' },
             { path: 'debug', loadChildren: './debug/debug.module#DebugModule' },
+            { path: 'nav-hub', loadChildren: './nav-hub/nav-hub.module#NavHubModule' },
         ],
     },
     { path: '**', component: NotFoundComponent }
