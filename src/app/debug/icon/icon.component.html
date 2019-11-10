@@ -1,0 +1,32 @@
+<div class="page-content">
+    <div class="page-header">
+        <h1 class="page-header-title">图标</h1>
+        <nav class="breadcrumb">
+            <ul>
+                <li>
+                    <a href="">Debug</a>
+                </li>
+                <li>
+                    <mat-icon>chevron_right</mat-icon>
+                    <a href="">Icon</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <ng-container *ngFor="let group of icons|keyvalue">
+        <mat-card>
+            <mat-card-title class="card-title">
+                {{group.key}}
+            </mat-card-title>
+            <mat-card-content>
+                <div class="icon-box">
+                    <div class="icon-item" *ngFor="let icon of group.value">
+                        <mat-icon>{{icon}}</mat-icon>
+                        <p>{{icon}}</p>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </ng-container>
+</div>

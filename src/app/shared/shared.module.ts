@@ -3,14 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { TranslateModule } from '@ngx-translate/core';
-import { MatButtonModule, MatIconModule } from '@angular/material';
-
+import { MaterialModules } from './material.module';
 import { WebviewDirective } from './directives/';
-
-const materialModules = [
-    MatButtonModule,
-    MatIconModule
-];
 
 @NgModule({
     declarations: [WebviewDirective],
@@ -18,13 +12,13 @@ const materialModules = [
         CommonModule,
         TranslateModule,
         FormsModule,
-        ...materialModules
+        ...MaterialModules
     ],
     exports: [
         TranslateModule,
         WebviewDirective,
         FormsModule,
-        ...materialModules
+        ...MaterialModules
     ]
 })
 export class SharedModule {

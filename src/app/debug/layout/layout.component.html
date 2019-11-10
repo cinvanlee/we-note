@@ -1,0 +1,18 @@
+<div class="layout">
+    <div class="layout-left">
+        <div class="wn-menu">
+            <a mat-button
+               [routerLink]="menu.path"
+               routerLinkActive="active"
+               class="wn-menu-item"
+               *ngFor="let menu of menus"
+            >
+                <mat-icon class="wn-menu-item-icon">{{menu.icon}}</mat-icon>
+                <span>{{menu.name}}</span>
+            </a>
+        </div>
+    </div>
+    <div class="layout-main">
+        <router-outlet></router-outlet>
+    </div>
+</div>

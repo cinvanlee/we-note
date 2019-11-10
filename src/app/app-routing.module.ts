@@ -1,10 +1,18 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { NotFoundComponent } from './core/pages';
+import { DefaultComponent } from './core/layouts';
 
 const routes: Routes = [
-    { path: '', loadChildren: './core/core.module#CoreModule' },
-    { path: 'note', loadChildren: './note/note.module#NoteModule' },
+    {
+        path: '',
+        component: DefaultComponent,
+        children: [
+            { path: '', loadChildren: './core/core.module#CoreModule' },
+            { path: 'note', loadChildren: './note/note.module#NoteModule' },
+            { path: 'debug', loadChildren: './debug/debug.module#DebugModule' },
+        ],
+    },
     { path: '**', component: NotFoundComponent }
 ];
 
