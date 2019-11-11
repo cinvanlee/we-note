@@ -7,8 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LayoutComponent implements OnInit {
     menus = [
-        { path: '/debug/icon', name: '图标', icon: 'face' },
-        { path: '/debug/material', name: 'Material', icon: 'palette' }
+        { path: '/debug/icon', name: 'Icon', icon: 'face' },
+        { path: '/debug/material', name: 'Material', icon: 'palette' },
+        { path: '/debug/dialog', name: 'Dialog', icon: 'palette' }
     ];
 
     constructor() {
