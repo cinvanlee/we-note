@@ -1,7 +1,7 @@
 <div class="layout">
     <div class="layout-left">
         <a routerLink="/" class="app-name">
-            <img src="/assets/logo.svg" alt="">
+            <img src="/assets/logo.svg" alt="" />
         </a>
 
         <a class="app-module" routerLink="/debug" routerLinkActive="active">
@@ -14,32 +14,39 @@
             <mat-icon>book</mat-icon>
         </a>
 
-        <a class="app-module setting-module" routerLink="/setting" routerLinkActive="active">
+        <a
+            class="app-module setting-module"
+            routerLink="/setting"
+            routerLinkActive="active"
+        >
             <mat-icon>settings</mat-icon>
         </a>
     </div>
     <div class="layout-main">
         <div class="layout-main-tabs">
-            <a mat-button
-               class="tab"
-               routerLink="/debug/icon"
-               routerLinkActive="active"
+            <a
+                mat-button
+                class="tab"
+                routerLink="/debug/icon"
+                routerLinkActive="active"
             >
                 <span>图标</span>
                 <mat-icon>clear</mat-icon>
             </a>
-            <a mat-button
-               class="tab"
-               routerLink="/debug/material"
-               routerLinkActive="active"
+            <a
+                mat-button
+                class="tab"
+                routerLink="/debug/material"
+                routerLinkActive="active"
             >
                 <span>Material</span>
                 <mat-icon>clear</mat-icon>
             </a>
-            <a mat-button
-               class="tab"
-               routerLink="/setting"
-               routerLinkActive="active"
+            <a
+                mat-button
+                class="tab"
+                routerLink="/setting"
+                routerLinkActive="active"
             >
                 <span>设置</span>
                 <mat-icon>clear</mat-icon>

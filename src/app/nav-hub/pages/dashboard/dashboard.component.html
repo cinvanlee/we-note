@@ -1,10 +1,12 @@
 <div class="nav">
     <div *ngFor="let block of sites" class="nav-item">
         <mat-card>
-            <mat-card-title class="card-title">{{block.title}}</mat-card-title>
+            <mat-card-title class="card-title">{{
+                block.title
+            }}</mat-card-title>
             <mat-card-content>
                 <a mat-button *ngFor="let site of block.links">
-                    {{site.title}}
+                    {{ site.title }}
                 </a>
             </mat-card-content>
         </mat-card>

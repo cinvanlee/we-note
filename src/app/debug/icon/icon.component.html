@@ -14,16 +14,16 @@
         </nav>
     </div>
 
-    <ng-container *ngFor="let group of icons|keyvalue">
+    <ng-container *ngFor="let group of icons | keyvalue">
         <mat-card>
             <mat-card-title class="card-title">
-                {{group.key}}
+                {{ group.key }}
             </mat-card-title>
             <mat-card-content>
                 <div class="icon-box">
                     <div class="icon-item" *ngFor="let icon of group.value">
-                        <mat-icon>{{icon}}</mat-icon>
-                        <p>{{icon}}</p>
+                        <mat-icon>{{ icon }}</mat-icon>
+                        <p>{{ icon }}</p>
                     </div>
                 </div>
             </mat-card-content>
