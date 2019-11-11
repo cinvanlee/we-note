@@ -1,19 +1,14 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { CommonModule } from "@angular/common";
+import { NgModule } from "@angular/core";
+import { FormsModule } from "@angular/forms";
 
-import { TranslateModule } from '@ngx-translate/core';
-import { MaterialModules } from './material.module';
-import { WebviewDirective } from './directives/';
+import { TranslateModule } from "@ngx-translate/core";
+import { WebviewDirective } from "./directives/";
+import { MaterialModules } from "./material.module";
 
 @NgModule({
     declarations: [WebviewDirective],
-    imports: [
-        CommonModule,
-        TranslateModule,
-        FormsModule,
-        ...MaterialModules
-    ],
+    imports: [CommonModule, TranslateModule, FormsModule, ...MaterialModules],
     exports: [
         TranslateModule,
         WebviewDirective,
@@ -21,5 +16,4 @@ import { WebviewDirective } from './directives/';
         ...MaterialModules
     ]
 })
-export class SharedModule {
-}
+export class SharedModule {}

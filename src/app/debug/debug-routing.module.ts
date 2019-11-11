@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
+import { DialogComponent } from './dialog/dialog.component';
+import { IconComponent } from './icon/icon.component';
 import { LayoutComponent } from './layout/layout.component';
 import { MaterialComponent } from './material/material.component';
-import { IconComponent } from './icon/icon.component';
-import { DialogComponent } from './dialog/dialog.component';
 
 const routes: Routes = [
     {

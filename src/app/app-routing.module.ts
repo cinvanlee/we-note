@@ -1,25 +1,27 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { NotFoundComponent } from './core/pages';
-import { DefaultComponent } from './core/layouts';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { DefaultComponent } from "./core/layouts";
+import { NotFoundComponent } from "./core/pages";
 
 const routes: Routes = [
     {
-        path: '',
+        path: "",
         component: DefaultComponent,
         children: [
-            { path: '', loadChildren: './core/core.module#CoreModule' },
-            { path: 'note', loadChildren: './note/note.module#NoteModule' },
-            { path: 'debug', loadChildren: './debug/debug.module#DebugModule' },
-            { path: 'nav-hub', loadChildren: './nav-hub/nav-hub.module#NavHubModule' },
-        ],
+            { path: "", loadChildren: "./core/core.module#CoreModule" },
+            { path: "note", loadChildren: "./note/note.module#NoteModule" },
+            { path: "debug", loadChildren: "./debug/debug.module#DebugModule" },
+            {
+                path: "nav-hub",
+                loadChildren: "./nav-hub/nav-hub.module#NavHubModule"
+            }
+        ]
     },
-    { path: '**', component: NotFoundComponent }
+    { path: "**", component: NotFoundComponent }
 ];
 
 @NgModule({
-    imports: [ RouterModule.forRoot(routes, { useHash: true }) ],
-    exports: [ RouterModule ]
+    imports: [RouterModule.forRoot(routes, { useHash: true })],
+    exports: [RouterModule]
 })
-export class AppRoutingModule {
-}
+export class AppRoutingModule {}

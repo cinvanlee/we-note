@@ -1,9 +1,9 @@
-import * as _ from 'lodash';
-import * as pkg from '../../../../package.json';
+import * as _ from "lodash";
+import * as pkg from "../../../../package.json";
 
-const remote = window.require('electron').remote;
-const shell = window.require('shelljs');
-const jf = window.require('jsonfile');
+const remote = window.require("electron").remote;
+const shell = window.require("shelljs");
+const jf = window.require("jsonfile");
 
 class AppUtil {
     getAppPath() {
@@ -30,7 +30,7 @@ class AppUtil {
                 }
                 resolve(config);
             } catch (e) {
-                reject(new Error('Get app config failed.'));
+                reject(new Error("Get app config failed."));
             }
         });
     }
@@ -41,7 +41,7 @@ class AppUtil {
         // 判断是否需要初始化
         try {
             const cfg = await appUtil.getAppConfig();
-            if (cfg['version'] === pkg.version) {
+            if (cfg["version"] === pkg.version) {
                 return Promise.resolve(cfg);
             }
         } catch (e) {
@@ -51,29 +51,27 @@ class AppUtil {
         const config = {
             name: pkg.name,
             version: pkg.version,
-            theme: 'default',
+            theme: "default",
             language: appUtil.getAppLocale(),
             createdAt: +new Date(),
             updateAt: +new Date(),
-            sideMenuList: [
-                {'name': '笔记本', 'url': '/note', 'icon': 'book'}
-            ],
+            sideMenuList: [{ name: "笔记本", url: "/note", icon: "book" }],
             tabBarList: []
         };
         return new Promise((resolve, reject) => {
-            const res = shell.mkdir('-p', [
+            const res = shell.mkdir("-p", [
                 `${appDir}/NOTE`,
                 `${appDir}/NOTE/Inbox`,
                 `${appDir}/NOTE/Trash`
             ]);
             if (res.code !== 0) {
-                reject(new Error('Init app dir failed.'));
+                reject(new Error("Init app dir failed."));
             }
             try {
                 jf.writeFileSync(`${appDir}/config.json`, config);
                 resolve(config);
             } catch (e) {
-                reject(new Error('Init app config failed'));
+                reject(new Error("Init app config failed"));
             }
         });
     }

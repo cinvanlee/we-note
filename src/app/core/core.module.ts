@@ -1,11 +1,11 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule } from "@angular/common";
+import { NgModule } from "@angular/core";
 
-import { CoreRoutingModule } from './core-routing.module';
-import { SharedModule } from '../shared/shared.module';
-import { DefaultComponent } from './layouts';
-import { WelcomeComponent, NotFoundComponent } from './pages';
-import { SettingComponent } from './pages/setting/setting.component';
+import { SharedModule } from "../shared/shared.module";
+import { CoreRoutingModule } from "./core-routing.module";
+import { DefaultComponent } from "./layouts";
+import { NotFoundComponent, WelcomeComponent } from "./pages";
+import { SettingComponent } from "./pages/setting/setting.component";
 
 @NgModule({
     declarations: [
@@ -14,11 +14,6 @@ import { SettingComponent } from './pages/setting/setting.component';
         NotFoundComponent,
         SettingComponent
     ],
-    imports: [
-        CommonModule,
-        SharedModule,
-        CoreRoutingModule
-    ]
+    imports: [CommonModule, SharedModule, CoreRoutingModule]
 })
-export class CoreModule {
-}
+export class CoreModule {}

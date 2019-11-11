@@ -1,14 +1,11 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { EditorComponent } from './pages';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { EditorComponent } from "./pages";
 
-const routes: Routes = [
-    { path: 'editor', component: EditorComponent }
-];
+const routes: Routes = [{ path: "editor", component: EditorComponent }];
 
 @NgModule({
-    imports: [ RouterModule.forChild(routes) ],
-    exports: [ RouterModule ]
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule]
 })
-export class NoteRoutingModule {
-}
+export class NoteRoutingModule {}

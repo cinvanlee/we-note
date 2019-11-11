@@ -1,24 +1,23 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
 
-import { WelcomeComponent } from './pages';
-import { DefaultComponent } from './layouts';
-import { SettingComponent } from './pages/setting/setting.component';
+import { DefaultComponent } from "./layouts";
+import { WelcomeComponent } from "./pages";
+import { SettingComponent } from "./pages/setting/setting.component";
 
 const routes: Routes = [
     {
-        path: '',
+        path: "",
         component: DefaultComponent,
         children: [
-            { path: '', component: WelcomeComponent },
-            { path: 'setting', component: SettingComponent },
+            { path: "", component: WelcomeComponent },
+            { path: "setting", component: SettingComponent }
         ]
     }
 ];
 
 @NgModule({
-    imports: [ RouterModule.forChild(routes) ],
-    exports: [ RouterModule ]
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule]
 })
-export class CoreRoutingModule {
-}
+export class CoreRoutingModule {}
