@@ -10,8 +10,14 @@ const routes: Routes = [
         path: "",
         component: DefaultComponent,
         children: [
-            { path: "", component: WelcomeComponent },
-            { path: "setting", component: SettingComponent }
+            {
+                path: "",
+                component: WelcomeComponent
+            },
+            {
+                path: "setting",
+                component: SettingComponent
+            }
         ]
     }
 ];

@@ -1,2 +1,2 @@
 export * from "./electron/electron.service";
-export * from "./core/core.service";
+export * from "./tab/tab.service";
