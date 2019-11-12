@@ -8,6 +8,7 @@ import { WelcomeDialogComponent } from "./dialog/welcome-dialog/welcome-dialog.c
 import { IconComponent } from "./icon/icon.component";
 import { LayoutComponent } from "./layout/layout.component";
 import { MaterialComponent } from "./material/material.component";
+import { SubscribeServiceDataComponent } from './subscribe-service-data/subscribe-service-data.component';
 
 const COMPONENTS_DYNAMIC = [WelcomeDialogComponent];
 
@@ -17,7 +18,8 @@ const COMPONENTS_DYNAMIC = [WelcomeDialogComponent];
         LayoutComponent,
         IconComponent,
         DialogComponent,
-        ...COMPONENTS_DYNAMIC
+        ...COMPONENTS_DYNAMIC,
+        SubscribeServiceDataComponent
     ],
     imports: [CommonModule, SharedModule, DebugRoutingModule],
     entryComponents: [...COMPONENTS_DYNAMIC]

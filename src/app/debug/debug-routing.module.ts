@@ -4,6 +4,7 @@ import { DialogComponent } from "./dialog/dialog.component";
 import { IconComponent } from "./icon/icon.component";
 import { LayoutComponent } from "./layout/layout.component";
 import { MaterialComponent } from "./material/material.component";
+import { SubscribeServiceDataComponent } from "./subscribe-service-data/subscribe-service-data.component";
 
 const routes: Routes = [
     {
@@ -12,7 +13,11 @@ const routes: Routes = [
         children: [
             { path: "icon", component: IconComponent },
             { path: "material", component: MaterialComponent },
-            { path: "dialog", component: DialogComponent }
+            { path: "dialog", component: DialogComponent },
+            {
+                path: "subscribe-service-data",
+                component: SubscribeServiceDataComponent
+            }
         ]
     }
 ];
