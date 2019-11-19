@@ -4,7 +4,9 @@ import { DialogComponent } from "./dialog/dialog.component";
 import { IconComponent } from "./icon/icon.component";
 import { LayoutComponent } from "./layout/layout.component";
 import { MaterialComponent } from "./material/material.component";
+import { RxjsOperatorComponent } from "./rxjs-operator/rxjs-operator.component";
 import { SubscribeServiceDataComponent } from "./subscribe-service-data/subscribe-service-data.component";
+import { TodoComponent } from "./todo/todo.component";
 
 const routes: Routes = [
     {
@@ -17,7 +19,9 @@ const routes: Routes = [
             {
                 path: "subscribe-service-data",
                 component: SubscribeServiceDataComponent
-            }
+            },
+            { path: "rxjs-operator", component: RxjsOperatorComponent },
+            { path: "todo", component: TodoComponent }
         ]
     }
 ];

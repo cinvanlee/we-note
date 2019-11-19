@@ -8,18 +8,22 @@ import { WelcomeDialogComponent } from "./dialog/welcome-dialog/welcome-dialog.c
 import { IconComponent } from "./icon/icon.component";
 import { LayoutComponent } from "./layout/layout.component";
 import { MaterialComponent } from "./material/material.component";
-import { SubscribeServiceDataComponent } from './subscribe-service-data/subscribe-service-data.component';
+import { RxjsOperatorComponent } from "./rxjs-operator/rxjs-operator.component";
+import { SubscribeServiceDataComponent } from "./subscribe-service-data/subscribe-service-data.component";
+import { TodoComponent } from "./todo/todo.component";
 
 const COMPONENTS_DYNAMIC = [WelcomeDialogComponent];
 
 @NgModule({
     declarations: [
+        ...COMPONENTS_DYNAMIC,
         MaterialComponent,
         LayoutComponent,
         IconComponent,
         DialogComponent,
-        ...COMPONENTS_DYNAMIC,
-        SubscribeServiceDataComponent
+        SubscribeServiceDataComponent,
+        RxjsOperatorComponent,
+        TodoComponent
     ],
     imports: [CommonModule, SharedModule, DebugRoutingModule],
     entryComponents: [...COMPONENTS_DYNAMIC]
