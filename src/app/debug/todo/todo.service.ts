@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Observable, of } from "rxjs";
+import { BehaviorSubject } from "rxjs";
 
 interface ITodo {
     id: number;
@@ -11,33 +11,36 @@ interface ITodo {
     providedIn: "root"
 })
 export class TodoService {
-    public todo$: Observable<ITodo[]>;
-    private defaultTodo = [
-        {
-            id: +new Date(),
-            title: "Default",
-            completed: false
-        }
-    ];
+    public todos$ = new BehaviorSubject<ITodo[]>([]);
 
-    constructor() {
-        this.todo$ = of(this.defaultTodo);
-    }
-
-    public getAllTodos() {
-        return this.todo$;
+    public getTodos$() {
+        return this.todos$;
     }
 
     public addTodo(title) {
-        // 1. 直接操作源数据: defaultTodo ??
+        const todos$ = this.todos$.getValue();
+        const newTodo = {
+            id: +new Date(),
+            title,
+            completed: false
+        };
+        this.todos$.next([...todos$, newTodo]);
+    }
 
-        // 2. 返回新的 Observable ??
-        return of([
-            {
-                id: +new Date(),
-                title,
-                completed: false
+    public removeTodoById(id) {
+        const todos$ = this.todos$.getValue();
+        const newTodos = todos$.filter(todo => todo.id !== id);
+        this.todos$.next(newTodos);
+    }
+
+    public toggleTodoStatus(id, completed) {
+        const todos$ = this.todos$.getValue();
+        const newTodos = todos$.map(todo => {
+            if (todo.id === id) {
+                todo.completed = completed;
             }
-        ]);
+            return todo;
+        });
+        this.todos$.next(newTodos);
     }
 }

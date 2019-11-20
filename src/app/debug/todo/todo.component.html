@@ -1,20 +1,25 @@
-<div>
-    <mat-card>
-        <h2>Todo App</h2>
-        <div>
-            <mat-form-field>
-                <input matInput [(ngModel)]="todoName" placeholder="Input something...">
-            </mat-form-field>
-            <button mat-button (click)="addTodo()">Add</button>
-        </div>
+<mat-card>
+    <h2>Todo App</h2>
+    <div>
+        <mat-form-field>
+            <input matInput [(ngModel)]="todoName" placeholder="Input something...">
+        </mat-form-field>
+        <button mat-button (click)="addTodo()">Add</button>
+    </div>
 
-        <div>
-            <ul>
-                <li *ngFor="let todo of todos">
-                    {{todo.title}}
-                    <mat-icon (click)="removeTodo">close</mat-icon>
-                </li>
-            </ul>
+    <div class="todo-list">
+        <div
+            *ngFor="let todo of todos"
+            [ngClass]="{
+                    'todo-item': true,
+                    'completed': todo.completed
+                }"
+            (click)="toggleTodoStatus(todo)"
+        >
+            <span>{{todo.title}}</span>
+            <div class="todo-item__close">
+                <mat-icon (click)="removeTodo(todo.id)">close</mat-icon>
+            </div>
         </div>
-    </mat-card>
-</div>
+    </div>
+</mat-card>
