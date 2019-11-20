@@ -10,6 +10,7 @@ import { LayoutComponent } from "./layout/layout.component";
 import { MaterialComponent } from "./material/material.component";
 import { RxjsOperatorComponent } from "./rxjs-operator/rxjs-operator.component";
 import { TodoComponent } from "./todo/todo.component";
+import { UserConfigComponent } from './user-config/user-config.component';
 
 const COMPONENTS_DYNAMIC = [WelcomeDialogComponent];
 
@@ -21,7 +22,8 @@ const COMPONENTS_DYNAMIC = [WelcomeDialogComponent];
         IconComponent,
         DialogComponent,
         RxjsOperatorComponent,
-        TodoComponent
+        TodoComponent,
+        UserConfigComponent,
     ],
     imports: [CommonModule, SharedModule, DebugRoutingModule],
     entryComponents: [...COMPONENTS_DYNAMIC]

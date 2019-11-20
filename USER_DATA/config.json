@@ -1,1 +1,1 @@
-{"name":"we-note","version":"0.0.1","theme":"default","language":"en-US","createdAt":1572944936509,"updateAt":1572944936510,"sideMenuList":[{"name":"笔记本","url":"/note","icon":"book"}],"tabBarList":[]}
+{"name":"we-note","version":"0.0.1","theme":"dark","language":"en-US","createdAt":1572944936509,"updateAt":1574253306077,"sideMenuList":[{"name":"笔记本","url":"/note","icon":"book"}],"tabs":[{"path":"/","name":"首页","active":false},{"path":"/debug","name":"Debug","active":false},{"path":"/note","name":"Note","active":true},{"path":"/nav-hub","name":"Navhub","active":false}]}

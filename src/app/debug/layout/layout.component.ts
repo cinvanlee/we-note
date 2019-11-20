@@ -12,7 +12,7 @@ export class LayoutComponent implements OnInit {
         { path: "/debug/dialog", name: "Dialog", icon: "palette" },
         { path: "/debug/rxjs-operator", name: "RxJS 操作符", icon: "palette" },
         { path: "/debug/todo", name: "Todo APP", icon: "palette" },
-
+        { path: "/debug/user-config", name: "操作用户配置", icon: "palette" },
     ];
 
     constructor() {}

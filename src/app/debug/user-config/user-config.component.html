@@ -1,0 +1,13 @@
+<mat-card>
+    <button mat-raised-button color="primary" (click)="getUserConfig()">获取用户配置</button>
+    <button mat-raised-button color="primary" (click)="getAppName()">获取指定键的配置</button>
+    <button mat-raised-button color="primary" (click)="setUserConfig()">修改 updateAt</button>
+    <button mat-raised-button color="primary" (click)="toggleTheme()">切换主题</button>
+</mat-card>
+
+<mat-card>
+    <h2>Output</h2>
+    <code>
+        <pre>{{output}}</pre>
+    </code>
+</mat-card>

@@ -1,33 +1,34 @@
 <div class="layout">
     <div class="layout-left">
-        <a routerLink="/" class="app-name">
+        <div class="app-name" (click)="handleLogoClick()">
             <img src="/assets/logo.svg" alt="" />
-        </a>
+        </div>
 
-        <a
+        <div
             *ngFor="let module of modules"
-            [routerLink]="module.path"
-            class="app-module"
-            routerLinkActive="active"
+            [ngClass]="{
+                'app-module': true,
+                active: activeTabPath.startsWith(module.path)
+            }"
             (click)="handleModuleClick(module)"
         >
             <mat-icon>{{ module.icon }}</mat-icon>
-        </a>
+        </div>
     </div>
     <div class="layout-main">
         <div class="layout-main-tabs">
-            <a
-                *ngFor="let tab of tabs"
+            <button
                 mat-button
+                *ngFor="let tab of tabs"
                 [ngClass]="{
                     tab: true,
                     active: tab.active
                 }"
-                [routerLink]="tab.path"
+                (click)="handleActiveTab(tab)"
             >
                 <span>{{ tab.name }}</span>
-                <mat-icon>clear</mat-icon>
-            </a>
+                <mat-icon (click)="handleRemoveTab(tab)">clear</mat-icon>
+            </button>
         </div>
         <div class="layout-main-bd">
             <router-outlet></router-outlet>
