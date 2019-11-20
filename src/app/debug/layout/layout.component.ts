@@ -10,11 +10,6 @@ export class LayoutComponent implements OnInit {
         { path: "/debug/icon", name: "Icon", icon: "face" },
         { path: "/debug/material", name: "Material", icon: "palette" },
         { path: "/debug/dialog", name: "Dialog", icon: "palette" },
-        {
-            path: "/debug/subscribe-service-data",
-            name: "订阅服务中数据",
-            icon: "palette"
-        },
         { path: "/debug/rxjs-operator", name: "RxJS 操作符", icon: "palette" },
         { path: "/debug/todo", name: "Todo APP", icon: "palette" },
 

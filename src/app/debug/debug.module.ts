@@ -9,7 +9,6 @@ import { IconComponent } from "./icon/icon.component";
 import { LayoutComponent } from "./layout/layout.component";
 import { MaterialComponent } from "./material/material.component";
 import { RxjsOperatorComponent } from "./rxjs-operator/rxjs-operator.component";
-import { SubscribeServiceDataComponent } from "./subscribe-service-data/subscribe-service-data.component";
 import { TodoComponent } from "./todo/todo.component";
 
 const COMPONENTS_DYNAMIC = [WelcomeDialogComponent];
@@ -21,7 +20,6 @@ const COMPONENTS_DYNAMIC = [WelcomeDialogComponent];
         LayoutComponent,
         IconComponent,
         DialogComponent,
-        SubscribeServiceDataComponent,
         RxjsOperatorComponent,
         TodoComponent
     ],
