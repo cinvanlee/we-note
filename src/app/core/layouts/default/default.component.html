@@ -20,12 +20,12 @@
                 *ngFor="let tab of tabs"
                 mat-button
                 [ngClass]="{
-                    'tab': true,
-                    'active': tab.active
+                    tab: true,
+                    active: tab.active
                 }"
                 [routerLink]="tab.path"
             >
-                <span>{{tab.name}}</span>
+                <span>{{ tab.name }}</span>
                 <mat-icon>clear</mat-icon>
             </a>
         </div>
