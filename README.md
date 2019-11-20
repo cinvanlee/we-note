@@ -1,1 +1,3 @@
-WeNote
+开发中...
+
+![](./docs/preview.jpg)
