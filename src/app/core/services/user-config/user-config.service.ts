@@ -59,7 +59,9 @@ export class UserConfigService {
             }
 
             try {
-                jf.writeFileSync(configPath, config);
+                jf.writeFileSync(configPath, config, {
+                    spaces: 4
+                });
                 resolve(config);
             } catch (e) {
                 reject(new Error("Set USER_DATA/config.json failed."));

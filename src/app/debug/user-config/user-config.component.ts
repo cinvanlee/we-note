@@ -30,7 +30,7 @@ export class UserConfigComponent implements OnInit {
 
     async setUserConfig() {
         const config = await this.userConfigService.set(
-            "updateAt",
+            "updatedAt",
             +new Date()
         );
         this.output = this.getFormattedJSON(config);
