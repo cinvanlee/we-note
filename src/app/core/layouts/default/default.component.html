@@ -12,13 +12,12 @@
             }"
             (click)="handleModuleClick(module)"
         >
-            <mat-icon>{{ module.icon }}</mat-icon>
+            <i nz-icon [nzType]="module.icon" nzTheme="fill"></i>
         </div>
     </div>
     <div class="layout-main">
         <div class="layout-main-tabs">
-            <button
-                mat-button
+            <div
                 *ngFor="let tab of tabs"
                 [ngClass]="{
                     tab: true,
@@ -27,8 +26,14 @@
                 (click)="handleActiveTab(tab)"
             >
                 <span>{{ tab.name }}</span>
-                <mat-icon (click)="handleRemoveTab(tab)">clear</mat-icon>
-            </button>
+                <i
+                    class="close-icon"
+                    nz-icon
+                    nzType="close"
+                    nzTheme="outline"
+                    (click)="handleRemoveTab(tab)"
+                ></i>
+            </div>
         </div>
         <div class="layout-main-bd">
             <router-outlet></router-outlet>

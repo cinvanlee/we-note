@@ -5,7 +5,7 @@ import * as Observable from "rxjs";
 @Component({
     selector: "app-rxjs-operator",
     templateUrl: "./rxjs-operator.component.html",
-    styleUrls: ["./rxjs-operator.component.scss"]
+    styleUrls: ["./rxjs-operator.component.less"]
 })
 export class RxjsOperatorComponent implements OnInit {
     constructor(private http: HttpClient) {}

@@ -160,7 +160,7 @@ export class NoteService {
         const timestamp = +new Date();
         const meta = {
             created_at: timestamp,
-            tags: [],
+            tags: note.tags,
             title: note.title,
             updated_at: timestamp,
             uuid: note.uuid

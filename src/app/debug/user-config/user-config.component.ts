@@ -4,7 +4,7 @@ import { UserConfigService } from "../../core/services/user-config/user-config.s
 @Component({
     selector: "app-user-config",
     templateUrl: "./user-config.component.html",
-    styleUrls: ["./user-config.component.scss"]
+    styleUrls: ["./user-config.component.less"]
 })
 export class UserConfigComponent implements OnInit {
     output: string;

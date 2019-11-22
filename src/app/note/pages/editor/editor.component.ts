@@ -5,15 +5,17 @@ import "brace/theme/github";
 import _ from "lodash";
 import { INote } from "../../services/note/note.interface";
 import { NoteService } from "../../services/note/note.service";
+import { NzContextMenuService } from "ng-zorro-antd";
 
 @Component({
     selector: "app-editor",
     templateUrl: "./editor.component.html",
-    styleUrls: ["./editor.component.scss"]
+    styleUrls: ["./editor.component.less"]
 })
 export class EditorComponent implements OnInit {
     notes: INote[];
     editor: any;
+    mode = "edit";
     note = {
         uuid: "",
         title: "",
@@ -23,11 +25,14 @@ export class EditorComponent implements OnInit {
         tags: []
     };
 
-    constructor(private noteService: NoteService) {
+    constructor(
+        private noteService: NoteService,
+        private nzContextMenuService: NzContextMenuService
+    ) {
         this.notes = [];
     }
 
-    handleTitleChange = _.debounce((value) => {
+    handleTitleChange = _.debounce(value => {
         this.note.title = value;
         const { uuid } = this.note;
         this.notes = this.notes.map(note => {
@@ -53,6 +58,7 @@ export class EditorComponent implements OnInit {
         this.editor.getSession().setUseWrapMode(true);
         this.editor.setTheme("ace/theme/github");
         this.editor.setShowPrintMargin(false);
+        this.editor.setOption("showLineNumbers", false);
         this.editor.on(
             "change",
             _.debounce(e => {
@@ -85,5 +91,18 @@ export class EditorComponent implements OnInit {
 
     private async saveNote() {
         await this.noteService.updateOne(this.note);
+    }
+
+    private handleCreateTag(evt) {
+        const tagName = evt.target.value;
+        if (this.note.tags.includes(tagName)) {
+            return;
+        }
+        this.note.tags.push(tagName);
+        this.saveNote();
+    }
+
+    handleNoteContextClick($event, menu): void {
+        this.nzContextMenuService.create($event, menu);
     }
 }

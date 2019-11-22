@@ -6,12 +6,12 @@ import { TabService } from "../../services";
     selector: "app-default",
     providers: [TabService],
     templateUrl: "./default.component.html",
-    styleUrls: ["./default.component.scss"]
+    styleUrls: ["./default.component.less"]
 })
 export class DefaultComponent implements OnInit, OnDestroy {
     modules = [
-        { path: "/debug", name: "调试", icon: "bug_report" },
-        { path: "/nav-hub", name: "程序员导航", icon: "apps" },
+        { path: "/debug", name: "调试", icon: "bug" },
+        { path: "/nav-hub", name: "程序员导航", icon: "appstore" },
         { path: "/note", name: "笔记本", icon: "book" }
     ];
 

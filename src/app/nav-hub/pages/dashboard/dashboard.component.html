@@ -1,14 +1,18 @@
 <div class="nav">
     <div *ngFor="let block of sites" class="nav-item">
-        <mat-card>
-            <mat-card-title class="card-title">{{
-                block.title
-            }}</mat-card-title>
-            <mat-card-content>
-                <a mat-button *ngFor="let site of block.links">
+        <nz-card
+            [nzTitle]="block.title"
+            nzSize="small"
+            [nzExtra]="extraTemplate"
+        >
+            <a *ngFor="let site of block.links">
+                <button nz-button nzType="link">
                     {{ site.title }}
-                </a>
-            </mat-card-content>
-        </mat-card>
+                </button>
+            </a>
+        </nz-card>
+        <ng-template #extraTemplate>
+            <a>一键打开</a>
+        </ng-template>
     </div>
 </div>

@@ -4,7 +4,7 @@
     "theme": "dark",
     "language": "en-US",
     "createdAt": 1572944936509,
-    "updatedAt": 1574253306077,
+    "updatedAt": 1574415136619,
     "sideMenuList": [
         {
             "name": "笔记本",
@@ -21,17 +21,17 @@
         {
             "path": "/debug",
             "name": "调试",
+            "active": true
+        },
+        {
+            "path": "/note",
+            "name": "笔记本",
             "active": false
         },
         {
             "path": "/nav-hub",
             "name": "程序员导航",
             "active": false
-        },
-        {
-            "path": "/note",
-            "name": "笔记本",
-            "active": true
         }
     ]
 }

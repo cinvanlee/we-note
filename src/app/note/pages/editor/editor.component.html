@@ -1,49 +1,115 @@
 <div class="page-layout">
     <div class="page-layout-left">
-        <div class="note-action">
-            <mat-icon (click)="handleAddClick()">add</mat-icon>
+        <div class="note-filter">
+            <span nz-dropdown [nzDropdownMenu]="menu" nzTrigger="click">Sort by Created ↓</span>
         </div>
+        <nz-dropdown-menu #menu="nzDropdownMenu">
+            <ul nz-menu nzSelectable>
+                <li nz-menu-item>Title</li>
+                <li nz-menu-item>Date Created</li>
+                <li nz-menu-item>Date Updated</li>
+            </ul>
+        </nz-dropdown-menu>
+
         <div class="note-list">
-            <button
-                mat-button
+            <div
                 *ngFor="let note of notes"
                 [ngClass]="{
                     'note-item': true,
                     active: note.active
                 }"
                 (click)="handleNoteClick(note.uuid)"
+                (contextmenu)="handleNoteContextClick($event, noteContextMenu)"
             >
                 <div class="note-item__title">{{ note.title }}</div>
                 <div class="note-item__info">{{ note.created_formatted }}</div>
-            </button>
+            </div>
+            <nz-dropdown-menu #noteContextMenu="nzDropdownMenu">
+                <ul nz-menu>
+                    <li nz-menu-item>Show in Finder</li>
+                    <li nz-menu-item>Open in New Window</li>
+                    <li nz-menu-divider></li>
+                    <li nz-menu-item>Delete Note</li>
+                    <li nz-submenu nzTitle="Export Note">
+                        <ul>
+                            <li nz-menu-item>As HTML</li>
+                            <li nz-menu-item>As Markdown</li>
+                            <li nz-menu-item>As PDF</li>
+                            <li nz-menu-item>As PNG</li>
+                        </ul>
+                    </li>
+                </ul>
+            </nz-dropdown-menu>
         </div>
-        <div class="note-filter">
-            Sort by Created ↓
+
+        <div class="note-action">
+            <i
+                nz-icon
+                nzType="plus"
+                nzTheme="outline"
+                (click)="handleAddClick()"
+            ></i>
         </div>
     </div>
+
     <div class="page-layout-main">
         <div
             class="editor-container"
             [ngStyle]="{ display: note.uuid ? 'block' : 'none' }"
         >
-            <div class="note-meta">
-                <span>Created: {{note.created_formatted}}</span>
-                <span>Updated: {{note.updated_formatted}}</span>
+            <div class="note-tool">
+                <div class="note-tool-item">
+                    <i
+                        class="note-tag-icon"
+                        nz-icon
+                        nzType="tags"
+                        nzTheme="outline"
+                    ></i>
+                    <div class="note-tags">
+                        <nz-tag
+                            nzMode="closeable"
+                            [nzColor]="'#404040'"
+                            *ngFor="let tag of note.tags"
+                        >{{ tag }}
+                        </nz-tag>
+                    </div>
+                    <input
+                        class="note-tag-input"
+                        type="text"
+                        placeholder="Click to add tags"
+                        (keydown.enter)="handleCreateTag($event)"
+                    />
+                </div>
+                <div class="note-tool-item">
+                    <nz-button-group nzSize="small">
+                        <button nz-button nzType="primary">
+                            <i nz-icon nzType="edit" nzTheme="outline"></i>
+                        </button>
+                        <button nz-button nzType="primary">
+                            <i nz-icon nzType="eye" nzTheme="outline"></i>
+                        </button>
+                        <button nz-button nzType="primary">
+                            <i nz-icon nzType="read" nzTheme="outline"></i>
+                        </button>
+                    </nz-button-group>
+                </div>
             </div>
             <div class="note-editor">
                 <div class="note-title">
-                    <input placeholder="Untitled Note"
-                           [ngModel]="note.title"
-                           (ngModelChange)="handleTitleChange($event)"
+                    <input
+                        placeholder="Untitled Note"
+                        [ngModel]="note.title"
+                        (ngModelChange)="handleTitleChange($event)"
                     />
                 </div>
                 <div class="ace-editor" id="ace-editor"></div>
             </div>
         </div>
-        <div class="note-editor empty"
-             [ngStyle]="{ display: note.uuid ? 'none' : 'flex' }"
+        <div
+            class="note-editor empty"
+            [ngStyle]="{ display: note.uuid ? 'none' : 'flex' }"
         >
-            <span>No Note Selected</span>
+            <nz-empty nzNotFoundContent="No Note Selected"></nz-empty>
         </div>
     </div>
 </div>

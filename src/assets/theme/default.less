@@ -1,0 +1,44 @@
+.theme-default {
+    .layout {
+        &-left {
+            border-right: 1px solid rgba(0, 0, 0, 0.12);
+            box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+                0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+            background: rgba(64, 64, 64, 1);
+
+            .app-module {
+                border-left: 3px solid transparent;
+                color: rgba(147, 147, 147, 1);
+
+                &.active {
+                    color: #fff;
+                    border-left-color: #fff;
+                }
+
+                &:hover {
+                    color: #fff;
+                }
+            }
+        }
+
+        &-main {
+            background-color: #fafafa;
+
+            &-tabs {
+                background: rgba(46, 46, 46, 1);
+                box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+                    0 2px 2px 0 rgba(0, 0, 0, 0.14),
+                    0 1px 5px 0 rgba(0, 0, 0, 0.12);
+
+                .tab {
+                    color: #939393;
+
+                    &.active {
+                        color: #fff;
+                        background: rgba(60, 60, 60, 1);
+                    }
+                }
+            }
+        }
+    }
+}

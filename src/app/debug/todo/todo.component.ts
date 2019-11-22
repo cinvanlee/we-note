@@ -4,7 +4,7 @@ import { TodoService } from "./todo.service";
 @Component({
     selector: "app-todo",
     templateUrl: "./todo.component.html",
-    styleUrls: ["./todo.component.scss"]
+    styleUrls: ["./todo.component.less"]
 })
 export class TodoComponent implements OnInit {
     todos = [];

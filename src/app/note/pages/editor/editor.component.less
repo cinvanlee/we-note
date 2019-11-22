@@ -14,7 +14,7 @@
     }
 }
 
-.note-action {
+.note-filter {
     position: absolute;
     top: 0;
     left: 0;
@@ -31,7 +31,7 @@
     user-select: none;
 }
 
-.note-filter {
+.note-action {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -49,6 +49,7 @@
     overflow-y: auto;
 
     .note-item {
+        cursor: pointer;
         display: block;
         width: 100%;
         border-radius: 0;
@@ -56,6 +57,7 @@
         padding: 15px;
         line-height: 1;
         font-weight: normal;
+        user-select: none;
 
         &:not(:last-child) {
             border-bottom: 1px solid rgb(224, 224, 224);
@@ -80,20 +82,44 @@
     }
 }
 
-.note-meta {
+.note-tool {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 30px;
-    line-height: 30px;
-    font-size: 12px;
     padding: 0 15px;
-    color: rgb(140, 140, 140);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     border-bottom: 1px solid rgb(212, 212, 212);
 
-    span {
-        margin-right: 30px;
+    &-item {
+        display: flex;
+        align-items: center;
+    }
+
+    .note-tag-input {
+        border: none;
+        background: transparent;
+        outline: none;
+        font-size: 12px;
+        height: 18px;
+    }
+
+    .note-tags {
+        margin-left: 10px;
+    }
+
+    .note-tag {
+        padding: 1px 6px;
+        height: 18px;
+        line-height: 18px;
+        font-size: 12px;
+        background: #404040;
+        color: #fff;
+        border-radius: 4px;
+        margin-right: 6px;
     }
 }
 

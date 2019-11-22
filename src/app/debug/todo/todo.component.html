@@ -1,14 +1,24 @@
-<mat-card>
-    <h2>Todo App</h2>
-    <div>
-        <mat-form-field>
+<nz-card nzTitle="Todo App">
+    <div style="width: 300px">
+        <nz-input-group nzSearch nzSize="large" [nzAddOnAfter]="suffixButton">
             <input
-                matInput
+                type="text"
                 [(ngModel)]="todoName"
+                nz-input
                 placeholder="Input something..."
             />
-        </mat-form-field>
-        <button mat-button (click)="addTodo()">Add</button>
+        </nz-input-group>
+        <ng-template #suffixButton>
+            <button
+                nz-button
+                nzType="primary"
+                nzSize="large"
+                nzSearch
+                (click)="addTodo()"
+            >
+                Add
+            </button>
+        </ng-template>
     </div>
 
     <div class="todo-list">
@@ -22,8 +32,13 @@
         >
             <span>{{ todo.title }}</span>
             <div class="todo-item__close">
-                <mat-icon (click)="removeTodo(todo.id)">close</mat-icon>
+                <i
+                    nz-icon
+                    nzType="close"
+                    nzTheme="outline"
+                    (click)="removeTodo(todo.id)"
+                ></i>
             </div>
         </div>
     </div>
-</mat-card>
+</nz-card>

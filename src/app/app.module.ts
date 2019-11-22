@@ -16,7 +16,14 @@ import { AppRoutingModule } from "./app-routing.module";
 import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 
+// NG Zorro
+import { NZ_I18N, zh_CN } from "ng-zorro-antd";
+
+import { registerLocaleData } from '@angular/common';
+import zh from '@angular/common/locales/zh';
 import { AppComponent } from "./app.component";
+
+registerLocaleData(zh);
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -41,7 +48,7 @@ export function HttpLoaderFactory(http: HttpClient) {
             }
         })
     ],
-    providers: [],
+    providers: [{ provide: NZ_I18N, useValue: zh_CN }],
     bootstrap: [AppComponent]
 })
 export class AppModule {}
