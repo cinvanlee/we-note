@@ -70,13 +70,16 @@
         "@angular/router": "8.2.12",
         "@ngx-translate/core": "11.0.1",
         "@ngx-translate/http-loader": "4.0.0",
+        "brace": "^0.11.1",
         "core-js": "3.1.4",
         "electron": "7.0.0",
         "jsonfile": "^5.0.0",
         "lodash": "^4.17.15",
+        "moment": "^2.24.0",
         "normalize.css": "^8.0.1",
         "rxjs": "6.5.3",
         "shelljs": "^0.8.3",
+        "uuid": "^3.3.3",
         "zone.js": "0.9.1"
     }
 }

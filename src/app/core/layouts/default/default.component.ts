@@ -10,9 +10,9 @@ import { TabService } from "../../services";
 })
 export class DefaultComponent implements OnInit, OnDestroy {
     modules = [
-        { path: "/debug", name: "Debug", icon: "bug_report" },
-        { path: "/nav-hub", name: "Navhub", icon: "apps" },
-        { path: "/note", name: "Note", icon: "book" }
+        { path: "/debug", name: "调试", icon: "bug_report" },
+        { path: "/nav-hub", name: "程序员导航", icon: "apps" },
+        { path: "/note", name: "笔记本", icon: "book" }
     ];
 
     tabs = [];

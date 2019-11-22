@@ -1,20 +1,49 @@
 <div class="page-layout">
     <div class="page-layout-left">
-        <div class="note-filter">Sort by Created ↓</div>
+        <div class="note-action">
+            <mat-icon (click)="handleAddClick()">add</mat-icon>
+        </div>
         <div class="note-list">
             <button
                 mat-button
                 *ngFor="let note of notes"
                 [ngClass]="{
                     'note-item': true,
-                    'active': note.active
+                    active: note.active
                 }"
+                (click)="handleNoteClick(note.uuid)"
             >
-                <div class="note-item__title">{{note.title}}</div>
-                <div class="note-item__info">{{note.createdAt}}</div>
+                <div class="note-item__title">{{ note.title }}</div>
+                <div class="note-item__info">{{ note.created_formatted }}</div>
             </button>
         </div>
-        <div class="note-search"></div>
+        <div class="note-filter">
+            Sort by Created ↓
+        </div>
     </div>
-    <div class="page-layout-main"></div>
+    <div class="page-layout-main">
+        <div
+            class="editor-container"
+            [ngStyle]="{ display: note.uuid ? 'block' : 'none' }"
+        >
+            <div class="note-meta">
+                <span>Created: {{note.created_formatted}}</span>
+                <span>Updated: {{note.updated_formatted}}</span>
+            </div>
+            <div class="note-editor">
+                <div class="note-title">
+                    <input placeholder="Untitled Note"
+                           [ngModel]="note.title"
+                           (ngModelChange)="handleTitleChange($event)"
+                    />
+                </div>
+                <div class="ace-editor" id="ace-editor"></div>
+            </div>
+        </div>
+        <div class="note-editor empty"
+             [ngStyle]="{ display: note.uuid ? 'none' : 'flex' }"
+        >
+            <span>No Note Selected</span>
+        </div>
+    </div>
 </div>
