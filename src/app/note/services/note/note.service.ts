@@ -24,8 +24,7 @@ export class NoteService {
     }
 
     private isDir(_path) {
-        const exist = fs.existsSync(_path) || path.existsSync(_path);
-        return exist && fs.statSync(_path).isDirectory();
+        return fs.existsSync(_path) && fs.statSync(_path).isDirectory();
     }
 
     initNoteApp(): Promise<string> {
@@ -34,7 +33,7 @@ export class NoteService {
         const inboxPath = `${noteAppPath}/Inbox`;
         const trashPath = `${noteAppPath}/Trash`;
         return new Promise((resolve, reject) => {
-            if (this.isDir(noteAppPath)) {
+            if (fs.existsSync(noteAppPath)) {
                 resolve("OK");
                 return;
             }

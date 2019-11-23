@@ -28,10 +28,14 @@
 
                 <nz-dropdown-menu #noteContextMenu="nzDropdownMenu">
                     <ul nz-menu>
-                        <li nz-menu-item (click)="showInFinder(note.uuid)">Show in Finder</li>
+                        <li nz-menu-item (click)="showInFinder(note.uuid)">
+                            Show in Finder
+                        </li>
                         <li nz-menu-item>Open in New Window</li>
                         <li nz-menu-divider></li>
-                        <li nz-menu-item (click)="deleteNote(note.uuid)">Delete Note</li>
+                        <li nz-menu-item (click)="deleteNote(note.uuid)">
+                            Delete Note
+                        </li>
                         <li nz-submenu nzTitle="Export Note">
                             <ul>
                                 <li nz-menu-item>As HTML</li>
@@ -58,7 +62,7 @@
     <div class="page-layout-main">
         <div
             [ngClass]="{
-                'main__hd': true,
+                main__hd: true,
                 hidden: !note.uuid
             }"
         >
@@ -90,8 +94,13 @@
             </nz-button-group>
         </div>
 
-        <div [ngClass]="{'main__bd': true, hidden: !note.uuid}">
-            <div [ngClass]="{'editor': true, hidden: !note.uuid || mode === 'preview'}">
+        <div [ngClass]="{ main__bd: true, hidden: !note.uuid }">
+            <div
+                [ngClass]="{
+                    editor: true,
+                    hidden: !note.uuid || mode === 'preview'
+                }"
+            >
                 <div class="editor-tool">
                     <div class="editor-tool-item">
                         <i
@@ -106,7 +115,7 @@
                                 [nzColor]="'#404040'"
                                 *ngFor="let tag of note.tags"
                                 (nzOnClose)="removeTag(tag)"
-                            >{{ tag }}
+                                >{{ tag }}
                             </nz-tag>
                         </div>
                         <input
@@ -129,12 +138,12 @@
                     <div id="ace-editor"></div>
                 </div>
             </div>
-            <div [ngClass]="{'preview': true, hidden: mode === 'edit'}">
-                <div class="preview-title">{{note.title}}</div>
+            <div [ngClass]="{ preview: true, hidden: mode === 'edit' }">
+                <div class="preview-title">{{ note.title }}</div>
                 <div class="preview-body" [innerHTML]="previewHTML"></div>
             </div>
         </div>
-        <div [ngClass]="{'main__bd--empty': true, hidden: note.uuid}">
+        <div [ngClass]="{ 'main__bd--empty': true, hidden: note.uuid }">
             <nz-empty nzNotFoundContent="No Note Selected"></nz-empty>
         </div>
     </div>

@@ -16,7 +16,7 @@ export class DefaultComponent implements OnInit, OnDestroy {
     ];
 
     tabs = [];
-    activeTabPath: string;
+    activeTabPath = '';
     tabSub: any;
 
     constructor(private tabService: TabService, private router: Router) {}

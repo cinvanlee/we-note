@@ -5,7 +5,11 @@
             nzSize="small"
             [nzExtra]="extraTemplate"
         >
-            <a *ngFor="let site of block.links" [href]="site.url" target="_blank">
+            <a
+                *ngFor="let site of block.links"
+                [href]="site.url"
+                target="_blank"
+            >
                 <button nz-button nzType="link">
                     {{ site.title }}
                 </button>

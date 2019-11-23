@@ -46,9 +46,9 @@ export class EditorComponent implements OnInit {
         this.saveNote();
     }, 1000);
 
-    ngOnInit() {
-        this.noteService.initNoteApp();
-        this.refreshNoteList();
+    async ngOnInit() {
+        await this.noteService.initNoteApp();
+        await this.refreshNoteList();
         this.initAceEditor();
     }
 
