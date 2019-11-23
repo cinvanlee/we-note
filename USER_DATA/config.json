@@ -14,24 +14,19 @@
     ],
     "tabs": [
         {
-            "path": "/",
-            "name": "首页",
-            "active": false
-        },
-        {
             "path": "/debug",
-            "name": "调试",
-            "active": true
-        },
-        {
-            "path": "/note",
-            "name": "笔记本",
+            "name": "Debug",
             "active": false
         },
         {
             "path": "/nav-hub",
-            "name": "程序员导航",
+            "name": "Navigation",
             "active": false
+        },
+        {
+            "path": "/note",
+            "name": "Notebook",
+            "active": true
         }
     ]
 }

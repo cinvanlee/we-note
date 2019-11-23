@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { INote, INoteDetail } from "./note.interface";
+
 const fs = window.require("fs");
 const path = window.require("path");
 const electron = window.require("electron");
@@ -7,11 +8,14 @@ const jf = window.require("jsonfile");
 const uuid = window.require("uuid/v4");
 const shell = window.require("shelljs");
 const moment = window.require("moment");
+const MarkdownIt = window.require("markdown-it");
 
 @Injectable({
     providedIn: "root"
 })
 export class NoteService {
+    md = new MarkdownIt();
+
     constructor() {}
 
     private getNoteAppPath() {
@@ -24,7 +28,7 @@ export class NoteService {
         return exist && fs.statSync(_path).isDirectory();
     }
 
-    public initNoteApp(): Promise<string> {
+    initNoteApp(): Promise<string> {
         const noteAppPath = this.getNoteAppPath();
         const bookPath = `${noteAppPath}/Book`;
         const inboxPath = `${noteAppPath}/Inbox`;
@@ -65,7 +69,7 @@ export class NoteService {
         });
     }
 
-    public fetchList(): Promise<INote[]> {
+    fetchList(): Promise<INote[]> {
         const noteAppPath = this.getNoteAppPath();
         const bookPath = `${noteAppPath}/Book`;
         return new Promise((resolve, reject) => {
@@ -96,7 +100,7 @@ export class NoteService {
         });
     }
 
-    public fetchOne(_uuid): Promise<INoteDetail> {
+    fetchOne(_uuid): Promise<INoteDetail> {
         const noteAppPath = this.getNoteAppPath();
         const metaPath = `${noteAppPath}/Book/${_uuid}/meta.json`;
         const contentPath = `${noteAppPath}/Book/${_uuid}/content.json`;
@@ -120,7 +124,7 @@ export class NoteService {
         });
     }
 
-    public createOne() {
+    createOne() {
         const noteAppPath = this.getNoteAppPath();
         const _uuid = uuid();
         const timestamp = +new Date();
@@ -155,7 +159,7 @@ export class NoteService {
         });
     }
 
-    public updateOne(note) {
+    updateOne(note) {
         const noteAppPath = this.getNoteAppPath();
         const timestamp = +new Date();
         const meta = {
@@ -183,5 +187,9 @@ export class NoteService {
         });
     }
 
-    public deleteOne() {}
+    deleteOne() {}
+
+    md2html(mdText) {
+        return this.md.render(mdText);
+    }
 }

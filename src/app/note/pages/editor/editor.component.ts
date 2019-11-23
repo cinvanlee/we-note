@@ -3,9 +3,9 @@ import "brace";
 import "brace/mode/markdown";
 import "brace/theme/github";
 import _ from "lodash";
+import { NzContextMenuService } from "ng-zorro-antd";
 import { INote } from "../../services/note/note.interface";
 import { NoteService } from "../../services/note/note.service";
-import { NzContextMenuService } from "ng-zorro-antd";
 
 @Component({
     selector: "app-editor",
@@ -16,6 +16,7 @@ export class EditorComponent implements OnInit {
     notes: INote[];
     editor: any;
     mode = "edit";
+    tagName = "";
     note = {
         uuid: "",
         title: "",
@@ -24,6 +25,7 @@ export class EditorComponent implements OnInit {
         updated_at: 0,
         tags: []
     };
+    previewHTML = "";
 
     constructor(
         private noteService: NoteService,
@@ -50,7 +52,7 @@ export class EditorComponent implements OnInit {
         this.initAceEditor();
     }
 
-    private initAceEditor() {
+    initAceEditor() {
         // API DOC:
         // https://ace.c9.io/#nav=api&api=editor
         this.editor = ace.edit("ace-editor");
@@ -62,24 +64,24 @@ export class EditorComponent implements OnInit {
         this.editor.on(
             "change",
             _.debounce(e => {
-                const value = this.editor.getValue();
-                this.note.content = value;
+                this.note.content = this.editor.getValue();;
+                this.renderPreviewHtml();
                 this.saveNote();
-            }, 1000)
+            }, 300)
         );
     }
 
-    private async refreshNoteList() {
+    async refreshNoteList() {
         const notes = await this.noteService.fetchList();
         this.notes = notes.sort((a, b) => b.created_at - a.created_at);
     }
 
-    private async handleAddClick() {
+    async handleAddClick() {
         await this.noteService.createOne();
         await this.refreshNoteList();
     }
 
-    private async handleNoteClick(uuid) {
+    async handleNoteClick(uuid) {
         const note = await this.noteService.fetchOne(uuid);
         this.notes = this.notes.map(item => {
             item.active = item.uuid === uuid;
@@ -89,20 +91,37 @@ export class EditorComponent implements OnInit {
         this.editor.setValue(note.content);
     }
 
-    private async saveNote() {
+    async saveNote() {
         await this.noteService.updateOne(this.note);
     }
 
-    private handleCreateTag(evt) {
+    async handleCreateTag(evt) {
         const tagName = evt.target.value;
         if (this.note.tags.includes(tagName)) {
             return;
         }
         this.note.tags.push(tagName);
+        await this.saveNote();
+        this.tagName = "";
+    }
+
+    handleRemoveTag(tagName) {
+        this.note.tags = this.note.tags.filter(tag => tag !== tagName);
         this.saveNote();
     }
 
-    handleNoteContextClick($event, menu): void {
+    handleNoteContextClick($event, menu) {
         this.nzContextMenuService.create($event, menu);
+    }
+
+    toggleMode(modeName) {
+        this.mode = modeName;
+        this.renderPreviewHtml();
+    }
+
+    renderPreviewHtml() {
+        if (this.mode !== 'edit') {
+            this.previewHTML = this.noteService.md2html(this.note.content);
+        }
     }
 }

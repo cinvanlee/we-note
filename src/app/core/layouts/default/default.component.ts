@@ -10,9 +10,9 @@ import { TabService } from "../../services";
 })
 export class DefaultComponent implements OnInit, OnDestroy {
     modules = [
-        { path: "/debug", name: "调试", icon: "bug" },
-        { path: "/nav-hub", name: "程序员导航", icon: "appstore" },
-        { path: "/note", name: "笔记本", icon: "book" }
+        { path: "/debug", name: "Debug", icon: "bug" },
+        { path: "/nav-hub", name: "Navigation", icon: "appstore" },
+        { path: "/note", name: "Notebook", icon: "book" }
     ];
 
     tabs = [];
@@ -39,7 +39,7 @@ export class DefaultComponent implements OnInit, OnDestroy {
     handleLogoClick() {
         this.tabService.addOrActiveTab({
             path: "/",
-            name: "首页"
+            name: "Dashboard"
         });
     }
 

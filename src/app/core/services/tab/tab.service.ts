@@ -81,7 +81,7 @@ export class TabService {
         if (lastTab) {
             this.activeTab(lastTab);
         } else {
-            this.addTab({ path: "/", name: "首页" });
+            this.addTab({ path: "/", name: "Dashboard" });
         }
     }
 }
