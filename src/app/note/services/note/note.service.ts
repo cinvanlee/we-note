@@ -227,4 +227,25 @@ export class NoteService {
         const notePath = `${noteAppPath}/Book/${_uuid}`;
         electron.shell.openItem(notePath);
     }
+
+    saveImage(_uuid, imgBlob) {
+        const noteAppPath = this.getNoteAppPath();
+        const imgUuid = uuid();
+        const imgPath = `${noteAppPath}/Book/${_uuid}/resources/${imgUuid}.png`;
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(imgBlob);
+            reader.onload = event => {
+                // @ts-ignore
+                const base64 = event.target.result;
+                const file = base64.replace(/^data:image\/\w+;base64,/, "");
+                fs.writeFile(imgPath, file, { encoding: "base64" }, err => {
+                    if (err) {
+                        reject(`Save ${imgPath} failed.`);
+                    }
+                    resolve(`./resources/${imgUuid}.png`);
+                });
+            };
+        });
+    }
 }

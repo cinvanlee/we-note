@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import "brace";
 import "brace/mode/markdown";
 import "brace/theme/github";
@@ -12,9 +12,10 @@ import { NoteService } from "../../services/note/note.service";
     templateUrl: "./editor.component.html",
     styleUrls: ["./editor.component.less"]
 })
-export class EditorComponent implements OnInit {
+export class EditorComponent implements OnInit, OnDestroy {
     notes: INote[];
     editor: any;
+    // note mode, edit | 'preview' | 'multiple'
     mode = "edit";
     tagName = "";
     note = {
@@ -25,14 +26,8 @@ export class EditorComponent implements OnInit {
         updated_at: 0,
         tags: []
     };
+    editorFocused = false;
     previewHTML = "";
-
-    constructor(
-        private noteService: NoteService,
-        private nzContextMenuService: NzContextMenuService
-    ) {
-        this.notes = [];
-    }
 
     onTitleChange = _.debounce(value => {
         this.note.title = value;
@@ -46,10 +41,22 @@ export class EditorComponent implements OnInit {
         this.saveNote();
     }, 1000);
 
+    constructor(
+        private noteService: NoteService,
+        private nzContextMenuService: NzContextMenuService
+    ) {
+        this.notes = [];
+    }
+
     async ngOnInit() {
         await this.noteService.initNoteApp();
         await this.refreshNoteList();
         this.initAceEditor();
+        window.addEventListener("paste", this.pasteListener.bind(this), false);
+    }
+
+    ngOnDestroy(): void {
+        window.removeEventListener("paste", this.pasteListener);
     }
 
     initAceEditor() {
@@ -64,11 +71,48 @@ export class EditorComponent implements OnInit {
         this.editor.on(
             "change",
             _.debounce(e => {
-                this.note.content = this.editor.getValue();;
+                this.note.content = this.editor.getValue();
                 this.renderPreviewHtml();
                 this.saveNote();
             }, 300)
         );
+        this.editor.on("focus", () => {
+            this.editorFocused = true;
+        });
+        this.editor.on("blur", () => {
+            this.editorFocused = false;
+        });
+    }
+
+    async pasteListener(evt) {
+        if (!this.editorFocused) {
+            return;
+        }
+        // @ts-ignore
+        if (!evt.clipboardData) {
+            return;
+        }
+        // @ts-ignore
+        const items = evt.clipboardData.items;
+        if (!items) {
+            return;
+        }
+        // tslint:disable-next-line:prefer-for-of
+        for (let i = 0; i < items.length; i++) {
+            if (items[i].type.indexOf("image") === -1) {
+                continue;
+            }
+            try {
+                const blob = items[i].getAsFile();
+                const imgUrl = await this.noteService.saveImage(
+                    this.note.uuid,
+                    blob
+                );
+                this.editor.insert(`\n![](${imgUrl})\n`);
+            } catch (e) {
+                break;
+            }
+        }
     }
 
     async refreshNoteList() {
@@ -133,7 +177,7 @@ export class EditorComponent implements OnInit {
     }
 
     renderPreviewHtml() {
-        if (this.mode !== 'edit') {
+        if (this.mode !== "edit") {
             this.previewHTML = this.noteService.md2html(this.note.content);
         }
     }
