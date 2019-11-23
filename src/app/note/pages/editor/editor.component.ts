@@ -34,7 +34,7 @@ export class EditorComponent implements OnInit {
         this.notes = [];
     }
 
-    handleTitleChange = _.debounce(value => {
+    onTitleChange = _.debounce(value => {
         this.note.title = value;
         const { uuid } = this.note;
         this.notes = this.notes.map(note => {
@@ -76,12 +76,25 @@ export class EditorComponent implements OnInit {
         this.notes = notes.sort((a, b) => b.created_at - a.created_at);
     }
 
-    async handleAddClick() {
-        await this.noteService.createOne();
+    async createNote() {
+        const uuid = await this.noteService.createOne();
         await this.refreshNoteList();
+        this.selectNote(uuid);
     }
 
-    async handleNoteClick(uuid) {
+    async deleteNote(uuid) {
+        await this.noteService.moveToTrash(uuid);
+        await this.refreshNoteList();
+
+        // if delete current selected note,
+        // select last note
+        if (uuid === this.note.uuid) {
+            const firstNote = this.notes[0];
+            this.selectNote(firstNote.uuid);
+        }
+    }
+
+    async selectNote(uuid) {
         const note = await this.noteService.fetchOne(uuid);
         this.notes = this.notes.map(item => {
             item.active = item.uuid === uuid;
@@ -91,11 +104,15 @@ export class EditorComponent implements OnInit {
         this.editor.setValue(note.content);
     }
 
+    onNoteContextClick($event, menu) {
+        this.nzContextMenuService.create($event, menu);
+    }
+
     async saveNote() {
         await this.noteService.updateOne(this.note);
     }
 
-    async handleCreateTag(evt) {
+    async createTag(evt) {
         const tagName = evt.target.value;
         if (this.note.tags.includes(tagName)) {
             return;
@@ -105,13 +122,9 @@ export class EditorComponent implements OnInit {
         this.tagName = "";
     }
 
-    handleRemoveTag(tagName) {
+    removeTag(tagName) {
         this.note.tags = this.note.tags.filter(tag => tag !== tagName);
         this.saveNote();
-    }
-
-    handleNoteContextClick($event, menu) {
-        this.nzContextMenuService.create($event, menu);
     }
 
     toggleMode(modeName) {
@@ -123,5 +136,9 @@ export class EditorComponent implements OnInit {
         if (this.mode !== 'edit') {
             this.previewHTML = this.noteService.md2html(this.note.content);
         }
+    }
+
+    showInFinder(uuid) {
+        this.noteService.showInFinder(uuid);
     }
 }

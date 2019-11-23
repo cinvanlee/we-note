@@ -20,28 +20,29 @@
                     'note-item': true,
                     active: note.active
                 }"
-                (click)="handleNoteClick(note.uuid)"
-                (contextmenu)="handleNoteContextClick($event, noteContextMenu)"
+                (click)="selectNote(note.uuid)"
+                (contextmenu)="onNoteContextClick($event, noteContextMenu)"
             >
                 <div class="note-item__title">{{ note.title }}</div>
                 <div class="note-item__info">{{ note.created_formatted }}</div>
+
+                <nz-dropdown-menu #noteContextMenu="nzDropdownMenu">
+                    <ul nz-menu>
+                        <li nz-menu-item (click)="showInFinder(note.uuid)">Show in Finder</li>
+                        <li nz-menu-item>Open in New Window</li>
+                        <li nz-menu-divider></li>
+                        <li nz-menu-item (click)="deleteNote(note.uuid)">Delete Note</li>
+                        <li nz-submenu nzTitle="Export Note">
+                            <ul>
+                                <li nz-menu-item>As HTML</li>
+                                <li nz-menu-item>As Markdown</li>
+                                <li nz-menu-item>As PDF</li>
+                                <li nz-menu-item>As PNG</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nz-dropdown-menu>
             </div>
-            <nz-dropdown-menu #noteContextMenu="nzDropdownMenu">
-                <ul nz-menu>
-                    <li nz-menu-item>Show in Finder</li>
-                    <li nz-menu-item>Open in New Window</li>
-                    <li nz-menu-divider></li>
-                    <li nz-menu-item>Delete Note</li>
-                    <li nz-submenu nzTitle="Export Note">
-                        <ul>
-                            <li nz-menu-item>As HTML</li>
-                            <li nz-menu-item>As Markdown</li>
-                            <li nz-menu-item>As PDF</li>
-                            <li nz-menu-item>As PNG</li>
-                        </ul>
-                    </li>
-                </ul>
-            </nz-dropdown-menu>
         </div>
 
         <div class="note-action">
@@ -49,7 +50,7 @@
                 nz-icon
                 nzType="plus"
                 nzTheme="outline"
-                (click)="handleAddClick()"
+                (click)="createNote()"
             ></i>
         </div>
     </div>
@@ -104,7 +105,7 @@
                                 nzMode="closeable"
                                 [nzColor]="'#404040'"
                                 *ngFor="let tag of note.tags"
-                                (nzOnClose)="handleRemoveTag(tag)"
+                                (nzOnClose)="removeTag(tag)"
                             >{{ tag }}
                             </nz-tag>
                         </div>
@@ -113,7 +114,7 @@
                             type="text"
                             [(ngModel)]="tagName"
                             placeholder="Click to add tags"
-                            (keydown.enter)="handleCreateTag($event)"
+                            (keydown.enter)="createTag($event)"
                         />
                     </div>
                 </div>
@@ -122,7 +123,7 @@
                         <input
                             placeholder="Untitled Note"
                             [ngModel]="note.title"
-                            (ngModelChange)="handleTitleChange($event)"
+                            (ngModelChange)="onTitleChange($event)"
                         />
                     </div>
                     <div id="ace-editor"></div>

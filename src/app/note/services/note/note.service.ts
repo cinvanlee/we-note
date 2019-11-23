@@ -124,7 +124,7 @@ export class NoteService {
         });
     }
 
-    createOne() {
+    createOne(): Promise<string> {
         const noteAppPath = this.getNoteAppPath();
         const _uuid = uuid();
         const timestamp = +new Date();
@@ -152,7 +152,7 @@ export class NoteService {
             try {
                 jf.writeFileSync(metaPath, meta);
                 jf.writeFileSync(contentPath, content);
-                resolve("OK");
+                resolve(_uuid);
             } catch (e) {
                 reject(new Error("Write default note file failed."));
             }
@@ -187,9 +187,45 @@ export class NoteService {
         });
     }
 
-    deleteOne() {}
+    moveToTrash(_uuid) {
+        const noteAppPath = this.getNoteAppPath();
+        const notePath = `${noteAppPath}/Book/${_uuid}`;
+        const trashPath = `${noteAppPath}/Trash/${_uuid}`;
+        return new Promise((resolve, reject) => {
+            try {
+                shell.mv(notePath, trashPath);
+                resolve("OK");
+            } catch (e) {
+                reject(new Error("Delete note failed."));
+            }
+        });
+    }
+
+    clearTrash() {
+        const noteAppPath = this.getNoteAppPath();
+        const metaPath = `${noteAppPath}/Trash/meta.json`;
+        return new Promise((resolve, reject) => {
+            try {
+                shell.rm("-rf", `${noteAppPath}/Trash/*`);
+                const meta = {
+                    title: "Trash",
+                    uuid: "Trash"
+                };
+                jf.writeFileSync(metaPath, meta);
+                resolve("OK");
+            } catch (e) {
+                reject(new Error("Clear Trash failed."));
+            }
+        });
+    }
 
     md2html(mdText) {
         return this.md.render(mdText);
+    }
+
+    showInFinder(_uuid) {
+        const noteAppPath = this.getNoteAppPath();
+        const notePath = `${noteAppPath}/Book/${_uuid}`;
+        electron.shell.openItem(notePath);
     }
 }

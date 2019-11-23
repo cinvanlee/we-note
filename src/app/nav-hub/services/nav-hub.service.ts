@@ -99,8 +99,14 @@ export class NavHubService {
                 { title: "廖雪峰", url: "https://www.liaoxuefeng.com/" },
                 { title: "现代简明魔法", url: "http://www.nowamagic.net/" },
                 { title: "囧克斯", url: "https://jiongks.name/" },
-                { title: "百度EFE", url: "https://efe.baidu.com/" },
-                { title: "", url: "" }
+                { title: "云风", url: "https://blog.codingnow.com/" },
+                { title: "陈皓", url: "https://coolshell.cn/" },
+                { title: "Artech", url: "https://www.cnblogs.com/artech/" },
+                { title: "叶小钗", url: "https://www.cnblogs.com/yexiaochai/" },
+                {
+                    title: "司徒正美",
+                    url: "https://www.cnblogs.com/rubylouvre/"
+                }
             ]
         },
         {
@@ -113,7 +119,8 @@ export class NavHubService {
                 { title: "阿里中间件团队", url: "http://jm.taobao.org/" },
                 { title: "有赞技术团队", url: "https://tech.youzan.com/" },
                 { title: "淘宝技术团队", url: "https://fed.taobao.org/" },
-                { title: "凹凸实验室", url: "https://aotu.io/" }
+                { title: "凹凸实验室", url: "https://aotu.io/" },
+                { title: "百度EFE", url: "https://efe.baidu.com/" }
             ]
         }
     ];
