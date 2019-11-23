@@ -140,7 +140,7 @@
             </div>
             <div [ngClass]="{ preview: true, hidden: mode === 'edit' }">
                 <div class="preview-title">{{ note.title }}</div>
-                <div class="preview-body" [innerHTML]="previewHTML"></div>
+                <div class="preview-body markdown-body" [innerHTML]="previewHTML"></div>
             </div>
         </div>
         <div [ngClass]="{ 'main__bd--empty': true, hidden: note.uuid }">
