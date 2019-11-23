@@ -14,9 +14,18 @@ const MarkdownIt = window.require("markdown-it");
     providedIn: "root"
 })
 export class NoteService {
-    md = new MarkdownIt();
+    md = new MarkdownIt({
+        html: true,
+        xhtmlOut: false,
+        breaks: true,
+        linkify: true,
+        typographer: true,
+        quotes: "“”‘’"
+    });
 
-    constructor() {}
+    constructor() {
+        this.md.validateLink = () => true;
+    }
 
     private getNoteAppPath() {
         const appDir = electron.remote.app.getAppPath();
@@ -218,7 +227,11 @@ export class NoteService {
         });
     }
 
-    md2html(mdText) {
+    md2html(_uuid, mdText) {
+        // replace `./resources` to `BOOK/note_uuid/resources`
+        const noteAppPath = this.getNoteAppPath();
+        const resourcePath = `file://${noteAppPath}/Book/${_uuid}/resources`;
+        mdText = mdText.replace(new RegExp('./resources', 'g'), resourcePath);
         return this.md.render(mdText);
     }
 
@@ -231,7 +244,7 @@ export class NoteService {
     saveImage(_uuid, imgBlob) {
         const noteAppPath = this.getNoteAppPath();
         const imgUuid = uuid();
-        const imgPath = `${noteAppPath}/Book/${_uuid}/resources/${imgUuid}.png`;
+        const imgPath = `${noteAppPath}/Book/${_uuid}/resources/${imgUuid}.jpg`;
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
             reader.readAsDataURL(imgBlob);
@@ -243,7 +256,7 @@ export class NoteService {
                     if (err) {
                         reject(`Save ${imgPath} failed.`);
                     }
-                    resolve(`./resources/${imgUuid}.png`);
+                    resolve(`./resources/${imgUuid}.jpg`);
                 });
             };
         });

@@ -145,7 +145,8 @@ export class EditorComponent implements OnInit, OnDestroy {
             return item;
         });
         this.note = note;
-        this.editor.setValue(note.content);
+        // moves cursor to the start
+        this.editor.setValue(note.content, -1);
     }
 
     onNoteContextClick($event, menu) {
@@ -178,7 +179,8 @@ export class EditorComponent implements OnInit, OnDestroy {
 
     renderPreviewHtml() {
         if (this.mode !== "edit") {
-            this.previewHTML = this.noteService.md2html(this.note.content);
+            const { uuid, content } = this.note;
+            this.previewHTML = this.noteService.md2html(uuid, content);
         }
     }
 
