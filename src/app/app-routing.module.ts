@@ -12,6 +12,10 @@ const routes: Routes = [
             { path: "note", loadChildren: "./note/note.module#NoteModule" },
             { path: "debug", loadChildren: "./debug/debug.module#DebugModule" },
             {
+                path: "preference",
+                loadChildren: "./preference/preference.module#PreferenceModule"
+            },
+            {
                 path: "nav-hub",
                 loadChildren: "./nav-hub/nav-hub.module#NavHubModule"
             }

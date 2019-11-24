@@ -1,0 +1,20 @@
+<div class="page-layout">
+    <div class="page-layout-left">
+        <div nz-menu nzMode="inline" nzTheme="light">
+            <ul nz-submenu nzOpen nzTitle="Appearance">
+                <a
+                    *ngFor="let menu of menus"
+                    [routerLink]="menu.path"
+                    routerLinkActive="ant-menu-item-selected"
+                    nz-menu-item
+                >
+                    {{ menu.name }}
+                </a>
+            </ul>
+        </div>
+    </div>
+
+    <div class="page-layout-main">
+        <router-outlet></router-outlet>
+    </div>
+</div>

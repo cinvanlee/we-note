@@ -12,7 +12,8 @@ export class DefaultComponent implements OnInit, OnDestroy {
     modules = [
         { path: "/debug", name: "Debug", icon: "bug" },
         { path: "/nav-hub", name: "Navigation", icon: "appstore" },
-        { path: "/note", name: "Notebook", icon: "book" }
+        { path: "/note", name: "Notebook", icon: "book" },
+        { path: "/preference", name: "Preference", icon: "setting" },
     ];
 
     tabs = [];
