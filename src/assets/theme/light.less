@@ -1,0 +1,42 @@
+@import "./markdown-github";
+
+.theme-light {
+    .layout {
+        &-left {
+            border-right: 1px solid #e1e4e8;
+            background: rgb(231, 234, 237);
+
+            .app-module {
+                border-left: 3px solid transparent;
+                color: #586069;
+
+                &.active {
+                    color: #0366d6;
+                    border-left-color: #0366d6;
+                }
+
+                &:hover {
+                    color: #0366d6;
+                }
+            }
+        }
+
+        &-main {
+            background-color: #fafbfc;
+
+            &-tabs {
+                background: rgb(231, 234, 237);
+                border-bottom: 1px solid #e1e4e8;
+
+                .tab {
+                    color: #586069;
+
+                    &.active {
+                        color: #24292e;
+                        background: rgba(255, 255, 255, 1);
+                    }
+                }
+            }
+        }
+    }
+}

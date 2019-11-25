@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
+import { WeNoteService } from "../../../core/services/we-note/we-note.service";
 import { INote, INoteDetail } from "./note.interface";
 
 const fs = window.require("fs");
-const path = window.require("path");
 const electron = window.require("electron");
 const jf = window.require("jsonfile");
 const uuid = window.require("uuid/v4");
@@ -23,20 +23,20 @@ export class NoteService {
         quotes: "“”‘’"
     });
 
-    constructor() {
+    constructor(private wnService: WeNoteService) {
         this.md.validateLink = () => true;
     }
 
     private getNoteAppPath() {
-        const appDir = electron.remote.app.getAppPath();
-        return `${appDir}/USER_DATA/NOTE`;
+        const appDir = this.wnService.getAppDir();
+        return `${appDir}/NOTEBOOK`;
     }
 
     private isDir(_path) {
         return fs.existsSync(_path) && fs.statSync(_path).isDirectory();
     }
 
-    initNoteApp(): Promise<string> {
+    initNotebook(): Promise<string> {
         const noteAppPath = this.getNoteAppPath();
         const bookPath = `${noteAppPath}/Book`;
         const inboxPath = `${noteAppPath}/Inbox`;
@@ -231,7 +231,7 @@ export class NoteService {
         // replace `./resources` to `BOOK/note_uuid/resources`
         const noteAppPath = this.getNoteAppPath();
         const resourcePath = `file://${noteAppPath}/Book/${_uuid}/resources`;
-        mdText = mdText.replace(new RegExp('./resources', 'g'), resourcePath);
+        mdText = mdText.replace(new RegExp("./resources", "g"), resourcePath);
         return this.md.render(mdText);
     }
 

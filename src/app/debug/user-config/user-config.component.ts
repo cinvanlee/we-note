@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { UserConfigService } from "../../core/services/user-config/user-config.service";
+import {WeNoteService} from "../../core/services/we-note/we-note.service";
 
 @Component({
     selector: "app-user-config",
@@ -9,7 +9,7 @@ import { UserConfigService } from "../../core/services/user-config/user-config.s
 export class UserConfigComponent implements OnInit {
     output: string;
 
-    constructor(private userConfigService: UserConfigService) {}
+    constructor(private wnService: WeNoteService) {}
 
     ngOnInit() {}
 
@@ -23,27 +23,30 @@ export class UserConfigComponent implements OnInit {
         return formatted;
     }
 
+    async getAppPath() {
+        this.output = this.wnService.getAppConfigPath();
+    }
+
     async getUserConfig() {
-        const config = await this.userConfigService.read();
+        const config = await this.wnService.getAppConfig();
         this.output = this.getFormattedJSON(config);
     }
 
     async setUserConfig() {
-        const config = await this.userConfigService.set(
-            "updatedAt",
+        const config = await this.wnService.setAppConfig(
+            "updated_at",
             +new Date()
         );
         this.output = this.getFormattedJSON(config);
     }
 
     async toggleTheme() {
-        const theme = await this.userConfigService.getConfigByKey("theme");
+        const theme = await this.wnService.getAppConfigByKey("theme");
         const newTheme = theme === "light" ? "dark" : "light";
-        const config = await this.userConfigService.set("theme", newTheme);
-        this.output = this.getFormattedJSON(config);
+        await this.wnService.setTheme(newTheme);
     }
 
     async getAppName() {
-        this.output = await this.userConfigService.getConfigByKey("name");
+        this.output = (await this.wnService.getAppConfigByKey("name")) as string;
     }
 }

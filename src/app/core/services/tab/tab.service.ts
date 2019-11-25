@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { BehaviorSubject, Observable, of } from "rxjs";
-import { UserConfigService } from "../user-config/user-config.service";
+import {WeNoteService} from "../we-note/we-note.service";
 
 interface ITab {
     path: string;
@@ -16,13 +16,13 @@ export class TabService {
     public tabs$ = new BehaviorSubject<ITab[]>([]);
 
     constructor(
-        private userConfigService: UserConfigService,
+        private wnService: WeNoteService,
         private router: Router
     ) {
         this.readCachedTabs();
         this.tabs$.subscribe(tabs => {
             try {
-                userConfigService.set("tabs", tabs);
+                wnService.setAppConfig("tabs", tabs);
             } catch (e) {
                 // ignore
             }
@@ -30,7 +30,8 @@ export class TabService {
     }
 
     private async readCachedTabs() {
-        const cachedTabs = await this.userConfigService.getConfigByKey("tabs");
+        const cachedTabs = await this.wnService.getAppConfigByKey("tabs");
+        // @ts-ignore
         this.tabs$.next(cachedTabs);
     }
 

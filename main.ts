@@ -1,9 +1,11 @@
-import { app, BrowserWindow, screen } from "electron";
+import { app, BrowserWindow, ipcMain, screen } from "electron";
+import * as updater from "electron-updater";
 import * as path from "path";
 import * as url from "url";
 
 let win;
 let serve;
+const autoUpdater = updater.autoUpdater;
 const args = process.argv.slice(1);
 serve = args.some(val => val === "--serve");
 
@@ -53,7 +55,10 @@ try {
     // This method will be called when Electron has finished
     // initialization and is ready to create browser windows.
     // Some APIs can only be used after this event occurs.
-    app.on("ready", createWindow);
+    app.on("ready", () => {
+        createWindow();
+        autoUpdater.checkForUpdatesAndNotify();
+    });
 
     // Quit when all windows are closed.
     app.on("window-all-closed", () => {
@@ -70,6 +75,10 @@ try {
         if (win === null) {
             createWindow();
         }
+    });
+
+    ipcMain.on("quitAndInstall", (event, arg) => {
+        autoUpdater.quitAndInstall();
     });
 } catch (e) {
     // Catch Error

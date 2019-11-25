@@ -49,7 +49,7 @@ export class EditorComponent implements OnInit, OnDestroy {
     }
 
     async ngOnInit() {
-        await this.noteService.initNoteApp();
+        await this.noteService.initNotebook();
         await this.refreshNoteList();
         this.initAceEditor();
         window.addEventListener("paste", this.pasteListener.bind(this), false);

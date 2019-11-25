@@ -1,10 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var electron_1 = require("electron");
+var updater = require("electron-updater");
 var path = require("path");
 var url = require("url");
 var win;
 var serve;
+var autoUpdater = updater.autoUpdater;
 var args = process.argv.slice(1);
 serve = args.some(function (val) { return val === "--serve"; });
 function createWindow() {
@@ -48,7 +50,10 @@ try {
     // This method will be called when Electron has finished
     // initialization and is ready to create browser windows.
     // Some APIs can only be used after this event occurs.
-    electron_1.app.on("ready", createWindow);
+    electron_1.app.on("ready", function () {
+        createWindow();
+        autoUpdater.checkForUpdatesAndNotify();
+    });
     // Quit when all windows are closed.
     electron_1.app.on("window-all-closed", function () {
         // On OS X it is common for applications and their menu bar
@@ -63,6 +68,9 @@ try {
         if (win === null) {
             createWindow();
         }
+    });
+    electron_1.ipcMain.on("quitAndInstall", function (event, arg) {
+        autoUpdater.quitAndInstall();
     });
 }
 catch (e) {
