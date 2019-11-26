@@ -1,7 +1,9 @@
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { BehaviorSubject, Observable, of } from "rxjs";
-import {WeNoteService} from "../we-note/we-note.service";
+import { WeNoteService } from "../we-note/we-note.service";
+
+const electron = window.require("electron");
 
 interface ITab {
     path: string;
@@ -15,10 +17,7 @@ interface ITab {
 export class TabService {
     public tabs$ = new BehaviorSubject<ITab[]>([]);
 
-    constructor(
-        private wnService: WeNoteService,
-        private router: Router
-    ) {
+    constructor(private wnService: WeNoteService, private router: Router) {
         this.readCachedTabs();
         this.tabs$.subscribe(tabs => {
             try {
@@ -84,5 +83,16 @@ export class TabService {
         } else {
             this.addTab({ path: "/", name: "Dashboard" });
         }
+    }
+
+    openExternal(url) {
+        electron.shell.openExternal(url);
+    }
+
+    openWebview({ path, name }) {
+        this.addOrActiveTab({
+            path: `/webview?url=${encodeURIComponent(path)}`,
+            name
+        });
     }
 }

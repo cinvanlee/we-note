@@ -15,26 +15,36 @@
     </div>
     <div class="layout-main">
         <div class="layout-main-tabs">
-            <div
-                *ngFor="let tab of tabs"
-                [ngClass]="{
-                    tab: true,
-                    active: tab.active
-                }"
-                (click)="handleActiveTab(tab)"
-            >
-                <span>{{ tab.name }}</span>
-                <i
-                    class="close-icon"
-                    nz-icon
-                    nzType="close"
-                    nzTheme="outline"
-                    (click)="handleRemoveTab(tab)"
-                ></i>
-            </div>
+            <nz-tabset [nzType]="'card'" [nzSelectedIndex]="selectedTabIndex">
+                <nz-tab
+                    *ngFor="let tab of tabs"
+                    [ngClass]="{
+                        tab: true,
+                        active: tab.active
+                    }"
+                    [nzTitle]="titleTemplate"
+                    (nzClick)="handleActiveTab(tab)"
+                >
+                    <ng-template #titleTemplate>
+                        <div>
+                            {{ tab.name }}
+                            <i
+                                nz-icon
+                                nzType="close"
+                                (click)="handleRemoveTab(tab)"
+                                class="ant-tabs-close-x"
+                            ></i>
+                        </div>
+                    </ng-template>
+                </nz-tab>
+            </nz-tabset>
         </div>
         <div class="layout-main-bd">
             <router-outlet></router-outlet>
         </div>
+    </div>
+
+    <div class="version-watermark" (click)="openGithub()">
+        <span>v{{ appVersion }}</span>
     </div>
 </div>

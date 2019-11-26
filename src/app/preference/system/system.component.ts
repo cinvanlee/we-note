@@ -8,6 +8,7 @@ import { WeNoteService } from "../../core/services/we-note/we-note.service";
 })
 export class SystemComponent implements OnInit {
     appDir = "";
+    useDefaultBrowser = false;
 
     constructor(private wnService: WeNoteService) {}
 
@@ -17,11 +18,19 @@ export class SystemComponent implements OnInit {
 
     async initPageData() {
         this.appDir = await this.wnService.getAppDir();
+        this.useDefaultBrowser = await this.wnService.getAppConfigByKey(
+            "useDefaultBrowser"
+        );
     }
 
     async openAppDirInFinder() {
         this.wnService.openInFinder(this.appDir);
     }
 
-    async apply() {}
+    async submitForm() {
+        await this.wnService.setAppConfig(
+            "useDefaultBrowser",
+            this.useDefaultBrowser
+        );
+    }
 }

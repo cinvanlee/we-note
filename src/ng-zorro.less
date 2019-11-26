@@ -19,21 +19,13 @@
 
 // Color used by default to control hover and active backgrounds and for
 // alert info backgrounds.
-@primary-1: color(
-    ~`colorPalette("@{primary-color}", 1) `
-); // replace tint(@primary-color, 90%)
-@primary-2: color(
-    ~`colorPalette("@{primary-color}", 2) `
-); // replace tint(@primary-color, 80%)
+@primary-1: color(~`colorPalette("@{primary-color}", 1) `); // replace tint(@primary-color, 90%)
+@primary-2: color(~`colorPalette("@{primary-color}", 2) `); // replace tint(@primary-color, 80%)
 @primary-3: color(~`colorPalette("@{primary-color}", 3) `); // unused
 @primary-4: color(~`colorPalette("@{primary-color}", 4) `); // unused
-@primary-5: color(
-    ~`colorPalette("@{primary-color}", 5) `
-); // color used to control the text color in many active and hover states, replace tint(@primary-color, 20%)
+@primary-5: color(~`colorPalette("@{primary-color}", 5) `); // color used to control the text color in many active and hover states, replace tint(@primary-color, 20%)
 @primary-6: @primary-color; // color used to control the text color of active buttons, don't use, use @primary-color
-@primary-7: color(
-    ~`colorPalette("@{primary-color}", 7) `
-); // replace shade(@primary-color, 5%)
+@primary-7: color(~`colorPalette("@{primary-color}", 7) `); // replace shade(@primary-color, 5%)
 @primary-8: color(~`colorPalette("@{primary-color}", 8) `); // unused
 @primary-9: color(~`colorPalette("@{primary-color}", 9) `); // unused
 @primary-10: color(~`colorPalette("@{primary-color}", 10) `); // unused
@@ -46,9 +38,9 @@
 // Base background color for most components
 @component-background: #fff;
 @font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial,
-    sans-serif, Apple Color Emoji, Segoe UI Emoji;
+sans-serif, Apple Color Emoji, Segoe UI Emoji;
 @code-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier,
-    monospace;
+monospace;
 @text-color: @black;
 @text-color-secondary: fade(@black, 45%);
 @text-color-inverse: @white;
@@ -125,11 +117,9 @@
 @outline-width: 2px;
 @outline-color: @primary-color;
 
-@background-color-light: hsv(
-    0,
-    0,
-    98%
-); // background of header and selected item
+@background-color-light: hsv(0,
+0,
+98%); // background of header and selected item
 @background-color-base: hsv(0, 0, 96%); // Default grey background color
 
 // Disabled states
@@ -423,9 +413,9 @@
 
 // dark theme
 @menu-dark-color: @text-color-secondary-dark;
-@menu-dark-bg: @layout-header-background;
+@menu-dark-bg: #3b3b3b;
 @menu-dark-arrow-color: #fff;
-@menu-dark-submenu-bg: #000c17;
+@menu-dark-submenu-bg: #3b3b3b;
 @menu-dark-highlight-color: #fff;
 @menu-dark-item-active-bg: @primary-color;
 @menu-dark-selected-item-icon-color: @white;
@@ -513,7 +503,7 @@
 
 // Tabs
 // ---
-@tabs-card-head-background: @background-color-light;
+@tabs-card-head-background: transparent;
 @tabs-card-height: 40px;
 @tabs-card-active-color: @primary-color;
 @tabs-title-font-size: @font-size-base;
@@ -529,9 +519,9 @@
 @tabs-vertical-margin: 0 0 16px 0;
 @tabs-scrolling-size: 32px;
 @tabs-highlight-color: @primary-color;
-@tabs-hover-color: @primary-5;
-@tabs-active-color: @primary-7;
-@tabs-card-gutter: 2px;
+@tabs-hover-color: inherit;
+@tabs-active-color: inherit;
+@tabs-card-gutter: 0;
 @tabs-card-tab-active-border-top: 2px solid transparent;
 
 // BackTop

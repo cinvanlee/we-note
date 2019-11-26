@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { TabService } from "../../services/tab/tab.service";
+import { WeNoteService } from "../../services/we-note/we-note.service";
 
 @Component({
     selector: "app-default",
@@ -10,24 +11,31 @@ import { TabService } from "../../services/tab/tab.service";
 })
 export class DefaultComponent implements OnInit, OnDestroy {
     modules = [
-        { path: "/debug", name: "Debug", icon: "bug" },
         { path: "/nav-hub", name: "Navigation", icon: "appstore" },
         { path: "/notebook", name: "Notebook", icon: "book" },
         { path: "/preference", name: "Preference", icon: "setting" }
     ];
 
+    selectedTabIndex = 0;
     tabs = [];
-    activeTabPath = '';
+    activeTabPath = "";
     tabSub: any;
+    appVersion = "";
 
-    constructor(private tabService: TabService, private router: Router) {}
+    constructor(
+        private tabService: TabService,
+        private router: Router,
+        private wnService: WeNoteService
+    ) {}
 
-    ngOnInit() {
+    async ngOnInit() {
+        this.appVersion = await this.wnService.getAppConfigByKey("version");
         this.tabSub = this.tabService.getTabs().subscribe(tabs => {
             this.tabs = tabs;
-            tabs.forEach(tab => {
+            tabs.forEach((tab, index) => {
                 if (tab.active) {
                     this.activeTabPath = tab.path;
+                    this.selectedTabIndex = index;
                 }
             });
         });
@@ -54,5 +62,9 @@ export class DefaultComponent implements OnInit, OnDestroy {
 
     handleActiveTab(tab) {
         this.tabService.activeTab(tab);
+    }
+
+    openGithub() {
+        this.tabService.openExternal("https://github.com/rmlzy/we-note");
     }
 }

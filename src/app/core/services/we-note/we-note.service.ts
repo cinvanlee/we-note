@@ -65,7 +65,7 @@ export class WeNoteService {
         });
     }
 
-    getAppConfigByKey(key: string): any {
+    getAppConfigByKey(key: string): Promise<any> {
         const configPath = this.getAppConfigPath();
         return new Promise((resolve, reject) => {
             try {
@@ -124,7 +124,8 @@ export class WeNoteService {
             hexo: {
                 enable: false,
                 dir: ""
-            }
+            },
+            useDefaultBrowser: false
         };
         return new Promise((resolve, reject) => {
             try {
@@ -184,7 +185,6 @@ export class WeNoteService {
     writeFile(filePath, fileContent) {
         // if not exist, create it
         if (!this.isFile(filePath)) {
-
         }
     }
 }

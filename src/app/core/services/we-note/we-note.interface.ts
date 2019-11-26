@@ -21,5 +21,6 @@ export interface IConfig {
     updatedAt: number;
     tabs: ITab[],
     blogEngine: string;
-    hexo: IHexo
+    hexo: IHexo,
+    useDefaultBrowser: boolean;
 }

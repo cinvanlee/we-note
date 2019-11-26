@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { NzNotificationService } from "ng-zorro-antd";
 import { HexoService } from "../../core/services/hexo/hexo.service";
+import { TabService } from "../../core/services/tab/tab.service";
 import { IHexo } from "../../core/services/we-note/we-note.interface";
 import { WeNoteService } from "../../core/services/we-note/we-note.service";
 
@@ -15,12 +16,13 @@ export class DeployComponent implements OnInit {
     isHexoInstalled = false;
     initLoading = false;
     deployLoading = false;
-    hexoServerLoading = false;
+    config = {};
 
     constructor(
         private wnService: WeNoteService,
         private hexoService: HexoService,
-        private notify: NzNotificationService
+        private notify: NzNotificationService,
+        private tabService: TabService
     ) {}
 
     ngOnInit() {
@@ -31,6 +33,7 @@ export class DeployComponent implements OnInit {
         this.blogEngine = await this.wnService.getAppConfigByKey("blogEngine");
         this.hexo = await this.wnService.getAppConfigByKey("hexo");
         this.isHexoInstalled = this.hexoService.isHexoInstalled();
+        this.config = await this.hexoService.getConfig();
     }
 
     openPostsDirInFinder() {
@@ -41,14 +44,10 @@ export class DeployComponent implements OnInit {
         this.initLoading = true;
         setTimeout(async () => {
             try {
-                const res = await this.hexoService.init();
-                if (res.success) {
-                    this.notify.success(res.message, res.data);
-                } else {
-                    this.notify.error(res.message, res.data);
-                }
+                await this.hexoService.init();
+                this.notify.success("SUCCESS", "Hexo installed.");
             } catch (e) {
-                this.notify.error(e.message, e.data);
+                this.notify.error("ERROR", e.message);
             }
             this.initLoading = false;
             this.isHexoInstalled = this.hexoService.isHexoInstalled();
@@ -61,21 +60,36 @@ export class DeployComponent implements OnInit {
         this.deployLoading = false;
     }
 
-    startHexoServer() {
-        this.hexoServerLoading = true;
-        setTimeout(async () => {
-            try {
-                const res = await this.hexoService.startHexoServer();
-                if (res.success) {
-                    this.notify.success(res.message, res.data);
-                } else {
-                    this.notify.error(res.message, res.data);
-                }
-                this.hexoServerLoading = false;
-            } catch (e) {
-                this.hexoServerLoading = false;
-                this.notify.error(e.message, e.data);
-            }
-        }, 200);
+    async startHexoServer() {
+        try {
+            await this.hexoService.startHexoServer();
+            this.notify.success("SUCCESS", "Hexo server started.");
+        } catch (e) {
+            this.notify.error("ERROR", e.message);
+        }
+    }
+
+    async stopHexoServer() {
+        try {
+            await this.hexoService.stopHexoServer();
+        } catch (e) {
+            this.notify.error("ERROR", e.message);
+        }
+    }
+
+    previewHexo() {
+        this.tabService.openWebview({
+            path: "http://localhost:4000",
+            name: "HEXO"
+        });
+    }
+
+    async saveConfig() {
+        try {
+            await this.hexoService.saveConfig(this.config);
+            this.notify.success("SUCCESS", "Hexo config saved.");
+        } catch (e) {
+            this.notify.error("ERROR", e.message);
+        }
     }
 }

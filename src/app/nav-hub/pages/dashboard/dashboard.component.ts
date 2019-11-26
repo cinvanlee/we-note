@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { TabService } from "../../../core/services/tab/tab.service";
+import { WeNoteService } from "../../../core/services/we-note/we-note.service";
 import { NavHubService } from "../../services/nav-hub.service";
 
 @Component({
@@ -12,18 +13,28 @@ export class DashboardComponent implements OnInit {
 
     constructor(
         private navService: NavHubService,
-        private tabService: TabService
+        private tabService: TabService,
+        private wnService: WeNoteService
     ) {}
 
     ngOnInit() {
         this.sites = this.navService.sites;
     }
 
-    openSite(site) {
-        if (!site.url) {
-            return;
+    async openSite(site) {
+        const useDefaultBrowser = await this.wnService.getAppConfigByKey(
+            "useDefaultBrowser"
+        );
+        if (useDefaultBrowser) {
+            this.tabService.openExternal(site.url);
+        } else {
+            this.tabService.openWebview({ path: site.url, name: site.title });
         }
-        const path = `/webview?url=${encodeURIComponent(site.url)}`;
-        this.tabService.addOrActiveTab({ path, name: site.title });
+    }
+
+    openAllSite(block) {
+        block.links.forEach(site => {
+            this.openSite(site);
+        });
     }
 }

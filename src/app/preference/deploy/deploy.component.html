@@ -5,7 +5,7 @@
     </nz-breadcrumb>
     <br />
 
-    <nz-card nzTitle="Deploy to Github Pages" nzSize="small">
+    <nz-card nzTitle="Deploy to Github Pages">
         <form nz-form *ngIf="hexo && isHexoInstalled; else init_hexo">
             <nz-form-item>
                 <nz-form-label [nzSpan]="3">Blog Engine</nz-form-label>
@@ -13,7 +13,7 @@
                     <nz-select
                         name="blogEngine"
                         [(ngModel)]="blogEngine"
-                        style="width: 200px"
+                        style="width: 300px"
                     >
                         <nz-option nzLabel="Hexo" nzValue="hexo"></nz-option>
                     </nz-select>
@@ -33,7 +33,7 @@
             <nz-form-item>
                 <nz-form-label [nzSpan]="3">Posts Path</nz-form-label>
                 <nz-form-control [nzSpan]="20">
-                    <nz-input-group style="width: 200px">
+                    <nz-input-group style="width: 300px">
                         <input
                             name="hexoPostDir"
                             type="text"
@@ -54,21 +54,13 @@
 
             <nz-form-item nz-row>
                 <nz-form-control [nzSpan]="20" [nzOffset]="3">
-                    <button nz-button nzType="default">Cancel</button>
-                    <button
-                        nz-button
-                        (click)="startHexoServer()"
-                        [nzLoading]="hexoServerLoading"
-                    >
-                        Start Hexo Server
-                    </button>
                     <button
                         nz-button
                         nzType="primary"
                         (click)="deploy()"
                         [nzLoading]="deployLoading"
                     >
-                        Deploy
+                        Apply
                     </button>
                 </nz-form-control>
             </nz-form-item>
@@ -93,5 +85,98 @@
                 </nz-empty>
             </div>
         </ng-template>
+    </nz-card>
+
+    <nz-card nzTitle="Hexo Config">
+        <form nz-form>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="3">Title</nz-form-label>
+                <nz-form-control [nzSpan]="20">
+                    <nz-input-group style="width: 300px">
+                        <input
+                            name="config.title"
+                            type="text"
+                            nz-input
+                            [(ngModel)]="config.title"
+                        />
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="3">Sub Title</nz-form-label>
+                <nz-form-control [nzSpan]="20">
+                    <nz-input-group style="width: 300px">
+                        <input
+                            name="config.subtitle"
+                            type="text"
+                            nz-input
+                            [(ngModel)]="config.subtitle"
+                        />
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="3">Description</nz-form-label>
+                <nz-form-control [nzSpan]="20">
+                    <nz-input-group style="width: 300px">
+                        <input
+                            name="config.description"
+                            type="text"
+                            nz-input
+                            [(ngModel)]="config.description"
+                        />
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="3">Keywords</nz-form-label>
+                <nz-form-control [nzSpan]="20">
+                    <nz-input-group style="width: 300px">
+                        <input
+                            name="config.keywords"
+                            type="text"
+                            nz-input
+                            [(ngModel)]="config.keywords"
+                        />
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="3">Author</nz-form-label>
+                <nz-form-control [nzSpan]="20">
+                    <nz-input-group style="width: 300px">
+                        <input
+                            name="config.author"
+                            type="text"
+                            nz-input
+                            [(ngModel)]="config.author"
+                        />
+                    </nz-input-group>
+                </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item nz-row>
+                <nz-form-control [nzSpan]="20" [nzOffset]="3">
+                    <button nz-button nzType="primary" (click)="saveConfig()">
+                        Apply
+                    </button>
+                    <button
+                        nz-button
+                        (click)="startHexoServer()"
+                    >
+                        Start Hexo Server
+                    </button>
+                    <button
+                        nz-button
+                        (click)="stopHexoServer()"
+                    >
+                        Stop Hexo Server
+                    </button>
+                    <button nz-button (click)="previewHexo()">
+                        Preview Hexo
+                    </button>
+                </nz-form-control>
+            </nz-form-item>
+        </form>
     </nz-card>
 </div>

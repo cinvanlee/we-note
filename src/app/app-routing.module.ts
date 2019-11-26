@@ -9,7 +9,6 @@ const routes: Routes = [
         component: DefaultComponent,
         children: [
             { path: "", loadChildren: "./core/core.module#CoreModule" },
-            { path: "debug", loadChildren: "./debug/debug.module#DebugModule" },
             {
                 path: "preference",
                 loadChildren: "./preference/preference.module#PreferenceModule"

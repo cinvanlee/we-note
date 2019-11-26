@@ -1,1 +1,35 @@
-<webview class="webview" webview *ngIf="url" attr.src="{{ url }}"></webview>
+<div class="webview">
+    <div *ngIf="loading" class="webview--loading">
+        <i nz-icon nzType="loading" nzTheme="outline"></i>
+    </div>
+    <div class="webview-tool">
+        <div class="webview-tool-left">
+            <div>
+                <button nz-button nzSize="small" nzType="default" nzShape="circle" (click)="back()" [disabled]="!canGoBack">
+                    <i nz-icon nzType="arrow-left" nzTheme="outline"></i>
+                </button>
+            </div>
+            <div>
+                <button nz-button nzSize="small" nzType="default" nzShape="circle" (click)="goForward()" [disabled]="!canGoForward">
+                    <i nz-icon nzType="arrow-right" nzTheme="outline"></i>
+                </button>
+            </div>
+            <div>
+                <button nz-button nzSize="small" nzType="default" nzShape="circle" (click)="reload()">
+                    <i nz-icon nzType="reload" nzTheme="outline"></i>
+                </button>
+            </div>
+        </div>
+        <div class="webview-tool-main">
+            <input #urlInput type="text" [value]="url" (keyup.enter)="toNewSite(urlInput.value)" />
+        </div>
+        <div class="webview-tool-right">
+            <button nz-button nzType="link" (click)="openInFinder()">
+                Open in Browser
+            </button>
+        </div>
+    </div>
+    <div class="webview-container">
+        <webview webview attr.src="{{ url }}"></webview>
+    </div>
+</div>

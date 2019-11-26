@@ -2,7 +2,7 @@
 
 <div align="center">
     <h1>👨🏻‍💻 WeNote</h1>
-    <h3>A notebook app for programmer</h3>
+    <h3>A notebook app build for programmer</h3>
     <a href="javascript:;">Download</a> | <a href="javascript:;">Homepage</a>
 </div>
 
