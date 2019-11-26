@@ -1,1 +1,41 @@
-<p>system works!</p>
+<div>
+    <nz-breadcrumb>
+        <nz-breadcrumb-item>Appearance</nz-breadcrumb-item>
+        <nz-breadcrumb-item>System</nz-breadcrumb-item>
+    </nz-breadcrumb>
+    <br />
+
+    <nz-card nzSize="small">
+        <form nz-form>
+            <nz-form-item>
+                <nz-form-label [nzSpan]="3">Document Path</nz-form-label>
+                <nz-form-control [nzSpan]="20">
+                    <nz-input-group style="width: 400px">
+                        <input
+                            name="appDir"
+                            type="text"
+                            nz-input
+                            [(ngModel)]="appDir"
+                            [disabled]="true"
+                        />
+                    </nz-input-group>
+                    <button nz-button nzType="link" (click)="openAppDirInFinder()">Open in Finder</button>
+                </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item nz-row>
+                <nz-form-control [nzSpan]="20" [nzOffset]="3">
+                    <button nz-button nzType="default">Cancel</button>
+                    <button
+                        nz-button
+                        nzType="primary"
+                        [nzLoading]="loading"
+                        (click)="apply()"
+                    >
+                        Apply
+                    </button>
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+    </nz-card>
+</div>

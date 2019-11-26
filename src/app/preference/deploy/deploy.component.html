@@ -1,1 +1,97 @@
-<p>deploy works!</p>
+<div>
+    <nz-breadcrumb>
+        <nz-breadcrumb-item>Appearance</nz-breadcrumb-item>
+        <nz-breadcrumb-item>Deploy</nz-breadcrumb-item>
+    </nz-breadcrumb>
+    <br />
+
+    <nz-card nzTitle="Deploy to Github Pages" nzSize="small">
+        <form nz-form *ngIf="hexo && isHexoInstalled; else init_hexo">
+            <nz-form-item>
+                <nz-form-label [nzSpan]="3">Blog Engine</nz-form-label>
+                <nz-form-control [nzSpan]="20">
+                    <nz-select
+                        name="blogEngine"
+                        [(ngModel)]="blogEngine"
+                        style="width: 200px"
+                    >
+                        <nz-option nzLabel="Hexo" nzValue="hexo"></nz-option>
+                    </nz-select>
+                </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item>
+                <nz-form-label [nzSpan]="3">Enable</nz-form-label>
+                <nz-form-control [nzSpan]="20">
+                    <nz-switch
+                        name="enable"
+                        [(ngModel)]="hexo.enable"
+                    ></nz-switch>
+                </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item>
+                <nz-form-label [nzSpan]="3">Posts Path</nz-form-label>
+                <nz-form-control [nzSpan]="20">
+                    <nz-input-group style="width: 200px">
+                        <input
+                            name="hexoPostDir"
+                            type="text"
+                            nz-input
+                            [(ngModel)]="hexo.dir"
+                        />
+                    </nz-input-group>
+                    <button
+                        [disabled]="!hexo.dir"
+                        nz-button
+                        nzType="link"
+                        (click)="openPostsDirInFinder()"
+                    >
+                        Open in Finder
+                    </button>
+                </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item nz-row>
+                <nz-form-control [nzSpan]="20" [nzOffset]="3">
+                    <button nz-button nzType="default">Cancel</button>
+                    <button
+                        nz-button
+                        (click)="startHexoServer()"
+                        [nzLoading]="hexoServerLoading"
+                    >
+                        Start Hexo Server
+                    </button>
+                    <button
+                        nz-button
+                        nzType="primary"
+                        (click)="deploy()"
+                        [nzLoading]="deployLoading"
+                    >
+                        Deploy
+                    </button>
+                </nz-form-control>
+            </nz-form-item>
+        </form>
+
+        <ng-template #init_hexo>
+            <div class="empty-container">
+                <nz-empty
+                    nzNotFoundContent="No configuration available"
+                    [nzNotFoundFooter]="footerTpl"
+                >
+                    <ng-template #footerTpl>
+                        <button
+                            nz-button
+                            nzType="primary"
+                            (click)="initHexo()"
+                            [nzLoading]="initLoading"
+                        >
+                            Init Hexo Now
+                        </button>
+                    </ng-template>
+                </nz-empty>
+            </div>
+        </ng-template>
+    </nz-card>
+</div>

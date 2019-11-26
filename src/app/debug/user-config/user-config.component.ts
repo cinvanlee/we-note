@@ -34,7 +34,7 @@ export class UserConfigComponent implements OnInit {
 
     async setUserConfig() {
         const config = await this.wnService.setAppConfig(
-            "updated_at",
+            "updatedAt",
             +new Date()
         );
         this.output = this.getFormattedJSON(config);

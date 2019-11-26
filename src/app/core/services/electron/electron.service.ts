@@ -28,7 +28,7 @@ export class ElectronService {
             this.remote = window.require("electron").remote;
 
             this.childProcess = window.require("child_process");
-            this.fs = window.require("fs");
+            this.fs = window.require("fs-extra");
         }
     }
 }

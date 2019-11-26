@@ -1,8 +1,8 @@
 export interface INote {
     uuid: string;
     title: string;
-    created_at: number;
-    updated_at: number;
+    createdAt: number;
+    updatedAt: number;
     active?: boolean;
 }
 
@@ -14,8 +14,8 @@ export interface IContent {
 export interface INoteDetail {
     uuid: string;
     title: string;
-    created_at: number;
-    updated_at: number;
+    createdAt: number;
+    updatedAt: number;
     content: string;
     tags: string[];
 }

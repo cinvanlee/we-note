@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { TabService } from "../../services";
+import { TabService } from "../../services/tab/tab.service";
 
 @Component({
     selector: "app-default",
@@ -12,8 +12,8 @@ export class DefaultComponent implements OnInit, OnDestroy {
     modules = [
         { path: "/debug", name: "Debug", icon: "bug" },
         { path: "/nav-hub", name: "Navigation", icon: "appstore" },
-        { path: "/note", name: "Notebook", icon: "book" },
-        { path: "/preference", name: "Preference", icon: "setting" },
+        { path: "/notebook", name: "Notebook", icon: "book" },
+        { path: "/preference", name: "Preference", icon: "setting" }
     ];
 
     tabs = [];

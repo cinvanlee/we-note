@@ -5,15 +5,14 @@
             nzSize="small"
             [nzExtra]="extraTemplate"
         >
-            <a
+            <button
                 *ngFor="let site of block.links"
-                [href]="site.url"
-                target="_blank"
+                (click)="openSite(site)"
+                nz-button
+                nzType="link"
             >
-                <button nz-button nzType="link">
-                    {{ site.title }}
-                </button>
-            </a>
+                {{ site.title }}
+            </button>
         </nz-card>
         <ng-template #extraTemplate>
             <a>一键打开</a>

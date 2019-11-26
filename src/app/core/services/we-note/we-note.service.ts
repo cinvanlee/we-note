@@ -1,8 +1,9 @@
 import { Injectable } from "@angular/core";
 import _ from "lodash";
 import * as pkg from "../../../../../package.json";
+import { IConfig } from "./we-note.interface";
 
-const fs = window.require("fs");
+const fs = window.require("fs-extra");
 const electron = window.require("electron");
 const jf = window.require("jsonfile");
 const shell = window.require("shelljs");
@@ -13,25 +14,46 @@ const shell = window.require("shelljs");
 export class WeNoteService {
     constructor() {}
 
-    isDir(_path) {
-        return fs.existsSync(_path) && fs.statSync(_path).isDirectory();
+    isFile(_path) {
+        try {
+            const stat = fs.lstatSync(_path);
+            return stat.isFile();
+        } catch (e) {
+            return false;
+        }
     }
 
-    public getAppDir() {
+    isDir(_path) {
+        try {
+            const stat = fs.lstatSync(_path);
+            return stat.isDirectory();
+        } catch (e) {
+            return false;
+        }
+    }
+
+    getAppDir() {
         const appDir = electron.remote.app.getPath("documents");
         return `${appDir}/WE_NOTE`;
     }
 
-    public getAppLocale() {
+    async setAppDir(appDir) {
+        if (!this.isDir(appDir)) {
+            return Promise.reject(`The directory: ${appDir} is not available!`);
+        }
+        await this.setAppConfig("appDir", appDir);
+    }
+
+    getAppLocale() {
         return electron.remote.app.getLocale();
     }
 
-    public getAppConfigPath() {
+    getAppConfigPath() {
         const appDir = this.getAppDir();
         return `${appDir}/config.json`;
     }
 
-    public getAppConfig() {
+    getAppConfig(): Promise<IConfig> {
         const configPath = this.getAppConfigPath();
         return new Promise((resolve, reject) => {
             try {
@@ -43,7 +65,7 @@ export class WeNoteService {
         });
     }
 
-    public getAppConfigByKey(key: string) {
+    getAppConfigByKey(key: string): any {
         const configPath = this.getAppConfigPath();
         return new Promise((resolve, reject) => {
             try {
@@ -55,7 +77,7 @@ export class WeNoteService {
         });
     }
 
-    public async setAppConfig(key: string, value: any) {
+    async setAppConfig(key: string, value: any): Promise<IConfig> {
         const configPath = this.getAppConfigPath();
         const config = await this.getAppConfig();
         return new Promise((resolve, reject) => {
@@ -76,23 +98,33 @@ export class WeNoteService {
         });
     }
 
-    public async initAppConfig() {
+    async initAppConfig() {
         const appDir = this.getAppDir();
         if (this.isDir(appDir)) {
             const cfg = await this.getAppConfig();
-            this.setTheme(cfg.theme);
+            this.setTheme(cfg["theme"]);
+            this.setFont(cfg["font"]);
+            this.setFontSize(cfg.fontSize);
             return Promise.resolve(cfg);
         }
 
         const timestamp = +new Date();
-        const config = {
+        const config: IConfig = {
             name: pkg.name,
             version: pkg.version,
-            theme: "default",
+            appDir,
+            theme: "light",
+            font: "Helvetica",
+            fontSize: "14",
             language: this.getAppLocale(),
-            created_at: timestamp,
-            updated_at: timestamp,
-            tabs: []
+            createdAt: timestamp,
+            updatedAt: timestamp,
+            tabs: [],
+            blogEngine: "hexo",
+            hexo: {
+                enable: false,
+                dir: ""
+            }
         };
         return new Promise((resolve, reject) => {
             try {
@@ -105,7 +137,7 @@ export class WeNoteService {
         });
     }
 
-    public async setTheme(themeName) {
+    async setTheme(themeName) {
         const classList = document.body.classList;
         // @ts-ignore
         for (const name of classList) {
@@ -114,5 +146,45 @@ export class WeNoteService {
         const themeCls = `theme-${themeName}`;
         document.body.classList.add(themeCls);
         await this.setAppConfig("theme", themeName);
+    }
+
+    async setLanguage(language) {
+        await this.setAppConfig("language", language);
+    }
+
+    getAvailableFonts() {
+        return [
+            { label: "Helvetica", value: "Helvetica" },
+            { label: "Arial", value: "Arial" },
+            { label: "Lucida Family", value: "Lucida Family" },
+            { label: "Verdana", value: "Verdana" },
+            { label: "Tahoma", value: "Tahoma" },
+            { label: "Trebuchet MS", value: "Trebuchet MS" },
+            { label: "Georgia", value: "Georgia" },
+            { label: "Times", value: "Times" },
+            { label: "微软雅黑", value: "微软雅黑" },
+            { label: "华文细黑", value: "华文细黑" }
+        ];
+    }
+
+    async setFont(font) {
+        document.body.style.fontFamily = font;
+        await this.setAppConfig("font", font);
+    }
+
+    async setFontSize(fontSize) {
+        document.body.style.fontSize = `${fontSize}px`;
+        await this.setAppConfig("fontSize", fontSize);
+    }
+
+    openInFinder(path) {
+        electron.shell.openItem(path);
+    }
+
+    writeFile(filePath, fileContent) {
+        // if not exist, create it
+        if (!this.isFile(filePath)) {
+
+        }
     }
 }

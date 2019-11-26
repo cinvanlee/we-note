@@ -4,15 +4,15 @@ import "brace/mode/markdown";
 import "brace/theme/github";
 import _ from "lodash";
 import { NzContextMenuService } from "ng-zorro-antd";
-import { INote } from "../../services/note/note.interface";
-import { NoteService } from "../../services/note/note.service";
+import { INote } from "../../services/notebook/notebook.interface";
+import { NotebookService } from "../../services/notebook/notebook.service";
 
 @Component({
-    selector: "app-editor",
-    templateUrl: "./editor.component.html",
-    styleUrls: ["./editor.component.less"]
+    selector: "app-notebook",
+    templateUrl: "./notebook.component.html",
+    styleUrls: ["./notebook.component.less"]
 })
-export class EditorComponent implements OnInit, OnDestroy {
+export class NotebookComponent implements OnInit, OnDestroy {
     notes: INote[];
     editor: any;
     // note mode, edit | 'preview' | 'multiple'
@@ -22,8 +22,8 @@ export class EditorComponent implements OnInit, OnDestroy {
         uuid: "",
         title: "",
         content: "",
-        created_at: 0,
-        updated_at: 0,
+        createdAt: 0,
+        updatedAt: 0,
         tags: []
     };
     editorFocused = false;
@@ -42,14 +42,14 @@ export class EditorComponent implements OnInit, OnDestroy {
     }, 1000);
 
     constructor(
-        private noteService: NoteService,
+        private nbService: NotebookService,
         private nzContextMenuService: NzContextMenuService
     ) {
         this.notes = [];
     }
 
     async ngOnInit() {
-        await this.noteService.initNotebook();
+        await this.nbService.initNotebook();
         await this.refreshNoteList();
         this.initAceEditor();
         window.addEventListener("paste", this.pasteListener.bind(this), false);
@@ -104,7 +104,7 @@ export class EditorComponent implements OnInit, OnDestroy {
             }
             try {
                 const blob = items[i].getAsFile();
-                const imgUrl = await this.noteService.saveImage(
+                const imgUrl = await this.nbService.saveImage(
                     this.note.uuid,
                     blob
                 );
@@ -116,18 +116,18 @@ export class EditorComponent implements OnInit, OnDestroy {
     }
 
     async refreshNoteList() {
-        const notes = await this.noteService.fetchList();
-        this.notes = notes.sort((a, b) => b.created_at - a.created_at);
+        const notes = await this.nbService.fetchList();
+        this.notes = notes.sort((a, b) => b.createdAt - a.createdAt);
     }
 
     async createNote() {
-        const uuid = await this.noteService.createOne();
+        const uuid = await this.nbService.createOne();
         await this.refreshNoteList();
         this.selectNote(uuid);
     }
 
     async deleteNote(uuid) {
-        await this.noteService.moveToTrash(uuid);
+        await this.nbService.moveToTrash(uuid);
         await this.refreshNoteList();
 
         // if delete current selected note,
@@ -139,7 +139,7 @@ export class EditorComponent implements OnInit, OnDestroy {
     }
 
     async selectNote(uuid) {
-        const note = await this.noteService.fetchOne(uuid);
+        const note = await this.nbService.fetchOne(uuid);
         this.notes = this.notes.map(item => {
             item.active = item.uuid === uuid;
             return item;
@@ -154,7 +154,7 @@ export class EditorComponent implements OnInit, OnDestroy {
     }
 
     async saveNote() {
-        await this.noteService.updateOne(this.note);
+        await this.nbService.updateOne(this.note);
     }
 
     async createTag(evt) {
@@ -180,11 +180,11 @@ export class EditorComponent implements OnInit, OnDestroy {
     renderPreviewHtml() {
         if (this.mode !== "edit") {
             const { uuid, content } = this.note;
-            this.previewHTML = this.noteService.md2html(uuid, content);
+            this.previewHTML = this.nbService.md2html(uuid, content);
         }
     }
 
     showInFinder(uuid) {
-        this.noteService.showInFinder(uuid);
+        this.nbService.showInFinder(uuid);
     }
 }

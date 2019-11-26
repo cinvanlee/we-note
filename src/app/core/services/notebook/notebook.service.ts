@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
-import { WeNoteService } from "../../../core/services/we-note/we-note.service";
-import { INote, INoteDetail } from "./note.interface";
+import { WeNoteService } from "../we-note/we-note.service";
+import { INote, INoteDetail } from "./notebook.interface";
 
-const fs = window.require("fs");
+const fs = window.require("fs-extra");
 const electron = window.require("electron");
 const jf = window.require("jsonfile");
 const uuid = window.require("uuid/v4");
@@ -13,7 +13,7 @@ const MarkdownIt = window.require("markdown-it");
 @Injectable({
     providedIn: "root"
 })
-export class NoteService {
+export class NotebookService {
     md = new MarkdownIt({
         html: true,
         xhtmlOut: false,
@@ -93,10 +93,10 @@ export class NoteService {
                     return {
                         ...meta,
                         title: meta.title || "Untitled Note",
-                        created_formatted: moment(meta.created_at).format(
+                        created_formatted: moment(meta.createdAt).format(
                             "YYYY-MM-DD hh:mm:ss"
                         ),
-                        updated_formatted: moment(meta.updated_at).format(
+                        updated_formatted: moment(meta.updatedAt).format(
                             "YYYY-MM-DD hh:mm:ss"
                         )
                     };
@@ -118,10 +118,10 @@ export class NoteService {
                 const contentInfo = jf.readFileSync(contentPath);
                 resolve({
                     ...metaInfo,
-                    created_formatted: moment(metaInfo.created_at).format(
+                    created_formatted: moment(metaInfo.createdAt).format(
                         "YYYY-MM-DD hh:mm:ss"
                     ),
-                    updated_formatted: moment(metaInfo.updated_at).format(
+                    updated_formatted: moment(metaInfo.updatedAt).format(
                         "YYYY-MM-DD hh:mm:ss"
                     ),
                     content: contentInfo.content
@@ -137,10 +137,10 @@ export class NoteService {
         const _uuid = uuid();
         const timestamp = +new Date();
         const meta = {
-            created_at: timestamp,
+            createdAt: timestamp,
             tags: [],
             title: "",
-            updated_at: timestamp,
+            updatedAt: timestamp,
             uuid: _uuid
         };
         const content = {
@@ -171,10 +171,10 @@ export class NoteService {
         const noteAppPath = this.getNoteAppPath();
         const timestamp = +new Date();
         const meta = {
-            created_at: timestamp,
+            createdAt: timestamp,
             tags: note.tags,
             title: note.title,
-            updated_at: timestamp,
+            updatedAt: timestamp,
             uuid: note.uuid
         };
         const content = {

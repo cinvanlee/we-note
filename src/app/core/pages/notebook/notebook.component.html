@@ -2,7 +2,7 @@
     <div class="page-layout-left">
         <div class="note-filter">
             <span nz-dropdown [nzDropdownMenu]="menu" nzTrigger="click"
-                >Sort by Created ↓</span
+            >Sort by Created ↓</span
             >
         </div>
         <nz-dropdown-menu #menu="nzDropdownMenu">
@@ -115,7 +115,7 @@
                                 [nzColor]="'#404040'"
                                 *ngFor="let tag of note.tags"
                                 (nzOnClose)="removeTag(tag)"
-                                >{{ tag }}
+                            >{{ tag }}
                             </nz-tag>
                         </div>
                         <input

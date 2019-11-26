@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
 import { AppConfig } from "../environments/environment";
-import { ElectronService } from "./core/services";
+import { ElectronService } from "./core/services/electron/electron.service";
 import { WeNoteService } from "./core/services/we-note/we-note.service";
 
 @Component({
