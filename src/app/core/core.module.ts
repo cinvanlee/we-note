@@ -4,10 +4,14 @@ import { NgModule } from "@angular/core";
 import { SharedModule } from "../shared/shared.module";
 import { CoreRoutingModule } from "./core-routing.module";
 import { DefaultComponent } from "./layouts";
-import { NotFoundComponent, WelcomeComponent } from "./pages";
-import { NotebookComponent } from './pages/notebook/notebook.component';
-import { SettingComponent } from "./pages/setting/setting.component";
-import { WebviewComponent } from './pages/webview/webview.component';
+import {
+    NotebookComponent,
+    NotFoundComponent,
+    PassworderComponent,
+    SettingComponent,
+    WebviewComponent,
+    WelcomeComponent
+} from "./pages";
 
 @NgModule({
     declarations: [
@@ -16,7 +20,8 @@ import { WebviewComponent } from './pages/webview/webview.component';
         NotFoundComponent,
         SettingComponent,
         WebviewComponent,
-        NotebookComponent
+        NotebookComponent,
+        PassworderComponent
     ],
     imports: [CommonModule, SharedModule, CoreRoutingModule]
 })

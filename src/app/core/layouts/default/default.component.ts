@@ -13,6 +13,7 @@ export class DefaultComponent implements OnInit, OnDestroy {
     modules = [
         { path: "/nav-hub", name: "Navigation", icon: "appstore" },
         { path: "/notebook", name: "Notebook", icon: "book" },
+        { path: "/passworder", name: "Password Manager", icon: "lock" },
         { path: "/preference", name: "Preference", icon: "setting" }
     ];
 
