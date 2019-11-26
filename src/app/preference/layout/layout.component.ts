@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { TabService } from "../../core/services/tab/tab.service";
 
 @Component({
     selector: "app-layout",
@@ -12,7 +13,11 @@ export class LayoutComponent implements OnInit {
         { path: "/preference/system", name: "System", icon: "palette" }
     ];
 
-    constructor() {}
+    constructor(private tabService: TabService) {}
 
     ngOnInit() {}
+
+    updateActivatedTab(tab) {
+        this.tabService.updateActivatedTabPath(tab.path);
+    }
 }

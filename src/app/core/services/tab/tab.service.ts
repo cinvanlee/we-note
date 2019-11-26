@@ -85,6 +85,28 @@ export class TabService {
         }
     }
 
+    updateActivatedTabName(name) {
+        const tabs = this.tabs$.getValue();
+        const newTabs = tabs.map(tab => {
+            if (tab.active) {
+                tab.name = name;
+            }
+            return tab;
+        });
+        this.tabs$.next(newTabs);
+    }
+
+    updateActivatedTabPath(path) {
+        const tabs = this.tabs$.getValue();
+        const newTabs = tabs.map(tab => {
+            if (tab.active) {
+                tab.path = path;
+            }
+            return tab;
+        });
+        this.tabs$.next(newTabs);
+    }
+
     openExternal(url) {
         electron.shell.openExternal(url);
     }

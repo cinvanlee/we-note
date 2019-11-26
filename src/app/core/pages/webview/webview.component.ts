@@ -27,12 +27,14 @@ export class WebviewComponent implements OnInit, OnDestroy {
         // Close loading while dom is ready
         this.webview.addEventListener("dom-ready", this.onDidStopLoading.bind(this));
         this.webview.addEventListener("did-navigate", this.onDidNavigate.bind(this));
+        this.webview.addEventListener("page-title-updated", this.onPageTitleUpdated.bind(this));
     }
 
     ngOnDestroy(): void {
         this.webview.removeEventListener("did-start-loading", this.onDidStartLoading.bind(this));
         this.webview.removeEventListener("dom-ready", this.onDidStopLoading.bind(this));
         this.webview.removeEventListener("did-navigate", this.onDidNavigate.bind(this));
+        this.webview.removeEventListener("page-title-updated", this.onPageTitleUpdated.bind(this));
     }
 
     onDidStartLoading() {
@@ -47,6 +49,13 @@ export class WebviewComponent implements OnInit, OnDestroy {
         if (this.webview) {
             this.canGoBack = this.webview.canGoBack();
             this.canGoForward = this.webview.canGoForward();
+        }
+    }
+
+    onPageTitleUpdated() {
+        if (this.webview) {
+            const pageTitle = this.webview.getTitle();
+            this.tabService.updateActivatedTabName(pageTitle);
         }
     }
 

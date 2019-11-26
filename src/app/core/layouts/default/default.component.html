@@ -26,14 +26,9 @@
                     (nzClick)="handleActiveTab(tab)"
                 >
                     <ng-template #titleTemplate>
-                        <div>
-                            {{ tab.name }}
-                            <i
-                                nz-icon
-                                nzType="close"
-                                (click)="handleRemoveTab(tab)"
-                                class="ant-tabs-close-x"
-                            ></i>
+                        <div class="tab-item">
+                            <span class="tab-name">{{ tab.name }}</span>
+                            <i nz-icon nzType="close" (click)="handleRemoveTab(tab)" class="tab-close ant-tabs-close-x"></i>
                         </div>
                     </ng-template>
                 </nz-tab>

@@ -77,6 +77,26 @@
                 cursor: pointer;
                 user-select: none;
 
+                &-item {
+                    position: relative;
+                    height: 100%;
+                    padding-right: 15px;
+                }
+
+                &-name {
+                    display: inline-block;
+                    max-width: 100px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+
+                &-close {
+                    position: absolute;
+                    top: 13px;
+                    right: 0;
+                }
+
                 &.active {
                     .close-icon {
                         display: inline-block;
