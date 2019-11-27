@@ -1,4 +1,4 @@
-**still in working...**
+<h2 style="color: red;">⚠️still in working...</h2> 
 
 <div align="center">
     <h1>👨🏻‍💻 WeNote</h1>
@@ -6,7 +6,10 @@
     <a href="javascript:;">Download</a> | <a href="javascript:;">Homepage</a>
 </div>
 
-![](./docs/preview.jpg)
+![](./docs/preview1.jpg)
+![](./docs/preview2.jpg)
+![](./docs/preview3.jpg)
+![](./docs/preview4.jpg)
 
 ### Features
 
@@ -20,6 +23,7 @@
 * Regular expression test tool
 * JSON beautification tool
 * Code formatting tool
+* A simple Password Manager
 * Add any tools you need !
 
 ### Installing
