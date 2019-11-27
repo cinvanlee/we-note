@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
+import { ElectronService } from "../electron/electron.service";
 import { WeNoteService } from "../we-note/we-note.service";
 import { INote, INoteDetail } from "./notebook.interface";
 
 const fs = window.require("fs-extra");
-const electron = window.require("electron");
 const jf = window.require("jsonfile");
 const uuid = window.require("uuid/v4");
 const shell = window.require("shelljs");
@@ -23,7 +23,7 @@ export class NotebookService {
         quotes: "“”‘’"
     });
 
-    constructor(private wnService: WeNoteService) {
+    constructor(private wnService: WeNoteService, private electronService: ElectronService) {
         this.md.validateLink = () => true;
     }
 
@@ -93,12 +93,8 @@ export class NotebookService {
                     return {
                         ...meta,
                         title: meta.title || "Untitled Note",
-                        created_formatted: moment(meta.createdAt).format(
-                            "YYYY-MM-DD hh:mm:ss"
-                        ),
-                        updated_formatted: moment(meta.updatedAt).format(
-                            "YYYY-MM-DD hh:mm:ss"
-                        )
+                        created_formatted: moment(meta.createdAt).format("YYYY-MM-DD hh:mm:ss"),
+                        updated_formatted: moment(meta.updatedAt).format("YYYY-MM-DD hh:mm:ss")
                     };
                 });
                 resolve(notes);
@@ -118,12 +114,8 @@ export class NotebookService {
                 const contentInfo = jf.readFileSync(contentPath);
                 resolve({
                     ...metaInfo,
-                    created_formatted: moment(metaInfo.createdAt).format(
-                        "YYYY-MM-DD hh:mm:ss"
-                    ),
-                    updated_formatted: moment(metaInfo.updatedAt).format(
-                        "YYYY-MM-DD hh:mm:ss"
-                    ),
+                    created_formatted: moment(metaInfo.createdAt).format("YYYY-MM-DD hh:mm:ss"),
+                    updated_formatted: moment(metaInfo.updatedAt).format("YYYY-MM-DD hh:mm:ss"),
                     content: contentInfo.content
                 });
             } catch (e) {
@@ -238,7 +230,7 @@ export class NotebookService {
     showInFinder(_uuid) {
         const noteAppPath = this.getNoteAppPath();
         const notePath = `${noteAppPath}/Book/${_uuid}`;
-        electron.shell.openItem(notePath);
+        this.electronService.shell.openItem(notePath);
     }
 
     saveImage(_uuid, imgBlob) {

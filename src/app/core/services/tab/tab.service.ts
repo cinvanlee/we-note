@@ -1,9 +1,8 @@
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { BehaviorSubject, Observable, of } from "rxjs";
+import { ElectronService } from "../electron/electron.service";
 import { WeNoteService } from "../we-note/we-note.service";
-
-const electron = window.require("electron");
 
 interface ITab {
     path: string;
@@ -15,9 +14,9 @@ interface ITab {
     providedIn: "root"
 })
 export class TabService {
-    public tabs$ = new BehaviorSubject<ITab[]>([]);
+    tabs$ = new BehaviorSubject<ITab[]>([]);
 
-    constructor(private wnService: WeNoteService, private router: Router) {
+    constructor(private wnService: WeNoteService, private router: Router, private electronService: ElectronService) {
         this.readCachedTabs();
         this.tabs$.subscribe(tabs => {
             try {
@@ -34,11 +33,11 @@ export class TabService {
         this.tabs$.next(cachedTabs);
     }
 
-    public getTabs(): Observable<ITab[]> {
+    getTabs(): Observable<ITab[]> {
         return this.tabs$;
     }
 
-    public addOrActiveTab({ path, name }) {
+    addOrActiveTab({ path, name }) {
         const tabs = this.tabs$.getValue();
         const existIndex = tabs.findIndex(tab => tab.path === path);
         if (existIndex === -1) {
@@ -48,7 +47,7 @@ export class TabService {
         }
     }
 
-    public activeTab({ path, name }) {
+    activeTab({ path, name }) {
         const tabs = this.tabs$.getValue();
         const newTabs = tabs.map(tab => {
             tab.active = tab.path === path;
@@ -58,7 +57,7 @@ export class TabService {
         this.router.navigateByUrl(path);
     }
 
-    public addTab({ path, name }) {
+    addTab({ path, name }) {
         let tabs = this.tabs$.getValue();
         tabs = tabs.map(tab => {
             tab.active = false;
@@ -73,7 +72,7 @@ export class TabService {
         this.router.navigateByUrl(path);
     }
 
-    public removeTab({ path }) {
+    removeTab({ path }) {
         const tabs = this.tabs$.getValue();
         const newTabs = tabs.filter(tab => tab.path !== path);
         const lastTab = newTabs[newTabs.length - 1];
@@ -108,7 +107,7 @@ export class TabService {
     }
 
     openExternal(url) {
-        electron.shell.openExternal(url);
+        this.electronService.shell.openExternal(url);
     }
 
     openWebview({ path, name }) {
@@ -116,5 +115,19 @@ export class TabService {
             path: `/webview?url=${encodeURIComponent(path)}`,
             name
         });
+    }
+
+    async activeCachedTab() {
+        const tabs = await this.wnService.getAppConfigByKey("tabs");
+        let activeTab;
+        tabs.forEach(item => {
+            if (item.active) {
+                activeTab = item;
+            }
+        });
+        if (!activeTab) {
+            activeTab = { path: "/", name: "Dashboard", active: true };
+        }
+        this.addOrActiveTab(activeTab);
     }
 }

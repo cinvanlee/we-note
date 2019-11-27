@@ -5,7 +5,6 @@ import { NotebookService } from "../notebook/notebook.service";
 import { WeNoteService } from "../we-note/we-note.service";
 
 const fs = window.require("fs-extra");
-const electron = window.require("electron");
 const jf = window.require("jsonfile");
 const shell = window.require("shelljs");
 const yaml = window.require("js-yaml");

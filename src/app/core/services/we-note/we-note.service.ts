@@ -1,10 +1,10 @@
 import { Injectable } from "@angular/core";
 import _ from "lodash";
 import * as pkg from "../../../../../package.json";
+import { ElectronService } from "../electron/electron.service";
 import { IConfig } from "./we-note.interface";
 
 const fs = window.require("fs-extra");
-const electron = window.require("electron");
 const jf = window.require("jsonfile");
 const shell = window.require("shelljs");
 
@@ -12,7 +12,7 @@ const shell = window.require("shelljs");
     providedIn: "root"
 })
 export class WeNoteService {
-    constructor() {}
+    constructor(private electronService: ElectronService) {}
 
     isFile(_path) {
         try {
@@ -33,7 +33,7 @@ export class WeNoteService {
     }
 
     getAppDir() {
-        const appDir = electron.remote.app.getPath("documents");
+        const appDir = this.electronService.remote.app.getPath("documents");
         return `${appDir}/WE_NOTE`;
     }
 
@@ -45,7 +45,7 @@ export class WeNoteService {
     }
 
     getAppLocale() {
-        return electron.remote.app.getLocale();
+        return this.electronService.remote.app.getLocale();
     }
 
     getAppConfigPath() {
@@ -180,7 +180,7 @@ export class WeNoteService {
     }
 
     openInFinder(path) {
-        electron.shell.openItem(path);
+        this.electronService.shell.openItem(path);
     }
 
     writeFile(filePath, fileContent) {
