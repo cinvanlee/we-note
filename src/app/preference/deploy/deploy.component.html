@@ -10,23 +10,24 @@
             <nz-form-item>
                 <nz-form-label [nzSpan]="3">Blog Engine</nz-form-label>
                 <nz-form-control [nzSpan]="20">
-                    <nz-select
-                        name="blogEngine"
-                        [(ngModel)]="blogEngine"
-                        style="width: 300px"
-                    >
+                    <nz-select name="blogEngine" [(ngModel)]="blogEngine" style="width: 300px">
                         <nz-option nzLabel="Hexo" nzValue="hexo"></nz-option>
                     </nz-select>
                 </nz-form-control>
             </nz-form-item>
 
             <nz-form-item>
-                <nz-form-label [nzSpan]="3">Enable</nz-form-label>
+                <nz-form-label [nzSpan]="3">Local Server</nz-form-label>
                 <nz-form-control [nzSpan]="20">
                     <nz-switch
-                        name="enable"
-                        [(ngModel)]="hexo.enable"
+                        name="localServerIsRunning"
+                        [nzControl]="true"
+                        [(ngModel)]="localServerIsRunning"
+                        (click)="switchLocalServer()"
                     ></nz-switch>
+                    <button [disabled]="!localServerIsRunning" nz-button (click)="previewHexo()" nzType="link">
+                        Preview
+                    </button>
                 </nz-form-control>
             </nz-form-item>
 
@@ -34,19 +35,9 @@
                 <nz-form-label [nzSpan]="3">Posts Path</nz-form-label>
                 <nz-form-control [nzSpan]="20">
                     <nz-input-group style="width: 300px">
-                        <input
-                            name="hexoPostDir"
-                            type="text"
-                            nz-input
-                            [(ngModel)]="hexo.dir"
-                        />
+                        <input name="hexoPostDir" type="text" nz-input [(ngModel)]="hexo.dir" />
                     </nz-input-group>
-                    <button
-                        [disabled]="!hexo.dir"
-                        nz-button
-                        nzType="link"
-                        (click)="openPostsDirInFinder()"
-                    >
+                    <button [disabled]="!hexo.dir" nz-button nzType="link" (click)="openPostsDirInFinder()">
                         Open in Finder
                     </button>
                 </nz-form-control>
@@ -54,12 +45,7 @@
 
             <nz-form-item nz-row>
                 <nz-form-control [nzSpan]="20" [nzOffset]="3">
-                    <button
-                        nz-button
-                        nzType="primary"
-                        (click)="deploy()"
-                        [nzLoading]="deployLoading"
-                    >
+                    <button nz-button nzType="primary" (click)="deploy()" [nzLoading]="deployLoading">
                         Apply
                     </button>
                 </nz-form-control>
@@ -68,17 +54,9 @@
 
         <ng-template #init_hexo>
             <div class="empty-container">
-                <nz-empty
-                    nzNotFoundContent="No configuration available"
-                    [nzNotFoundFooter]="footerTpl"
-                >
+                <nz-empty nzNotFoundContent="No configuration available" [nzNotFoundFooter]="footerTpl">
                     <ng-template #footerTpl>
-                        <button
-                            nz-button
-                            nzType="primary"
-                            (click)="initHexo()"
-                            [nzLoading]="initLoading"
-                        >
+                        <button nz-button nzType="primary" (click)="initHexo()" [nzLoading]="initLoading">
                             Init Hexo Now
                         </button>
                     </ng-template>
@@ -93,12 +71,7 @@
                 <nz-form-label [nzSpan]="3">Title</nz-form-label>
                 <nz-form-control [nzSpan]="20">
                     <nz-input-group style="width: 300px">
-                        <input
-                            name="config.title"
-                            type="text"
-                            nz-input
-                            [(ngModel)]="config.title"
-                        />
+                        <input name="config.title" type="text" nz-input [(ngModel)]="config.title" />
                     </nz-input-group>
                 </nz-form-control>
             </nz-form-item>
@@ -106,12 +79,7 @@
                 <nz-form-label [nzSpan]="3">Sub Title</nz-form-label>
                 <nz-form-control [nzSpan]="20">
                     <nz-input-group style="width: 300px">
-                        <input
-                            name="config.subtitle"
-                            type="text"
-                            nz-input
-                            [(ngModel)]="config.subtitle"
-                        />
+                        <input name="config.subtitle" type="text" nz-input [(ngModel)]="config.subtitle" />
                     </nz-input-group>
                 </nz-form-control>
             </nz-form-item>
@@ -119,12 +87,7 @@
                 <nz-form-label [nzSpan]="3">Description</nz-form-label>
                 <nz-form-control [nzSpan]="20">
                     <nz-input-group style="width: 300px">
-                        <input
-                            name="config.description"
-                            type="text"
-                            nz-input
-                            [(ngModel)]="config.description"
-                        />
+                        <input name="config.description" type="text" nz-input [(ngModel)]="config.description" />
                     </nz-input-group>
                 </nz-form-control>
             </nz-form-item>
@@ -132,12 +95,7 @@
                 <nz-form-label [nzSpan]="3">Keywords</nz-form-label>
                 <nz-form-control [nzSpan]="20">
                     <nz-input-group style="width: 300px">
-                        <input
-                            name="config.keywords"
-                            type="text"
-                            nz-input
-                            [(ngModel)]="config.keywords"
-                        />
+                        <input name="config.keywords" type="text" nz-input [(ngModel)]="config.keywords" />
                     </nz-input-group>
                 </nz-form-control>
             </nz-form-item>
@@ -145,12 +103,7 @@
                 <nz-form-label [nzSpan]="3">Author</nz-form-label>
                 <nz-form-control [nzSpan]="20">
                     <nz-input-group style="width: 300px">
-                        <input
-                            name="config.author"
-                            type="text"
-                            nz-input
-                            [(ngModel)]="config.author"
-                        />
+                        <input name="config.author" type="text" nz-input [(ngModel)]="config.author" />
                     </nz-input-group>
                 </nz-form-control>
             </nz-form-item>
@@ -159,21 +112,6 @@
                 <nz-form-control [nzSpan]="20" [nzOffset]="3">
                     <button nz-button nzType="primary" (click)="saveConfig()">
                         Apply
-                    </button>
-                    <button
-                        nz-button
-                        (click)="startHexoServer()"
-                    >
-                        Start Hexo Server
-                    </button>
-                    <button
-                        nz-button
-                        (click)="stopHexoServer()"
-                    >
-                        Stop Hexo Server
-                    </button>
-                    <button nz-button (click)="previewHexo()">
-                        Preview Hexo
                     </button>
                 </nz-form-control>
             </nz-form-item>

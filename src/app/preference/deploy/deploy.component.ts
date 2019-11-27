@@ -14,6 +14,7 @@ export class DeployComponent implements OnInit {
     blogEngine = "";
     hexo: IHexo;
     isHexoInstalled = false;
+    localServerIsRunning = false;
     initLoading = false;
     deployLoading = false;
     config = {};
@@ -32,6 +33,7 @@ export class DeployComponent implements OnInit {
     async initPageData() {
         this.blogEngine = await this.wnService.getAppConfigByKey("blogEngine");
         this.hexo = await this.wnService.getAppConfigByKey("hexo");
+        this.localServerIsRunning = await this.hexoService.isLocalServerRunning();
         this.isHexoInstalled = this.hexoService.isHexoInstalled();
         this.config = await this.hexoService.getConfig();
     }
@@ -60,23 +62,6 @@ export class DeployComponent implements OnInit {
         this.deployLoading = false;
     }
 
-    async startHexoServer() {
-        try {
-            await this.hexoService.startHexoServer();
-            this.notify.success("SUCCESS", "Hexo server started.");
-        } catch (e) {
-            this.notify.error("ERROR", e.message);
-        }
-    }
-
-    async stopHexoServer() {
-        try {
-            await this.hexoService.stopHexoServer();
-        } catch (e) {
-            this.notify.error("ERROR", e.message);
-        }
-    }
-
     previewHexo() {
         this.tabService.openWebview({
             path: "http://localhost:4000",
@@ -91,5 +76,36 @@ export class DeployComponent implements OnInit {
         } catch (e) {
             this.notify.error("ERROR", e.message);
         }
+    }
+
+    private async startHexoServer() {
+        try {
+            await this.hexoService.startHexoServer(this.outputListener);
+            this.notify.success("SUCCESS", "Hexo server started.");
+        } catch (e) {
+            this.notify.error("ERROR", e.message);
+        }
+    }
+
+    private async stopHexoServer() {
+        try {
+            await this.hexoService.stopHexoServer();
+        } catch (e) {
+            this.notify.error("ERROR", e.message);
+        }
+    }
+
+    async switchLocalServer() {
+        if (this.localServerIsRunning) {
+            await this.stopHexoServer();
+            this.localServerIsRunning = false;
+        } else {
+            await this.startHexoServer();
+            this.localServerIsRunning = true;
+        }
+    }
+
+    async outputListener(data) {
+        console.log('listener', data);
     }
 }

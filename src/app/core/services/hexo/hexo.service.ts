@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import _ from "lodash";
+import { ElectronService } from "../electron/electron.service";
 import { NotebookService } from "../notebook/notebook.service";
 import { WeNoteService } from "../we-note/we-note.service";
 
@@ -7,24 +8,17 @@ const fs = window.require("fs-extra");
 const electron = window.require("electron");
 const jf = window.require("jsonfile");
 const shell = window.require("shelljs");
-const child_process = window.require("child_process");
 const yaml = window.require("js-yaml");
-
-interface IResponse {
-    success: boolean;
-    message?: string;
-    data?: any;
-}
+const psTree = window.require("ps-tree");
 
 @Injectable({
     providedIn: "root"
 })
 export class HexoService {
-    hexoServer: any;
-
     constructor(
         private wnService: WeNoteService,
-        private nbService: NotebookService
+        private nbService: NotebookService,
+        private electronService: ElectronService
     ) {
         // shell.exec not support Electron
         // https://github.com/shelljs/shelljs/wiki/Electron-compatibility
@@ -75,6 +69,11 @@ export class HexoService {
         });
     }
 
+    async isLocalServerRunning() {
+        const pid = await this.wnService.getAppConfigByKey("hexo.localServerPid");
+        return pid !== 0;
+    }
+
     async note2hexo(): Promise<any> {
         const hexoDir = this.getHexoDir();
         const postsDir = `${hexoDir}/source/_posts`;
@@ -109,11 +108,11 @@ ${note.content}`;
         return Promise.resolve();
     }
 
-    async startHexoServer(): Promise<any> {
+    async startHexoServer(listener): Promise<any> {
         const hexoDir = this.getHexoDir();
         return new Promise(async (resolve, reject) => {
             try {
-                child_process.exec(
+                const child = this.electronService.childProcess.exec(
                     `cd ${hexoDir}; hexo server;`,
                     (error, stdout, stderr) => {
                         if (error) {
@@ -122,6 +121,10 @@ ${note.content}`;
                         }
                     }
                 );
+                await this.wnService.setAppConfig("hexo.localServerPid", child.pid);
+                child.stdout.on("data", data => {
+                    listener(data.toString());
+                });
                 resolve();
             } catch (e) {
                 reject(new Error("Start hexo server failed."));
@@ -130,13 +133,17 @@ ${note.content}`;
     }
 
     async stopHexoServer() {
-        // TODO: This solution is bad.
-        return new Promise((resolve, reject) => {
-            try {
-                shell.exec(`kill -9 $(lsof -i tcp:4000 -t)`);
-            } catch (e) {
-                reject(new Error("Stop hexo server failed."));
-            }
+        return new Promise(async (resolve, reject) => {
+            const pid = await this.wnService.getAppConfigByKey("hexo.localServerPid");
+            psTree(pid, async (err, children) => {
+                if (err) {
+                    reject(new Error(`Kill pid: ${pid} failed.`));
+                    return;
+                }
+                this.electronService.childProcess.spawn("kill", ["-9"].concat(children.map(p => p.PID)));
+                await this.wnService.setAppConfig("hexo.localServerPid", 0);
+                resolve();
+            });
         });
     }
 
@@ -144,9 +151,7 @@ ${note.content}`;
         const hexoDir = this.getHexoDir();
         return new Promise((resolve, reject) => {
             try {
-                const doc = yaml.safeLoad(
-                    fs.readFileSync(`${hexoDir}/_config.yml`, "utf8")
-                );
+                const doc = yaml.safeLoad(fs.readFileSync(`${hexoDir}/_config.yml`, "utf8"));
                 resolve(doc);
             } catch (e) {
                 reject(new Error("Read hexo config.yml failed."));

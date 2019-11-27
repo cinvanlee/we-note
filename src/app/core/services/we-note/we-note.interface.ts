@@ -7,6 +7,7 @@ export interface ITab {
 export interface IHexo {
     enable: boolean;
     dir: string
+    localServerPid: number;
 }
 
 export interface IConfig {

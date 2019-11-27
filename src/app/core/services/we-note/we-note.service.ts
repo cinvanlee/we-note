@@ -123,7 +123,8 @@ export class WeNoteService {
             blogEngine: "hexo",
             hexo: {
                 enable: false,
-                dir: ""
+                dir: "",
+                localServerPid: 0
             },
             useDefaultBrowser: false
         };
